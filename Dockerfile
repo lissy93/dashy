@@ -1,4 +1,4 @@
-FROM node:22-alpine AS build
+FROM node:26-alpine AS build
 
 WORKDIR /app
 
@@ -8,7 +8,7 @@ RUN yarn install --frozen-lockfile --network-timeout 600000
 COPY . .
 RUN yarn build
 
-FROM node:22-alpine AS deps
+FROM node:26-alpine AS deps
 
 WORKDIR /app
 
@@ -16,7 +16,7 @@ COPY package.json yarn.lock ./
 RUN yarn install --production --frozen-lockfile --network-timeout 600000 \
   && yarn cache clean
 
-FROM node:22-alpine
+FROM node:26-alpine
 
 ARG VERSION=dev
 ARG REVISION
