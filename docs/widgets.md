@@ -422,7 +422,7 @@ Keep an eye on the expiry dates of your domain names, using public whois records
 
 - **CORS**: 🟢 Enabled
 - **Auth**: 🔴 Required
-- **Price**: 🟠 Free Plan (10,000 requests)
+- **Price**: 🔴 Paid only, no free plan
 - **Host**: Managed Instance Only
 - **Privacy**: _See [WhoAPI Privacy Policy](https://whoapi.com/privacy-policy/)_
 
