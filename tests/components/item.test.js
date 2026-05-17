@@ -5,6 +5,7 @@ import { shallowMount } from '@vue/test-utils';
 import { createStore } from 'vuex';
 import Item from '@/components/LinkItems/Item.vue';
 import router from '@/router';
+import pingCheck from '../../services/ping-check';
 
 vi.mock('@/utils/request', () => {
   const fn = vi.fn(() => Promise.resolve({ data: {} }));
@@ -212,6 +213,36 @@ describe('Computed: enableStatusCheck', () => {
   });
 });
 
+describe('Computed: isPingCheckEnabled', () => {
+  it('item.pingCheckEnabled boolean overrides appConfig', () => {
+    const { wrapper } = mountItem({
+      item: {
+        id: '1', title: 'X', url: '#', pingCheckEnabled: false, pingCheckHost: 'example.com',
+      },
+      appConfig: { pingCheckEnabled: true },
+    });
+    expect(wrapper.vm.isPingCheckEnabled).toBe(false);
+  });
+
+  it('falls back to appConfig.pingCheckEnabled', () => {
+    const { wrapper } = mountItem({
+      item: { id: '1', title: 'X', url: '#', pingCheckHost: 'example.com' },
+      appConfig: { pingCheckEnabled: true },
+    });
+    expect(wrapper.vm.isPingCheckEnabled).toBe(true);
+  });
+
+  it('defaults to false', () => {
+    const { wrapper } = mountItem({ item: { id: '1', title: 'X', url: '#' } });
+    expect(wrapper.vm.isPingCheckEnabled).toBe(false);
+  });
+
+  it('false if pingCheckHost is not provided', () => {
+    const { wrapper } = mountItem({ item: { id: '1', title: 'X', url: '#', pingCheckEnabled: true } });
+    expect(wrapper.vm.isPingCheckEnabled).toBe(false);
+  });
+});
+
 describe('Computed: statusCheckInterval', () => {
   it('reads from item', () => {
     const { wrapper } = mountItem({
@@ -246,6 +277,43 @@ describe('Computed: statusCheckInterval', () => {
       },
     });
     expect(wrapper.vm.statusCheckInterval).toBe(0);
+  });
+});
+
+describe('Computed: pingCheckInterval', () => {
+  it('reads from item', () => {
+    const { wrapper } = mountItem({
+      item: {
+        id: '1', title: 'X', url: '#', pingCheckInterval: 3,
+      },
+    });
+    expect(wrapper.vm.pingCheckInterval).toBe(3);
+  });
+
+  it('falls back to appConfig', () => {
+    const { wrapper } = mountItem({
+      item: { id: '1', title: 'X', url: '#' },
+      appConfig: { pingCheckInterval: 4 },
+    });
+    expect(wrapper.vm.pingCheckInterval).toBe(4);
+  });
+
+  it('clamps to max 5', () => {
+    const { wrapper } = mountItem({
+      item: {
+        id: '1', title: 'X', url: '#', pingCheckInterval: 15,
+      },
+    });
+    expect(wrapper.vm.pingCheckInterval).toBe(5);
+  });
+
+  it('clamps values less than 1 to 0', () => {
+    const { wrapper } = mountItem({
+      item: {
+        id: '1', title: 'X', url: '#', pingCheckInterval: 0.5,
+      },
+    });
+    expect(wrapper.vm.pingCheckInterval).toBe(0);
   });
 });
 
@@ -423,6 +491,25 @@ describe('Methods: getTooltipOptions', () => {
     });
     wrapper.vm.statusResponse = { message: 'ok' };
     expect(wrapper.vm.getTooltipOptions().placement).toBe('left');
+  });
+
+  it('placement is "left" when pingResponse exists', () => {
+    const { wrapper } = mountItem({
+      item: {
+        id: '1', title: 'X', url: '#', description: 'D',
+      },
+    });
+    wrapper.vm.pingResponse = { message: 'ok' };
+    expect(wrapper.vm.getTooltipOptions().placement).toBe('left');
+  });
+
+  it('placement is "auto" when neither statusResponse nor pingResponse exists', () => {
+    const { wrapper } = mountItem({
+      item: {
+        id: '1', title: 'X', url: '#', description: 'D',
+      },
+    });
+    expect(wrapper.vm.getTooltipOptions().placement).toBe('auto');
   });
 });
 
@@ -666,6 +753,50 @@ describe('Lifecycle: mounted', () => {
     expect(spy).not.toHaveBeenCalled();
     spy.mockRestore();
   });
+
+  it('calls checkPingStatus when pingCheckEnabled is true', () => {
+    const spy = vi.spyOn(Item.mixins[0].methods, 'checkPingStatus');
+    mountItem({
+      item: {
+        id: '1', title: 'X', url: '#', pingCheckEnabled: true, pingCheckHost: 'localhost',
+      },
+    });
+    expect(spy).toHaveBeenCalled();
+    spy.mockRestore();
+  });
+
+  it('sets up interval when pingCheckInterval > 0', () => {
+    vi.useFakeTimers();
+    const { wrapper } = mountItem({
+      item: {
+        id: '1', title: 'X', url: '#', pingCheckEnabled: true, pingCheckHost: 'localhost', pingCheckInterval: 2,
+      },
+    });
+    expect(wrapper.vm.pingIntervalId).toBeDefined();
+    vi.useRealTimers();
+  });
+
+  it('does nothing when pingCheckEnabled is false', () => {
+    const spy = vi.spyOn(Item.mixins[0].methods, 'checkPingStatus');
+    mountItem({
+      item: {
+        id: '1', title: 'X', url: '#', pingCheckEnabled: false, pingCheckHost: 'localhost', pingCheckInterval: 2,
+      },
+    });
+    expect(spy).not.toHaveBeenCalled();
+    spy.mockRestore();
+  });
+
+  it('does nothing when pingCheckHost is undefined', () => {
+    const spy = vi.spyOn(Item.mixins[0].methods, 'checkPingStatus');
+    mountItem({
+      item: {
+        id: '1', title: 'X', url: '#', pingCheckEnabled: true, pingCheckHost: undefined, pingCheckInterval: 2,
+      },
+    });
+    expect(spy).not.toHaveBeenCalled();
+    spy.mockRestore();
+  });
 });
 
 describe('Lifecycle: beforeDestroy', () => {
@@ -680,6 +811,20 @@ describe('Lifecycle: beforeDestroy', () => {
     const { intervalId } = wrapper.vm;
     wrapper.unmount();
     expect(clearSpy).toHaveBeenCalledWith(intervalId);
+    vi.useRealTimers();
+  });
+
+  it('clears interval if pingIntervalId exists', () => {
+    vi.useFakeTimers();
+    const clearSpy = vi.spyOn(global, 'clearInterval');
+    const { wrapper } = mountItem({
+      item: {
+        id: '1', title: 'X', url: '#', pingCheckEnabled: true, pingCheckHost: 'localhost', pingCheckInterval: 2,
+      },
+    });
+    const { pingIntervalId } = wrapper.vm;
+    wrapper.unmount();
+    expect(clearSpy).toHaveBeenCalledWith(pingIntervalId);
     vi.useRealTimers();
   });
 });
@@ -712,6 +857,29 @@ describe('Template rendering', () => {
       },
     });
     expect(on.html()).toContain('status-indicator');
+  });
+
+  it('shows StatusIndicator only when pingCheckEnabled', () => {
+    const { wrapper: off } = mountItem({
+      item: {
+        id: '1', title: 'X', url: '#', pingCheckEnabled: false,
+      },
+    });
+    expect(off.html()).not.toContain('status-indicator');
+
+    const { wrapper: on1 } = mountItem({
+      item: {
+        id: '1', title: 'X', url: '#', pingCheckEnabled: true,
+      },
+    });
+    expect(on1.html()).not.toContain('status-indicator');
+
+    const { wrapper: on2 } = mountItem({
+      item: {
+        id: '1', title: 'X', url: '#', pingCheckEnabled: true, pingCheckHost: 'localhost',
+      },
+    });
+    expect(on2.html()).toContain('status-indicator');
   });
 
   it('shows EditModeIcon only in edit mode', async () => {

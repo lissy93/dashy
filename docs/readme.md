@@ -25,7 +25,7 @@
 - [Icons](/docs/icons.md) - Outline of all available icon types for sections and items, with examples
 - [Language Switching](/docs/multi-language-support.md) - Details on how to switch language, or add a new locale
 - [Pages and Sections](/docs/pages-and-sections.md) - Multi-page support, sections, items and sub-items
-- [Status Indicators](/docs/status-indicators.md) - Using Dashy to monitor uptime and status of your apps
+- [Status Indicators](/docs/status-indicators.md) - Using Dashy to monitor uptime and status of your apps/services and hosts
 - [Searching  & Shortcuts](/docs/searching.md) - Searching, launching methods + keyboard shortcuts
 - [Theming](/docs/theming.md) - Complete guide to applying, writing and modifying themes + styles
 - [Widgets](/docs/widgets.md) - List of all dynamic content widgets, with usage guides and examples

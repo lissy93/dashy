@@ -245,6 +245,36 @@
           "default": false,
           "description": "If enabled, status indicators will use distinct shapes (in addition to color) for better color-blind accessibility"
         },
+        "pingCheckEnabled": {
+          "title": "Global Ping Check Enabling",
+          "type": "boolean",
+          "default": false,
+          "description": "Ping Check Enabling status for all items having a pingCheckHost specified and not explicitly disabling ping checks at the item level."
+        },
+        "pingCheckInterval": {
+          "title": "Global Ping Check Interval",
+          "type": "number",
+          "default": 0,
+          "description": "The default interval in seconds between ping checks. If set to 0, pings will only be checked on page load. Is limited to 5 seconds min to prevent performance issues."
+        },
+        "pingCheckAccessibility": {
+          "title": "Global Ping Check Accessibility Mode",
+          "type": "boolean",
+          "default": false,
+          "description": "If enabled, ping indicators will use distinct shapes (in addition to color) for better color-blind accessibility."
+        },
+        "pingCheckCount": {
+          "title": "Global Ping Check Count",
+          "type": "number",
+          "default": 0,
+          "description": "The default number of ping icmp packets to send per check for all items. If set to 0, 3 packets will be sent. Is limited to 5 packets max to prevent performance issues."
+        },
+        "pingCheckTimeout": {
+          "title": "Global Ping Check Timeout",
+          "type": "number",
+          "default": 0,
+          "description": "The default timeout delay in milliseconds for a ping check to complete. If set to 0, it uses the same value as pingCheckInterval in milliseconds. Is limited to 1000ms per pingCheckCount max to prevent performance issues."
+        },
         "language": {
           "title": "Language",
           "type": "string",
@@ -1193,6 +1223,35 @@
                   "type": "number",
                   "default": 0,
                   "description": "If your service redirects to another page, and you would like status checks to follow redirects, then specify the maximum number of redirects here"
+                },
+                "pingCheckEnabled": {
+                  "title": "Item Ping Check Enabling",
+                  "type": "boolean",
+                  "default": false,
+                  "description": "Ping Check Enabling status specified for this item. Will override appConfig.pingCheckEnabled."
+                },
+                "pingCheckHost": {
+                  "title": "Item hostname or IP address",
+                  "type": "string",
+                  "description": "The FQDN hostname or IP address of the host represented by this item. If this field is not set or invalid then it uses the item's URL and if the URL's host is also invalid then ping checks will not be performed."
+                },
+                "pingCheckInterval": {
+                  "title": "Item Ping Check Interval",
+                  "type": "number",
+                  "default": 0,
+                  "description": "The interval in seconds between ping checks for this item. If set to 0, pings will only be checked on page load. Is limited to 5 seconds min to prevent performance issues. Will override appConfig.pingCheckInterval."
+                },
+                "pingCheckCount": {
+                  "title": "Item Ping Check Count",
+                  "type": "number",
+                  "default": 0,
+                  "description": "The number of ping icmp packets to send per check for this item. If set to 0, 3 packets will be sent. Is limited to 5 packets max to prevent performance issues. Will override appConfig.pingCheckCount."
+                },
+                "pingCheckTimeout": {
+                  "title": "Item Ping Check Timeout",
+                  "type": "number",
+                  "default": 0,
+                  "description": "The timeout delay in milliseconds for a ping check to complete for this item. If set to 0, it uses the same value as pingCheckInterval in milliseconds. Is limited to 1000ms per pingCheckCount max to prevent performance issues. Will override appConfig.pingCheckTimeout."
                 },
                 "color": {
                   "title": "Custom Color",

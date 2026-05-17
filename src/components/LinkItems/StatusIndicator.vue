@@ -18,18 +18,20 @@ export default {
   props: {
     statusText: { type: String, default: '' },
     statusSuccess: Boolean,
+    statusTimeout: { type: Number, default: 2000 },
+    statusAccessibility: { type: Boolean, default: false },
   },
   computed: {
     /* If true, will use shapes instead of dots for indicator status */
     a11yMode() {
-      return !!this.$store.getters.appConfig.statusCheckAccessibility;
+      return !!this.statusAccessibility;
     },
   },
   methods: {
     /* Returns a color, based on success status */
     color() {
       switch (this.statusSuccess) {
-        case undefined: return ((new Date() - this.startTime) > 2000) ? 'grey' : 'yellow';
+        case undefined: return ((new Date() - this.startTime) > this.statusTimeout) ? 'grey' : 'yellow';
         case true: return 'green'; // Success!
         default: return 'red'; // Not success, therefore failure
       }
@@ -44,7 +46,7 @@ export default {
   mounted() {
     setTimeout(() => {
       if (!this.statusText) this.otherStatusText = 'Request timed out';
-    }, 2000);
+    }, this.statusTimeout);
   },
 };
 </script>

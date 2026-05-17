@@ -76,6 +76,7 @@
 ## Features 🌈
 - 📃 Support for multiple pages
 - 🚦 Real-time status monitoring for each of your apps/links
+- 🚦 Real-time ping monitoring for each of your hosts
 - 📊 Use widgets to display info and dynamic content from self-hosted services
 - 🔎 Instant search by name, domain, or tags + customizable hotkeys & keyboard shortcuts
 - 🎨 Many built-in color themes, with UI color editor and support for custom CSS
@@ -249,9 +250,11 @@ The following icon types are supported:
 
 > For full monitoring documentation, see: [**Status Indicators**](./docs/status-indicators.md)
 
-Dashy has an optional feature to check if each app/ service is up and responding, then display a small status indicator icon. Hovering over it will show additional stats like response time and status code.
+Dashy has two optional features to check if each app/service or host is up and responding, then display a small status indicator icon. Hovering over it will show additional stats like response time and status code.
 
-Status indicators can be globally enabled by setting `appConfig.statusCheck: true` or enabled/ disabled on a per-item basis. Status is checked on page load, but you can allow continuous polling by specifying a time interval between checks, in seconds under `appConfig.statusCheckInterval`. You can also use a different endpoint for status checking, with `statusCheckUrl`, and if needed, pass in custom headers under `statusCheckHeaders`.
+App/Service status is checked by calling an URL and analyzing its HTTP response code. Host status is checked by sending a real ping ICMP request to the host. Both checks can be done at the same time on the same item. In this cas, two status indicators will show up and behave independantly according to the global and item settings for each feature.
+
+Status indicators can be globally enabled by setting `appConfig.statusCheck: true` for app/service and  `appConfig.pingCheck: true` for hosts or enabled/disabled on a per-item basis. Statuses are checked on page load, but you can allow continuous polling by specifying a time interval between checks, in seconds under `appConfig.statusCheckInterval` and `appConfig.pingCheckInterval`. You can also use a different endpoint for app/service status checking, with `statusCheckUrl`, and if needed, pass in custom headers under `statusCheckHeaders`.
 
 <p align="center">
   <img alt="Status Checks demo" src="https://raw.githubusercontent.com/Lissy93/dashy/master/docs/assets/status-check-demo.gif" width="600" />
@@ -605,7 +608,7 @@ If you're new to web development, I've put together a short [list of resources](
 - 💾 [Backup & Restore](/docs/backup-restore.md) - Guide to backing up config with Dashy's cloud sync feature
 - 🧸 [Icons](/docs/icons.md) - Outline of all available icon types for sections and items, with examples
 - 🌐 [Multi-Language Support](/docs/multi-language-support.md) - Switching languages, and adding a new locales
-- 🚦 [Status Indicators](/docs/status-indicators.md) - Using Dashy to monitor uptime and status of your apps
+- 🚦 [Status Indicators](/docs/status-indicators.md) - Using Dashy to monitor uptime and status of your apps, services and hosts
 - 🔍 [Searching  & Shortcuts](/docs/searching.md) - Searching, launching methods + keyboard shortcuts
 - 🎨 [Theming](/docs/theming.md) - Complete guide to applying, writing and modifying themes + styles
 - 📊 [Widgets](/docs/widgets.md) - List of all dynamic content widgets, with usage guides and examples

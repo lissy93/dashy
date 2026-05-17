@@ -74,7 +74,7 @@ export default defineConfig({
         skipWaiting: false,
         navigateFallback: '/index.html',
         navigateFallbackDenylist: [
-          /^\/(status-check|system-info|cors-proxy|get-user|config-manager)\b/,
+          /^\/(status-check|ping-check|system-info|cors-proxy|get-user|config-manager)\b/,
         ],
         maximumFileSizeToCacheInBytes: 10 * 1024 * 1024,
         globIgnores: [

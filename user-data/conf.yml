@@ -12,6 +12,12 @@ pageInfo:
 # Optional app settings and configuration
 appConfig:
   theme: colorful
+  pingCheckEnabled: true
+  pingCheckInterval: 5
+  pingCheckTimeout: 2000
+  pingCheckCount: 2
+  pingCheckAccessibility: true
+  statusCheckInterval: 3
 
 # Main content - An array of sections, each containing an array of items
 sections:
@@ -27,6 +33,22 @@ sections:
         provider: Dashy.to
         icon: far fa-book
         url: https://dashy.to/docs
+
+  - name: Ping Examples
+    icon: fas fa-test
+    items:
+      - title: Localhost
+        pingCheckHost: localhost
+        pingCheckTimeout: 1000
+        pingCheckCount: 1
+      - title: Google DNS
+        pingCheckHost: 8.8.8.8
+        pingCheckTimeout: 3000
+        pingCheckCount: 3
+      - title: Google.fr
+        url: https://www.google.fr
+        statusCheck: true
+        pingCheckInterval: 8
 
   - name: Support Dashy
     icon: fas fa-heart

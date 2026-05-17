@@ -247,6 +247,11 @@ export default {
       if (newItem.statusCheckAllowInsecure) {
         newItem.statusCheckAllowInsecure = strToBool(newItem.statusCheckAllowInsecure);
       }
+      if (newItem.pingCheckEnabled) newItem.pingCheckEnabled = strToBool(newItem.pingCheckEnabled);
+      if (newItem.pingCheckHost) newItem.pingCheckHost = newItem.pingCheckHost.trim();
+      if (newItem.pingCheckCount) newItem.pingCheckCount = parseInt(newItem.pingCheckCount, 0);
+      if (newItem.pingCheckInterval) newItem.pingCheckInterval = parseInt(newItem.pingCheckInterval, 0);
+      if (newItem.pingCheckTimeout) newItem.pingCheckTimeout = parseInt(newItem.pingCheckTimeout, 0);
       return newItem;
     },
     /* Cleanup  work for modal, triggered by save, cancel or click-outside */

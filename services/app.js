@@ -25,6 +25,7 @@ let config = require('./config-validator'); // Validate config file and load res
 
 /* Include route handlers for API endpoints */
 const statusCheck = require('./status-check'); // Used by the status check feature, uses GET
+const pingCheck = require('./ping-check'); // Used by the ping check feature, uses GET
 const saveConfig = require('./save-config'); // Saves users new conf.yml to file-system
 const systemInfo = require('./system-info'); // Basic system info, for resource widget
 const sslServer = require('./ssl-server'); // TLS-enabled web server
@@ -38,6 +39,7 @@ const ENDPOINTS = {
   health: '/healthz',
   statusPing: '/status-ping',
   statusCheck: '/status-check',
+  pingCheck: '/ping-check',
   save: '/config-manager/save',
   systemInfo: '/system-info',
   corsProxy: '/cors-proxy',
@@ -237,6 +239,22 @@ const app = express()
       printWarning(`Error running status check for ${req.url}\n`, e);
       if (!res.headersSent) {
         res.status(500).end(JSON.stringify({ successStatus: false, message: '❌ Status check failed badly' }));
+      }
+    }
+  }))
+  // GET endpoint to run ping of a given URL with GET request
+  .use(ENDPOINTS.pingCheck, protectConfig, requireAuth, method('GET', (req, res) => {
+    try {
+      pingCheck(req.url, (results) => {
+        if (!res.headersSent) {
+          res.setHeader('Content-Type', 'application/json');
+          res.end(results);
+        }
+      });
+    } catch (e) {
+      printWarning(`Error running ping check for ${req.url}\n`, e);
+      if (!res.headersSent) {
+        res.status(500).end(JSON.stringify({ successStatus: false, message: '❌ Ping check failed badly' }));
       }
     }
   }))

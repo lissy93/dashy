@@ -39,6 +39,7 @@ const defaults = {
   serviceEndpoints: {
     statusPing: '/status-ping',
     statusCheck: '/status-check',
+    pingCheck: '/ping-check',
     save: '/config-manager/save',
     systemInfo: '/system-info',
     corsProxy: '/cors-proxy',

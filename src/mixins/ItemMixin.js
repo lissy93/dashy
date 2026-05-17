@@ -21,8 +21,10 @@ export default {
   data() {
     return {
       statusResponse: undefined,
+      pingResponse: undefined,
       contextMenuOpen: false,
       intervalId: undefined, // status-check setInterval() id
+      pingIntervalId: undefined, // ping-check setInterval() id
       contextPos: {
         posX: undefined,
         posY: undefined,
@@ -59,6 +61,67 @@ export default {
       if (interval < 1) interval = 0;
       return interval;
     },
+    /* Determines the host to ping */
+    pingCheckHost() {
+      let host = this.item.pingCheckHost;
+      if (!host || typeof host !== 'string') host = new URL(this.item.url, import.meta.url)?.hostname;
+      if (!host || typeof host !== 'string') return undefined;
+      try {
+        // If the input is not an IP address, try to handle it a valid hostname
+        const ipPattern = /^(\d{1,3}\.){3}\d{1,3}/;
+        let match = host.match(ipPattern);
+        if (match) {
+          return match[0];
+        }
+        const hostPattern = /^([a-zA-Z0-9_-]+\.?)+$/;
+        match = host.match(hostPattern);
+        if (match) {
+          return match[0];
+        }
+        console.warn(`Invalid ping hostname: ${host}`);
+        return '';
+      } catch {
+        // If parsing fails, return an empty string to prevent errors in the ping check
+        console.warn(`Error parsing ping hostname: ${host}`);
+        return '';
+      }
+    },
+    /* Determines if user has enabled hosts ping checks */
+    isPingCheckEnabled() {
+      const globalPref = this.appConfig.pingCheckEnabled || false;
+      const itemPref = this.item.pingCheckEnabled;
+      return (typeof itemPref === 'boolean' ? itemPref : globalPref) && !!this.pingCheckHost;
+    },
+    /* Determine how often to re-fire ping checks */
+    pingCheckInterval() {
+      let interval = this.item.pingCheckInterval;
+      if (!interval) interval = this.appConfig.pingCheckInterval;
+      if (!interval) return 0;
+      interval = Math.floor(interval);
+      if (interval < 0) interval = 0;
+      if (interval > 5) interval = 5;
+      return interval;
+    },
+    /* Determine the number of ping icmp packets to send per check */
+    pingCheckCount() {
+      let pingCount = this.item.pingCheckCount;
+      if (!pingCount) pingCount = this.appConfig.pingCheckCount;
+      if (!pingCount) return 3;
+      pingCount = Math.floor(pingCount);
+      if (pingCount > 5) pingCount = 5;
+      if (pingCount < 1) pingCount = 3;
+      return pingCount;
+    },
+    /* Determine delay in milliseconds for a ping check to complete */
+    pingCheckTimeout() {
+      let timeout = this.item.pingCheckTimeout;
+      if (!timeout) timeout = this.appConfig.pingCheckTimeout;
+      if (!timeout) return this.pingCheckInterval * 1000;
+      let maxTimeout = this.pingCheckCount * 1000;
+      if (timeout > maxTimeout) timeout = maxTimeout;
+      if (timeout < 1) timeout = 0;
+      return timeout;
+    },
     accumulatedTarget() {
       return this.item.target || this.appConfig.defaultOpeningMethod || defaultOpeningMethod;
     },
@@ -82,7 +145,7 @@ export default {
       const noAnchorNeeded = ['modal', 'workspace', 'clipboard', 'newwindow'];
       return noAnchorNeeded.includes(this.accumulatedTarget) ? nothing : url;
     },
-    /* Pulls together all user options, returns URL + Get params for ping endpoint */
+    /* Pulls together all user options, returns URL + Get params for status check endpoint */
     statusCheckApiUrl() {
       const {
         url,
@@ -109,6 +172,19 @@ export default {
       return `${baseUrl}${serviceEndpoints.statusCheck}/${urlToCheck}`
         + `${headers}${enableInsecure}${acceptCodes}${maxRedirects}`;
     },
+    /* Pulls together all user options, returns URL + Get params for ping endpoint */
+    pingCheckApiUrl() {
+      const encode = (str) => encodeURIComponent(str);
+      this.pingResponse = undefined;
+      // Find base URL, where the API is hosted
+      const baseUrl = import.meta.env.VITE_APP_DOMAIN || window.location.origin;
+      // Find correct URL to check, and encode parameters
+      const pingHost = `?&host=${encode(this.pingCheckHost)}`;
+      const pingCount = this.pingCheckCount ? `&count=${this.pingCheckCount}` : '';
+      const pingTimeout = this.pingCheckTimeout ? `&timeout=${this.pingCheckTimeout}` : '';
+      // Construct the full API endpoint's URL with GET params
+      return `${baseUrl}${serviceEndpoints.pingCheck}/${pingHost}${pingCount}${pingTimeout}`;
+    },
     customStyle() {
       return `--open-icon:${this.unicodeOpeningIcon};`
         + `color:${this.item.color};`
@@ -129,6 +205,29 @@ export default {
             statusSuccess: false,
           };
         });
+    },
+    /* Checks if a given host responds to ping */
+    checkPingStatus() {
+      this.pingResponse = undefined;
+      if (!this.isPingCheckEnabled) return;
+      if (!this.pingCheckHost) {
+        this.pingResponse = {
+          statusText: 'Host not set or invalid',
+          statusSuccess: false,
+        };
+      } else {
+        const endpoint = this.pingCheckApiUrl;
+        request.get(endpoint)
+          .then((response) => {
+            if (response.data) this.pingResponse = response.data;
+          })
+          .catch(() => { // Something went very wrong.
+            this.pingResponse = {
+              statusText: 'Failed to make Ping request',
+              statusSuccess: false,
+            };
+          });
+      }
     },
     /* Called when an item is clicked, manages the opening of modal & resets the search field */
     itemClicked(e) {

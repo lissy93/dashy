@@ -126,7 +126,7 @@ You might also want to check out the docs for specific features you'd like to us
 - [Backup & Restore](/docs/backup-restore.md) - Guide to Dashy's cloud sync feature
 - [Icons](/docs/icons.md) - Outline of all available icon types for sections and items
 - [Localisation](/docs/multi-language-support.md) - How to change language, or add your own
-- [Status Indicators](/docs/status-indicators.md) - Using Dashy to monitor uptime and status of your apps
+- [Status Indicators](/docs/status-indicators.md) - Using Dashy to monitor uptime and status of your apps/services and hosts
 - [Search & Shortcuts](/docs/searching.md) - Using instant filter, web search and custom hotkeys
 - [Theming](/docs/theming.md) - Complete guide to applying, writing and modifying themes and styles
 

@@ -46,6 +46,7 @@
     "js-yaml": "^4.2.0",
     "keycloak-js": "^26.0.0",
     "oidc-client-ts": "^3.0.1",
+    "ping": "^1.0.0",
     "rsup-progress": "^3.2.0",
     "simple-icons": "^16.22.0",
     "vue": "^3.5.35",

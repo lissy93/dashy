@@ -132,9 +132,9 @@ Certain themes may use external assets (such as fonts or images). These are only
 
 ### Status Checking
 
-The status checking feature allows you to ping your apps/ services to check if they are currently operational.
+The status checking feature allows you to ping your apps/services and hosts to check if they are currently online and operational.
 
-Dashy will ping your services directly, and does not rely on any third party. If you are checking the uptime status of a public/ hosted application, then please refer to that services privacy policy. For all self-hosted services, requests happen locally within your network, and are not external.
+Dashy will ping your services directly, and does not rely on any third party. If you are checking the uptime status of a public/hosted application, then please refer to that services privacy policy. For all self-hosted services, requests happen locally within your network, and are not external.
 
 ### Update Checks
 
@@ -272,7 +272,8 @@ You may wish to disable features that you don't want to use, if they involve sto
 - To disable smart-sort (uses local storage), set `appConfig.disableSmartSort: true`
 - To disable update checks (makes external request to GH), set `appConfig.disableUpdateChecks: true`
 - To disable web search (redirect to external / internal content), set `appConfig.webSearch.disableWebSearch: true`
-- To keep status checks disabled (external/ internal requests), set `appConfig.statusCheck: false`
+- To keep status checks disabled (external / internal requests), set `appConfig.statusCheck: false`
+- To keep ping checks disabled (external / internal requests), set `appConfig.pingCheckEnabled: false`
 - To keep font-awesome icons disabled (external requests), set `appConfig.enableFontAwesome: false`
 - To keep error reporting disabled (external requests and data collection), set `appConfig.enableErrorReporting: false`
 - To keep the service worker disabled (stores cache of app in browser data), set `appConfig.enableServiceWorker: false`

@@ -28,3 +28,22 @@ describe('Status check', () => {
     expect(res.status).toBeLessThan(500);
   });
 });
+
+describe('Ping check', () => {
+  it('returns error for missing URL param', async () => {
+    const res = await request(app).get('/ping-check/');
+    const body = JSON.parse(res.text);
+    expect(body.successStatus).toBe(false);
+  });
+
+  it('returns error for empty URL param', async () => {
+    const res = await request(app).get('/ping-check/?&host=');
+    const body = JSON.parse(res.text);
+    expect(body.successStatus).toBe(false);
+  });
+
+  it('ignores POST requests', async () => {
+    const res = await request(app).post('/ping-check/?&host=localhost');
+    expect(res.status).toBeLessThan(500);
+  });
+});

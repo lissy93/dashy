@@ -27,13 +27,23 @@
         :isSmall="!itemIcon || size === 'small'"
         :openingMethod="accumulatedTarget"  position="bottom right"
         :hotkey="item.hotkey" />
-      <!-- Status indicator dot (if enabled) showing weather service is available -->
-      <StatusIndicator
-        class="status-indicator"
-        v-if="enableStatusCheck"
-        :statusSuccess="statusResponse ? statusResponse.successStatus : undefined"
-        :statusText="statusResponse ? statusResponse.message : undefined"
-      />
+      <div class="indicators-container">
+        <!-- Status indicator dot (if enabled) showing weather service is available -->
+        <StatusIndicator
+          v-if="enableStatusCheck"
+          :statusSuccess="statusResponse ? statusResponse.successStatus : undefined"
+          :statusText="statusResponse ? statusResponse.message : undefined"
+          :statusAccessibility="appConfig.statusCheckAccessibility"
+        />
+        <!-- Status indicator dot (if enabled) showing host ping status -->
+        <StatusIndicator
+          v-if="isPingCheckEnabled"
+          :statusSuccess="pingResponse ? pingResponse.successStatus : undefined"
+          :statusText="pingResponse ? pingResponse.message : undefined"
+          :statusTimeout="pingCheckTimeout"
+          :statusAccessibility="appConfig.pingCheckAccessibility"
+        />
+      </div>
       <!-- URL of the item (shown on hover, only on some themes) -->
       <p class="item-url">{{ shortUrl(item.url) }}</p>
       <!-- Edit icon (displayed only when in edit mode) -->
@@ -71,7 +81,7 @@ const EditItem = defineAsyncComponent(() => import('@/components/InteractiveEdit
 import StoreKeys from '@/utils/StoreMutations';
 import ItemMixin from '@/mixins/ItemMixin';
 import EditModeIcon from '@/assets/interface-icons/interactive-editor-edit-mode.svg';
-import { modalNames } from '@/utils/config/defaults';
+import { appConfig, modalNames } from '@/utils/config/defaults';
 
 export default {
   name: 'Item',
@@ -163,7 +173,7 @@ export default {
       return {
         content: (this.isEditMode ? editText : tooltipText),
         html: true,
-        placement: this.statusResponse ? 'left' : 'auto',
+        placement: this.statusResponse || this.pingResponse ? 'left' : 'auto',
         delay: { show: 600, hide: 200 },
         popperClass: `item-description-tooltip tooltip-is-${this.size}`,
       };
@@ -192,7 +202,15 @@ export default {
     },
   },
   mounted() {
-    // If ststus checking is enabled, then check service status
+    // If ping checking is enabled, then check ping status
+    if (this.isPingCheckEnabled) {
+      this.checkPingStatus();
+      // If continious ping checking is enabled, then start ever-lasting loop
+      if (this.pingCheckInterval > 0) {
+        this.pingIntervalId = setInterval(this.checkPingStatus, this.pingCheckInterval * 1000);
+      }
+    }
+    // If status checking is enabled, then check service status
     if (this.enableStatusCheck) {
       this.checkWebsiteStatus();
       // If continious status checking is enabled, then start ever-lasting loop
@@ -202,7 +220,8 @@ export default {
     }
   },
   beforeUnmount() {
-    // Stop periodic status-check when item is destroyed (e.g. navigating in multi-page setup)
+    // Stop periodic ping-check and status-check when item is destroyed (e.g. navigating in multi-page setup)
+    if (this.pingIntervalId) clearInterval(this.pingIntervalId);
     if (this.intervalId) clearInterval(this.intervalId);
   },
 };
@@ -291,8 +310,10 @@ export default {
   }
 }
 
-/* Colored dot showing service status */
-.status-indicator {
+/* Container for status and ping indicators */
+.indicators-container {
+  display: flex;
+  align-items: center;
   position: absolute;
   top: 0;
   right: 0;
@@ -429,9 +450,9 @@ p.description {
 
 /* Adjust positioning of status indicator, when in edit mode */
 a.item.is-edit-mode {
-  &.size-medium .status-indicator { top: 1rem; }
-  &.size-small .status-indicator { right: 1rem; }
-  &.size-large .status-indicator { top: 1.5rem; }
+  &.size-medium .indicators-container { top: 1rem; }
+  &.size-small .indicators-container { right: 1rem; }
+  &.size-large .indicators-container { top: 1.5rem; }
 }
 
 </style>
