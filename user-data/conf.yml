@@ -1,58 +1,497 @@
----
-# Page meta info, like heading, footer text and nav links
-pageInfo:
-  title: Dashy
-  description: Welcome to your new dashboard!
-  navLinks:
-  - title: GitHub
-    path: https://github.com/Lissy93/dashy
-  - title: Documentation
-    path: https://dashy.to/docs
-
-# Optional app settings and configuration
 appConfig:
-  theme: colorful
-
-# Main content - An array of sections, each containing an array of items
+  language: cn
+  layout: auto
+  iconSize: medium
+  auth:
+    users:
+      - user: chunsiyang
+        hash: 49e649a030abb215ed91ced446f6b29839d3d0bb591c7a82486a30f561a86346
+        type: admin
+  theme: nord-frost
+pageInfo:
+  title: Mineserver
+  description: ''
+  navLinks: []
+  footerText: ''
 sections:
-  - name: Getting Started
-    icon: fas fa-rocket
-    items:
-      - title: GitHub
-        description: Source Code, Issues and Pull Requests
-        url: https://github.com/lissy93/dashy
-        icon: si-github
-      - title: Docs
-        description: Configuring & Usage Documentation
-        provider: Dashy.to
-        icon: far fa-book
-        url: https://dashy.to/docs
-
-  - name: Support Dashy
-    icon: fas fa-heart
+  - name: Media & Entertainment
     displayData:
-      itemSize: large
-    widgets:
-      - type: image
-        label: Dashy is made possible thanks to our awesome sponsors
-        options:
-          imagePath: https://readme-contribs.as93.net/sponsors/lissy93?perRow=5&shape=squircle
-    items:
-      - title: Sponsor
-        url: https://github.com/sponsors/lissy93
-        description: Sponsor @Lissy93 on GitHub to support with ongoing development of Dashy
-        icon: 🩷
-        color: '#ff78d1'
-        backgroundColor: '#c30c844a'
-
-  - name: Latest Updates
-    icon: fas fa-code-branch
-    displayData:
+      sortBy: default
+      rows: 1
       cols: 1
-      rows: 3
-      cutToHeight: true
-    widgets:
-      - type: rss-feed
-        options:
-          rssUrl: https://github.com/lissy93/dashy/releases.atom
-          limit: 5
+      collapsed: false
+      hideForGuests: false
+    items:
+      - &ref_0
+        title: Plex
+        description: Plex media server
+        icon: >-
+          https://github.com/walkxcode/Dashboard-Icons/blob/main/png/plex.png?raw=true
+        url: https://app.plex.tv
+        target: newtab
+        statusCheck: false
+        id: 0_1956_plex
+      - &ref_1
+        title: Transmission
+        description: Transmission is an open source, volunteer-based project.
+        icon: >-
+          https://raw.githubusercontent.com/walkxcode/dashboard-icons/53b8825daecf4e511202ba4c62657706664e74ae/svg/transmission.svg
+        url: https://transmission.mineserver.info
+        target: newtab
+        id: 1_1956_transmission
+      - &ref_2
+        title: IYUU
+        description: IYUUAutoReseed
+        icon: https://avatars.githubusercontent.com/u/53997080?v=4
+        url: https://iyuu.mineserver.info
+        target: newtab
+        id: 2_1956_iyuu
+      - &ref_3
+        title: Tautulli
+        description: >-
+          Tautulli is a 3rd party application that you can run alongside your
+          Plex Media Server to monitor activity and track various statistics.
+        icon: >-
+          https://github.com/walkxcode/Dashboard-Icons/blob/main/png/tautulli.png?raw=true
+        url: https://tautulli.mineserver.info/home
+        target: newtab
+        id: 3_1956_tautulli
+      - &ref_4
+        title: MoonTV
+        description: >-
+          MoonTV 是一个开箱即用的、跨平台的影视聚合播放器。它基于 Next.js 14 + Tailwind CSS + TypeScript
+          构建，支持多资源搜索、在线播放、收藏同步、播放记录、云端存储，让你可以随时随地畅享海量免费影视内容
+        icon: https://github.com/MoonTechLab/LunaTV/raw/main/public/logo.png
+        url: https://moon.mineserver.info/
+        target: newtab
+        id: 4_1956_moontv
+    filteredItems:
+      - *ref_0
+      - *ref_1
+      - *ref_2
+      - *ref_3
+      - *ref_4
+  - name: Cloud Service
+    displayData:
+      sortBy: default
+      rows: 1
+      cols: 1
+      collapsed: false
+      hideForGuests: false
+    items:
+      - &ref_5
+        title: Nextcloud
+        description: Online collaboration platform
+        icon: >-
+          https://github.com/walkxcode/Dashboard-Icons/blob/main/png/nextcloud.png?raw=true
+        url: https://nextcloud.mineserver.info/
+        target: newtab
+        id: 0_1256_nextcloud
+      - &ref_6
+        title: Photoprism
+        description: PhotoPrism® is an AI-Powered Photos App
+        icon: >-
+          https://github.com/walkxcode/Dashboard-Icons/blob/main/png/photoprism.png?raw=true
+        url: https://photoprism.mineserver.info
+        target: newtab
+        id: 1_1256_photoprism
+      - &ref_7
+        title: talebook
+        description: A better online books library management website
+        icon: >-
+          https://raw.githubusercontent.com/walkxcode/dashboard-icons/5101b2d796128e108dc30e0bb6ddc894f0b9e406/svg/calibreweb.svg
+        url: https://talebook.mineserver.info/
+        target: newtab
+        id: 2_1256_talebook
+      - &ref_8
+        title: guacamole
+        description: A clientless remote desktop gateway
+        icon: >-
+          https://github.com/walkxcode/Dashboard-Icons/blob/main/png/guacamole.png?raw=true
+        url: https://guacamole.mineserver.info
+        target: newtab
+        id: 3_1256_guacamole
+      - &ref_9
+        title: HAOS
+        description: >-
+          Home Assistant is free and open-source software for home automation
+          designed to be a central control system for smart home devices with a
+          focus on local control and privacy
+        icon: >-
+          https://raw.githubusercontent.com/walkxcode/dashboard-icons/5101b2d796128e108dc30e0bb6ddc894f0b9e406/svg/home-assistant.svg
+        url: https://haos.mineserver.info/
+        target: newtab
+        id: 4_1256_haos
+      - &ref_10
+        title: 'Organizr '
+        description: >-
+          Organizr allows you to setup "Tabs" that will be loaded all in one
+          webpage.
+        icon: >-
+          https://github.com/walkxcode/Dashboard-Icons/blob/main/png/organizr.png?raw=true
+        url: https://organizr.mineserver.info
+        target: newtab
+        id: 5_1256_organizr
+      - &ref_11
+        title: Trilium
+        description: >-
+          Trilium Notes is a hierarchical note taking application with focus on
+          building large personal knowledge bases.
+        icon: >-
+          https://github.com/walkxcode/Dashboard-Icons/blob/main/png/trilium.png?raw=true
+        url: https://trilium.mineserver.info
+        target: newtab
+        id: 6_1256_trilium
+      - &ref_12
+        title: SunShine
+        description: >-
+          Sunshine is a self-hosted game stream host for Moonlight. Offering low
+          latency, cloud gaming server capabilities with support for AMD, Intel,
+          and Nvidia GPUs for hardware encoding. Software encoding is also
+          available. You can connect to Sunshine from any Moonlight client on a
+          variety of devices. A web UI is provided to allow configuration, and
+          client pairing, from your favorite web browser. Pair from the local
+          server or any mobile device.
+        icon: https://app.lizardbyte.dev/Sunshine/assets/img/navbar-avatar.png
+        url: https://sunshine.mineserver.info/
+        target: newtab
+        id: 7_1256_sunshine
+      - &ref_13
+        title: Nastools
+        icon: https://nastools.mineserver.info/static/img/logo/logo-blue.png
+        url: https://nastools.mineserver.info
+        target: newtab
+        id: 8_1256_nastools
+    filteredItems:
+      - *ref_5
+      - *ref_6
+      - *ref_7
+      - *ref_8
+      - *ref_9
+      - *ref_10
+      - *ref_11
+      - *ref_12
+      - *ref_13
+  - name: Infrastructure
+    displayData:
+      sortBy: default
+      rows: 1
+      cols: 1
+      collapsed: false
+      hideForGuests: false
+    items:
+      - &ref_14
+        title: VSphere SM
+        description: VMware's cloud computing virtualization platform
+        icon: >-
+          https://raw.githubusercontent.com/walkxcode/dashboard-icons/5101b2d796128e108dc30e0bb6ddc894f0b9e406/svg/vmware.svg
+        url: https://vsphere-sm.mineserver.info/ui/
+        target: newtab
+        id: 0_1505_vspheresm
+      - &ref_15
+        title: VSphere MN
+        description: VMware's cloud computing virtualization platform
+        icon: >-
+          https://raw.githubusercontent.com/walkxcode/dashboard-icons/5101b2d796128e108dc30e0bb6ddc894f0b9e406/svg/vmware.svg
+        url: https://vsphere-mn.mineserver.info/ui/#/login
+        target: newtab
+        id: 1_1505_vspheremn
+      - &ref_16
+        title: VCSA
+        description: The vCenter Server Appliance
+        icon: >-
+          https://raw.githubusercontent.com/walkxcode/dashboard-icons/5101b2d796128e108dc30e0bb6ddc894f0b9e406/svg/vmware.svg
+        url: https://vcsa.mineserver.info/
+        target: newtab
+        statusCheckAllowInsecure: true
+        id: 2_1505_vcsa
+      - &ref_17
+        title: OMV SM
+        description: openmediavault is the next generation network attached storage (NAS)
+        icon: >-
+          https://github.com/walkxcode/Dashboard-Icons/blob/main/png/openmediavault.png?raw=true
+        url: https://omv-sm.mineserver.info/#/login
+        target: newtab
+        id: 3_1505_omvsm
+      - &ref_18
+        title: OMV MN
+        description: openmediavault is the next generation network attached storage (NAS)
+        icon: >-
+          https://github.com/walkxcode/Dashboard-Icons/blob/main/png/openmediavault.png?raw=true
+        url: https://omv-mn.mineserver.info/#/login
+        target: newtab
+        id: 4_1505_omvmn
+      - &ref_19
+        title: portainer
+        description: a lightweight service delivery platform for containerized applications
+        icon: >-
+          https://github.com/walkxcode/Dashboard-Icons/blob/main/png/portainer.png?raw=true
+        url: https://portainer.mineserver.info/
+        target: newtab
+        id: 5_1505_portainer
+      - &ref_20
+        title: jumpserver
+        description: >-
+          JumpServer is an open-source Privileged Access Management (PAM) tool
+          that provides DevOps and IT teams with on-demand and secure access to
+          SSH, RDP, Kubernetes
+        icon: https://avatars.githubusercontent.com/u/6006570?v=4
+        url: https://jumpserver.mineserver.info/
+        target: newtab
+        id: 6_1505_jumpserver
+      - &ref_21
+        title: Nginx-UI JP
+        description: Nginx UI Yet another Nginx Web UI Intelligent, powerful, and fast.
+        icon: https://nginxui.com/assets/icon.svg
+        url: https://nginx-ui-jp.mineserver.info/
+        target: newtab
+        id: 7_1505_nginxuijp
+      - &ref_22
+        title: Nginx-UI DC
+        description: Nginx UI Yet another Nginx Web UI Intelligent, powerful, and fast.
+        icon: https://nginxui.com/assets/icon.svg
+        url: https://nginx-ui-dc.mineserver.info
+        target: newtab
+        id: 8_1505_nginxuidc
+    filteredItems:
+      - *ref_14
+      - *ref_15
+      - *ref_16
+      - *ref_17
+      - *ref_18
+      - *ref_19
+      - *ref_20
+      - *ref_21
+      - *ref_22
+  - name: Network & Server
+    displayData:
+      sortBy: default
+      rows: 1
+      cols: 1
+      collapsed: false
+      hideForGuests: false
+    items:
+      - &ref_23
+        title: ROS
+        description: >-
+          MikroTik RouterOS is the operating system of MikroTik RouterBOARD
+          hardware
+        icon: >-
+          https://github.com/walkxcode/Dashboard-Icons/blob/main/png/mikrotik.png?raw=true
+        url: https://router.mineserver.info/
+        target: newtab
+        id: 0_1479_ros
+      - &ref_24
+        title: TP-Link
+        icon: https://assets.ifttt.com/images/channels/1933872977/icons/large.png
+        url: https://tplink-router.mineserver.info
+        target: newtab
+        id: 1_1479_tplink
+      - &ref_25
+        title: Supermicro
+        description: The Intelligent Platform Management Interface (IPMI)
+        icon: >-
+          https://github.com/walkxcode/Dashboard-Icons/blob/main/png/supermicro.png?raw=true
+        url: https://ipmi-sm.mineserver.info/
+        target: newtab
+        id: 2_1479_supermicro
+      - &ref_26
+        title: Minenas
+        description: The Intelligent Platform Management Interface (IPMI)
+        icon: >-
+          https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQV6ln_plYB_YvVMzbAkRmU8RR5m3XoGJ3yzg&s
+        url: https://ipmi-mn.mineserver.info/
+        target: newtab
+        id: 3_1479_minenas
+      - &ref_27
+        title: OpenWrt
+        description: >-
+          The OpenWrt Project is a Linux operating system targeting embedded
+          devices. 
+        icon: >-
+          https://github.com/walkxcode/Dashboard-Icons/blob/main/png/openwrt.png?raw=true
+        url: https://openwrt.mineserver.info/cgi-bin/luci/
+        target: newtab
+        id: 4_1479_openwrt
+      - &ref_28
+        title: Adguard home
+        description: Surf the Web ad-free and safely. Shields up!
+        icon: >-
+          https://e7.pngegg.com/pngimages/368/846/png-clipart-adguard-ad-blocking-android-internet-android-angle-text-thumbnail.png
+        url: https://adguard.mineserver.info/
+        target: newtab
+        id: 5_1479_adguardhome
+    filteredItems:
+      - *ref_23
+      - *ref_24
+      - *ref_25
+      - *ref_26
+      - *ref_27
+      - *ref_28
+  - name: Development
+    displayData:
+      sortBy: default
+      rows: 1
+      cols: 1
+      collapsed: false
+      hideForGuests: false
+    items:
+      - &ref_29
+        title: Code server
+        description: Run VS Code on any machine anywhere and access it in the browser.
+        icon: >-
+          https://github.com/walkxcode/dashboard-icons/blob/main/png/code-server.png?raw=true
+        url: https://code-server.mineserver.info/login
+        target: newtab
+        id: 0_1155_codeserver
+      - &ref_30
+        title: Jupyter
+        description: The Jupyter Notebook is a web-based interactive computing platform
+        icon: >-
+          https://github.com/walkxcode/Dashboard-Icons/blob/main/png/jupyter.png?raw=true
+        url: https://jupyter.mineserver.info
+        target: newtab
+        id: 1_1155_jupyter
+      - &ref_31
+        title: LiteLLM
+        description: >-
+          Call all LLM APIs using the OpenAI format [Bedrock, Huggingface,
+          VertexAI, TogetherAI, Azure, OpenAI, Groq etc
+        icon: 🚅
+        url: https://litellm.mineserver.info/ui
+        target: newtab
+        id: 2_1155_litellm
+      - &ref_32
+        title: Dify
+        description: >-
+          Dify is an open-source platform for building AI applications. We
+          combine Backend-as-a-Service and LLMOps to streamline the development
+          of generative AI solutions, making it accessible to both developers
+          and non-technical innovators.
+        icon: >-
+          https://yvgmusqljscajoqbuxdu.supabase.co/storage/v1/object/public/logos/agent_logos/dify.jpg
+        url: https://dify.mineserver.info
+        target: newtab
+        id: 3_1155_dify
+      - &ref_33
+        title: OpenWebUI
+        description: >-
+          Open WebUI is an extensible, feature-rich, and user-friendly
+          self-hosted AI platform designed to operate entirely offline. It
+          supports various LLM runners like Ollama and OpenAI-compatible APIs,
+          with built-in inference engine for RAG, making it a powerful AI
+          deployment solution.
+        icon: https://avatars.githubusercontent.com/u/158137808?s=48&v=4
+        url: https://openwebui.mineserver.info/
+        target: newtab
+        id: 4_1155_openwebui
+    filteredItems:
+      - *ref_29
+      - *ref_30
+      - *ref_31
+      - *ref_32
+      - *ref_33
+  - name: System monitoring
+    displayData:
+      sortBy: default
+      rows: 1
+      cols: 1
+      collapsed: false
+      hideForGuests: false
+    items:
+      - &ref_34
+        title: Zabbix
+        description: >-
+          Zabbix is a mature and effortless enterprise-class open source
+          monitoring solution for network monitoring and application monitoring
+          of millions of metrics.
+        icon: >-
+          https://raw.githubusercontent.com/walkxcode/dashboard-icons/5101b2d796128e108dc30e0bb6ddc894f0b9e406/svg/zabbix.svg
+        url: https://zabbix.mineserver.info
+        target: newtab
+        id: 0_1771_zabbix
+      - &ref_35
+        title: Grafana
+        description: >-
+          Grafana is a multi-platform open source analytics and interactive
+          visualization web application.
+        icon: >-
+          https://github.com/walkxcode/Dashboard-Icons/blob/main/png/grafana.png?raw=true
+        url: https://grafana.mineserver.info
+        target: newtab
+        id: 1_1771_grafana
+    filteredItems:
+      - *ref_34
+      - *ref_35
+  - name: Cloud Providers
+    displayData:
+      sortBy: default
+      rows: 1
+      cols: 1
+      collapsed: true
+      hideForGuests: false
+    items:
+      - &ref_36
+        title: Aliyun
+        description: Alibaba Cloud
+        icon: https://avatars.githubusercontent.com/u/941070?s=280&v=4
+        url: https://account.aliyun.com/
+        target: newtab
+        id: 0_1493_aliyun
+      - &ref_37
+        title: cloudflare
+        description: >-
+          Cloudflare is a global network designed to make everything you connect
+          to the Internet secure, private, fast, and reliable. 
+        icon: >-
+          https://github.com/walkxcode/Dashboard-Icons/blob/main/png/cloudflare.png?raw=true
+        url: https://dash.cloudflare.com/
+        target: newtab
+        id: 1_1493_cloudflare
+      - &ref_38
+        title: Oracle cloud
+        description: Oracle Cloud Infrastructure (OCI)
+        icon: >-
+          https://github.com/walkxcode/Dashboard-Icons/blob/main/png/oracle-cloud.png?raw=true
+        url: https://www.oracle.com/cloud/
+        target: newtab
+        id: 2_1493_oraclecloud
+      - &ref_39
+        title: Paoluz
+        description: Paoluz proxy
+        icon: >-
+          https://image.winudf.com/v2/image1/Y29tLmdpdGh1Yi5rcjMyOC5jbGFzaF9pY29uXzE1ODI4NzA3NjBfMDU3/icon.png?fakeurl=1&h=240&type=webp
+        url: https://paoluz.link
+        target: newtab
+        id: 3_1493_paoluz
+      - &ref_40
+        title: Tencent Mail
+        description: Tencent Mail
+        icon: >-
+          https://pic1.zhimg.com/v2-0cbf21c2db1e9f7925868793fc8ac4f9_l.jpg?source=1940ef5c
+        url: https://work.weixin.qq.com/mail/
+        target: newtab
+        id: 4_1493_tencentmail
+      - &ref_41
+        title: Aliyun Mail
+        description: Aliyun Mail
+        icon: https://avatars3.githubusercontent.com/aliyun
+        url: https://qiye.aliyun.com/alimail
+        target: newtab
+        id: 5_1493_aliyunmail
+      - &ref_42
+        title: AWS
+        description: Amazon Web Services
+        icon: >-
+          https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg-blog.csdnimg.cn%2Fimg_convert%2F84864f49c366c4b5245937c9a9cd6099.png&refer=http%3A%2F%2Fimg-blog.csdnimg.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1670468712&t=6d661aef1091a9e39c1c1e694e073883
+        url: https://aws.amazon.com/
+        target: newtab
+        id: 6_1493_aws
+    filteredItems:
+      - *ref_36
+      - *ref_37
+      - *ref_38
+      - *ref_39
+      - *ref_40
+      - *ref_41
+      - *ref_42
