@@ -2761,10 +2761,11 @@ Linkding is a self-hosted bookmarking service, which has a clean interface and i
 
 #### Options
 
-| **Field**    | **Type** | **Required** | **Description**                                                          |
-| ------------ | -------- | ------------ | ------------------------------------------------------------------------ |
-| **`url`**    | `string` | Required     | The URL of the Uptime Kuma instance                                      |
-| **`apiKey`** | `string` | Required     | The API key (see https://github.com/louislam/uptime-kuma/wiki/API-Keys). |
+| **Field**      | **Type**  | **Required** | **Description**                                                          |
+| -------------- | --------- | ------------ | ------------------------------------------------------------------------ |
+| **`url`**      | `string`  | Required     | The URL of the Uptime Kuma instance                                      |
+| **`apiKey`**   | `string`  | Required     | The API key (see https://github.com/louislam/uptime-kuma/wiki/API-Keys). |
+| **`showCert`** | `boolean` | _Optional_   | If true, will show certificate information, when it is available, in the tooltip of the status pill (on mouse hover). Also will color the status yellow if the service is up but the certificate is invalid. Default false. |
 
 #### Example
 

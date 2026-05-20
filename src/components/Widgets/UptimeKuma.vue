@@ -5,11 +5,28 @@
         <div class="item monitor-row">
           <div class="title-title"><span class="text">{{ monitor.name }}</span></div>
           <div class="monitors-container">
-            <div class="status-container">
-              <span class="status-pill" :class="[monitor.statusClass]">{{ monitor.status }}</span>
+            <div class="status-container up-status">
+              <span
+                class="status-pill"
+                :class="[monitor.statusClass, monitor.certClass]"
+                v-tooltip="showCert ? {
+                  content: (monitor.certTitle || '') + (
+                    monitor.certClass === 'valid-cert' ? monitor.certDaysTitle : ''
+                  ),
+                  trigger: 'hover focus',
+                  delay: { show: 350, hide: 100 },
+                } : undefined"
+                :title="showCert ? (monitor.certTitle || '') + (
+                  monitor.certClass === 'valid-cert' ? monitor.certDaysTitle : ''
+                ) : undefined"
+              >
+                {{ monitor.status }}
+              </span>
             </div>
-            <div class="status-container">
-              <span class="response-time">{{ monitor.responseTime }}ms</span>
+            <div class="status-container response-time">
+              <span v-if="monitor.responseTime">
+                {{ monitor.responseTime }}ms
+              </span>
             </div>
           </div>
         </div>
@@ -57,6 +74,10 @@ export default {
     /* Get instance URL */
     url() {
       return this.parseAsEnvVar(this.options.url);
+    },
+    /* Determine if the cert information should be shown */
+    showCert() {
+      return this.options.showCert;
     },
     /* Create authorisation header for the instance from the apiKey */
     authHeaders() {
@@ -121,11 +142,14 @@ export default {
       const copy = { ...monitor };
       switch (key) {
         case 'monitor_cert_days_remaining': {
-          copy.certDaysRemaining = value;
+          if (!this.showCert) break;
+          copy.certDaysTitle = ` for ${value} days`;
           break;
         }
         case 'monitor_cert_is_valid': {
-          copy.certValid = value;
+          if (!this.showCert) break;
+          copy.certClass = value === '1' ? 'valid-cert' : 'invalid-cert';
+          copy.certTitle = `Certificate is ${value === '1' ? 'valid' : 'invalid'}`;
           break;
         }
         case 'monitor_response_time': {
@@ -133,7 +157,24 @@ export default {
           break;
         }
         case 'monitor_status': {
-          copy.status = value === '1' ? 'Up' : 'Down';
+          switch (value) {
+            case '1': {
+              copy.status = 'Up';
+              break;
+            }
+            case '2': {
+              copy.status = 'Pending';
+              break;
+            }
+            case '3': {
+              copy.status = 'Maintenance';
+              break;
+            }
+            default: {
+              copy.status = 'Down';
+              break;
+            }
+          }
           copy.statusClass = copy.status.toLowerCase();
           break;
         }
@@ -144,7 +185,7 @@ export default {
       return copy;
     },
     getRowValue(row) {
-      return this.getValueWithRegex(row, /\b(\d+)(\.\d+)*\b$/);
+      return this.getValueWithRegex(row, /[\s](-?\d+)(\.\d+)*\b$/);
     },
     getRowMonitorName(row) {
       return this.getValueWithRegex(row, /monitor_name="([^"]+)"/);
@@ -155,13 +196,18 @@ export default {
     getValueWithRegex(string, regex) {
       const result = string.match(regex);
 
-      const isArray = Array.isArray(result);
-
-      if (!isArray) {
+      if (!Array.isArray(result)) {
         return result;
       }
 
-      return result.length > 1 ? result[1] : result[0];
+      if (result.length > 1) {
+        // -1 means N/A
+        if (result[1] === '-1' && !result[2]) {
+          return null;
+        }
+        return result[1];
+      }
+      return result[0];
     },
     optionsValid({ url, authHeaders }) {
       const errors = [];
@@ -199,11 +245,26 @@ export default {
   &.up {
     background-color: rgb(92, 221, 139);
     color: black;
+
+    &.invalid-cert {
+      background-color: rgb(219, 216, 18);
+      color: black;
+    }
   }
 
   &.down {
     background-color: rgb(220, 53, 69);
     color: white;
+  }
+
+  &.pending {
+    background-color: rgb(108, 117, 125);
+    color: black;
+  }
+
+  &.maintenance {
+    background-color: rgb(23, 71, 245);
+    color: black;
   }
 }
 
@@ -217,22 +278,53 @@ div.item.monitor-row:hover {
   }
 }
 
-.monitors-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
-  width: 50%;
+.item-wrapper {
+  container-type: inline-size;
+  container-name: item-wrapper-container;
 }
 
 .monitor-row {
   display: flex;
-  justify-content: space-between;
+  flex-direction: row;
+  justify-content: left;
   padding: 0.35em 0.5em;
   align-items: center;
+
+  .title-title {
+    font-weight: bold;
+    text-align: left;
+    flex: 1 1 60%;
+  }
+
+  .monitors-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex: 0 1 40%;
+    align-items: center;
+    justify-content: space-around;
+
+    .status-container.up-status {
+      min-width: 7.5rem;
+    }
+    .status-container.response-time {
+      min-width: 5rem;
+    }
+  }
 }
 
-.title-title {
-  font-weight: bold;
+@container item-wrapper-container (width < 320px) {
+  .monitor-row {
+    flex-direction: column;
+    justify-content: center;
+
+    .title-title {
+      text-align: center;
+    }
+
+    .monitors-container {
+      flex-wrap: unset;
+      flex-direction: column;
+    }
+  }
 }
 </style>
