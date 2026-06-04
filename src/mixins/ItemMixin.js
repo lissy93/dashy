@@ -156,7 +156,6 @@ export default {
         statusCheckMaxRedirects,
       } = this.item;
       const encode = (str) => encodeURIComponent(str);
-      this.statusResponse = undefined;
       // Find base URL, where the API is hosted
       const baseUrl = import.meta.env.VITE_APP_DOMAIN || window.location.origin;
       // Find correct URL to check, and encode
@@ -175,7 +174,6 @@ export default {
     /* Pulls together all user options, returns URL + Get params for ping endpoint */
     pingCheckApiUrl() {
       const encode = (str) => encodeURIComponent(str);
-      this.pingResponse = undefined;
       // Find base URL, where the API is hosted
       const baseUrl = import.meta.env.VITE_APP_DOMAIN || window.location.origin;
       // Find correct URL to check, and encode parameters
@@ -195,6 +193,7 @@ export default {
     /* Checks if a given service is currently online */
     checkWebsiteStatus() {
       const endpoint = this.statusCheckApiUrl;
+      if (this.statusResponse) this.statusResponse.successStatus = undefined; // Reset previous response, to show loading state
       request.get(endpoint)
         .then((response) => {
           if (response.data) this.statusResponse = response.data;
@@ -208,7 +207,6 @@ export default {
     },
     /* Checks if a given host responds to ping */
     checkPingStatus() {
-      this.pingResponse = undefined;
       if (!this.isPingCheckEnabled) return;
       if (!this.pingCheckHost) {
         this.pingResponse = {
@@ -216,6 +214,7 @@ export default {
           statusSuccess: false,
         };
       } else {
+        if (this.pingResponse) this.pingResponse.successStatus = undefined; // Reset previous response, to show loading state
         const endpoint = this.pingCheckApiUrl;
         request.get(endpoint)
           .then((response) => {

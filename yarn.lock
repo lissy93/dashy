@@ -4150,10 +4150,10 @@ picomatch@^4.0.2, picomatch@^4.0.3, picomatch@^4.0.4:
   resolved "https://registry.yarnpkg.com/picomatch/-/picomatch-4.0.4.tgz#fd6f5e00a143086e074dffe4c924b8fb293b0589"
   integrity sha512-QP88BAKvMam/3NxH6vj2o21R6MjxZUAd6nlwAS/pnGvN9IVLocLHxGYIzFhg6fUQ+5th6P4dv4eW9jX3DSIj7A==
 
-ping@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/ping/-/ping-1.0.0.tgz#5347397c356d44778e8261194de6dbcc2c3db0c4"
-  integrity sha512-3dxdgGtV+7P/EVo42JhkGSomeO/0GGicSz3mI/yK+AI+VGNAOfakw5XfcbGI4IjyBY+ZZwvuRXdhnNF2uliKew==
+pingman@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/pingman/-/pingman-2.1.0.tgz#202c3d7b241064ce8e01c6a7fb133392c357fb37"
+  integrity sha512-PJIONaNT+jDhAjkwQCUQPOlQgA237po1UCH+JkgqHVdvl2oTuhSh/IDXAe8DqizqkkNtMirrrAVx8lI+qLw9pQ==
 
 possible-typed-array-names@^1.0.0:
   version "1.1.0"

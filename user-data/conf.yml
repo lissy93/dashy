@@ -38,7 +38,12 @@ sections:
     icon: fas fa-test
     items:
       - title: Localhost
+        description: localhost hostname is not allowed, only 127.0.0.1 is allowed, but this is just an example to show a failed ping check
         pingCheckHost: localhost
+        pingCheckTimeout: 1000
+        pingCheckCount: 1
+      - title: 127.0.0.1
+        pingCheckHost: 127.0.0.1
         pingCheckTimeout: 1000
         pingCheckCount: 1
       - title: Google DNS

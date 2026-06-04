@@ -31,15 +31,15 @@
         <!-- Status indicator dot (if enabled) showing weather service is available -->
         <StatusIndicator
           v-if="enableStatusCheck"
-          :statusSuccess="statusResponse ? statusResponse.successStatus : undefined"
-          :statusText="statusResponse ? statusResponse.message : undefined"
+          :statusSuccess="statusResponse?.successStatus"
+          :statusText="statusResponse?.message"
           :statusAccessibility="appConfig.statusCheckAccessibility"
         />
         <!-- Status indicator dot (if enabled) showing host ping status -->
         <StatusIndicator
           v-if="isPingCheckEnabled"
-          :statusSuccess="pingResponse ? pingResponse.successStatus : undefined"
-          :statusText="pingResponse ? pingResponse.message : undefined"
+          :statusSuccess="pingResponse?.successStatus"
+          :statusText="pingResponse?.message"
           :statusTimeout="pingCheckTimeout"
           :statusAccessibility="appConfig.pingCheckAccessibility"
         />

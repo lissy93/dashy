@@ -26,12 +26,15 @@ export default {
     a11yMode() {
       return !!this.statusAccessibility;
     },
+    otherStatusText() {
+      return (!this.statusText && (new Date() - this.startTime) > this.statusTimeout) ? 'Request timed out' : 'Checking...';
+    },
   },
   methods: {
     /* Returns a color, based on success status */
     color() {
       switch (this.statusSuccess) {
-        case undefined: return ((new Date() - this.startTime) > this.statusTimeout) ? 'grey' : 'yellow';
+        case undefined: return (!this.statusText && (new Date() - this.startTime) > this.statusTimeout) ? 'grey' : 'yellow';
         case true: return 'green'; // Success!
         default: return 'red'; // Not success, therefore failure
       }
@@ -40,13 +43,7 @@ export default {
   data() {
     return {
       startTime: new Date(), // Used for timeout
-      otherStatusText: 'Checking...', // Used before server has responded
     };
-  },
-  mounted() {
-    setTimeout(() => {
-      if (!this.statusText) this.otherStatusText = 'Request timed out';
-    }, this.statusTimeout);
   },
 };
 </script>

@@ -3,7 +3,7 @@
  * It accepts many parameters (host, count, timeout) and will make a system ping icmp
  * request and then resolve the average response time.
  */
-const ping = require('ping');
+const ping = require('pingman');
 
 /* Returned if the URL params are not present or correct */
 const immediateError = (render, error) => {
@@ -27,21 +27,24 @@ module.exports = (paramStr, render) => {
       immediateError(render, 'No host given for ping check.');
       return;
     }
-    const configuration = {
-      timeout: Math.round(timeout/1000),
-      min_reply: count > 0 ? count : undefined,
-    };
-    ping.promise.probe(host)
-      .then((response) => {
+    (async () => {
+      try {
+        const configuration = {
+          timeout: Math.round(timeout/1000),
+          numberOfEchos: count > 0 ? count : undefined,
+          IPV4: true,
+        };
+        const response = await ping(host, configuration);
+        console.log('Ping response : ', response);
         const results = {
           successStatus: response.alive,
-          message: response.alive ? `UP (${response.time} ms)` : "DOWN",
+          message: `${response.host} ${response.numericHost == response.host ? '' : `(${response.numericHost}) `} is ${response.alive ? `UP (${response.packetLoss} % / ${response.avg} ms)` : 'DOWN'}`,
           timeTaken: response.time,
         };
         render(JSON.stringify(results));
-      })
-      .catch((error) => {
+      } catch (error) {
         immediateError(render, 'Ping check failed : ' + (error.message || 'Unknown error'));
-      });
+      }
+    })();
   }
 };
