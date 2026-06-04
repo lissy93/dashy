@@ -35,7 +35,6 @@ module.exports = (paramStr, render) => {
           IPV4: true,
         };
         const response = await ping(host, configuration);
-        console.log('Ping response : ', response);
         const results = {
           successStatus: response.alive,
           message: `${response.host} ${response.numericHost == response.host ? '' : `(${response.numericHost}) `} is ${response.alive ? `UP (${response.packetLoss} % / ${response.avg} ms)` : 'DOWN'}`,
