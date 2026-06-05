@@ -5,7 +5,11 @@
  */
 const ping = require('pingman');
 
-const { validateHostname } = require('../src/utils/Validator.js');
+const {
+  validateHostname,
+  validateIpV4Address,
+  validateIpV6Address
+} = require('../src/utils/Validator.js');
 
 /* Returned if the URL params are not present or correct */
 const immediateError = (render, error) => {
@@ -34,13 +38,13 @@ module.exports = (paramStr, render) => {
         const configuration = {
           timeout: Math.round(timeout/1000),
           numberOfEchos: count,
-          IPV4: true,
-          IPV6: true,
+          IPV4: validateIpV4Address(host),
+          IPV6: validateIpV6Address(host),
         };
         const response = await ping(host, configuration);
         const results = {
           successStatus: response.alive,
-          message: `${response.host} ${response.numericHost == response.host ? '' : `(${response.numericHost}) `} is ${response.alive ? `UP (${response.packetLoss} % / ${response.avg} ms)` : 'DOWN'}`,
+          message: `${response.host} ${response.numericHost == response.host ? '' : `(${response.numericHost}) `} is ${response.alive ? `UP (${response.avg} ms)` : 'DOWN'}`,
           timeTaken: response.time,
         };
         render(JSON.stringify(results));
