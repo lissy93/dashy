@@ -9,6 +9,7 @@ import {
   localStorageKeys,
   iconSize as defaultSize,
 } from '@/utils/config/defaults';
+import { validateHostname } from '@/utils/Validator.js';
 
 export default {
   directives: {
@@ -66,25 +67,7 @@ export default {
       let host = this.item.pingCheckHost;
       if (!host || typeof host !== 'string') host = new URL(this.item.url, import.meta.url)?.hostname;
       if (!host || typeof host !== 'string') return undefined;
-      try {
-        // If the input is not an IP address, try to handle it a valid hostname
-        const ipPattern = /^(\d{1,3}\.){3}\d{1,3}/;
-        let match = host.match(ipPattern);
-        if (match) {
-          return match[0];
-        }
-        const hostPattern = /^([a-zA-Z0-9_-]+\.?)+$/;
-        match = host.match(hostPattern);
-        if (match) {
-          return match[0];
-        }
-        console.warn(`Invalid ping hostname: ${host}`);
-        return '';
-      } catch {
-        // If parsing fails, return an empty string to prevent errors in the ping check
-        console.warn(`Error parsing ping hostname: ${host}`);
-        return '';
-      }
+      return validateHostname(host) ? host : '';
     },
     /* Determines if user has enabled hosts ping checks */
     isPingCheckEnabled() {

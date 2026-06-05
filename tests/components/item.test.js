@@ -758,7 +758,7 @@ describe('Lifecycle: mounted', () => {
     const spy = vi.spyOn(Item.mixins[0].methods, 'checkPingStatus');
     mountItem({
       item: {
-        id: '1', title: 'X', url: '#', pingCheckEnabled: true, pingCheckHost: 'localhost',
+        id: '1', title: 'X', url: '#', pingCheckEnabled: true, pingCheckHost: '127.0.0.1',
       },
     });
     expect(spy).toHaveBeenCalled();
@@ -769,7 +769,7 @@ describe('Lifecycle: mounted', () => {
     vi.useFakeTimers();
     const { wrapper } = mountItem({
       item: {
-        id: '1', title: 'X', url: '#', pingCheckEnabled: true, pingCheckHost: 'localhost', pingCheckInterval: 2,
+        id: '1', title: 'X', url: '#', pingCheckEnabled: true, pingCheckHost: '127.0.0.1', pingCheckInterval: 2,
       },
     });
     expect(wrapper.vm.pingIntervalId).toBeDefined();
@@ -780,7 +780,7 @@ describe('Lifecycle: mounted', () => {
     const spy = vi.spyOn(Item.mixins[0].methods, 'checkPingStatus');
     mountItem({
       item: {
-        id: '1', title: 'X', url: '#', pingCheckEnabled: false, pingCheckHost: 'localhost', pingCheckInterval: 2,
+        id: '1', title: 'X', url: '#', pingCheckEnabled: false, pingCheckHost: '127.0.0.1', pingCheckInterval: 2,
       },
     });
     expect(spy).not.toHaveBeenCalled();
@@ -819,7 +819,7 @@ describe('Lifecycle: beforeDestroy', () => {
     const clearSpy = vi.spyOn(global, 'clearInterval');
     const { wrapper } = mountItem({
       item: {
-        id: '1', title: 'X', url: '#', pingCheckEnabled: true, pingCheckHost: 'localhost', pingCheckInterval: 2,
+        id: '1', title: 'X', url: '#', pingCheckEnabled: true, pingCheckHost: '127.0.0.1', pingCheckInterval: 2,
       },
     });
     const { pingIntervalId } = wrapper.vm;
@@ -876,7 +876,7 @@ describe('Template rendering', () => {
 
     const { wrapper: on2 } = mountItem({
       item: {
-        id: '1', title: 'X', url: '#', pingCheckEnabled: true, pingCheckHost: 'localhost',
+        id: '1', title: 'X', url: '#', pingCheckEnabled: true, pingCheckHost: '127.0.0.1',
       },
     });
     expect(on2.html()).toContain('status-indicator');

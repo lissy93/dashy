@@ -81,7 +81,7 @@ const EditItem = defineAsyncComponent(() => import('@/components/InteractiveEdit
 import StoreKeys from '@/utils/StoreMutations';
 import ItemMixin from '@/mixins/ItemMixin';
 import EditModeIcon from '@/assets/interface-icons/interactive-editor-edit-mode.svg';
-import { appConfig, modalNames } from '@/utils/config/defaults';
+import { modalNames } from '@/utils/config/defaults';
 
 export default {
   name: 'Item',

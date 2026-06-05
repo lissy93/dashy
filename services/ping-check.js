@@ -5,6 +5,8 @@
  */
 const ping = require('pingman');
 
+const { validateHostname } = require('../src/utils/Validator.js');
+
 /* Returned if the URL params are not present or correct */
 const immediateError = (render, error) => {
   render(JSON.stringify({
@@ -21,18 +23,19 @@ module.exports = (paramStr, render) => {
     // Prepare the parameters, which are got from the URL
     const params = new URLSearchParams(paramStr);
     const host = decodeURIComponent(params.get('host'));
-    const count = decodeURIComponent(params.get('count')) || 0;
-    const timeout = decodeURIComponent(params.get('timeout')) || 0;
-    if (!host || host === 'undefined') {
-      immediateError(render, 'No host given for ping check.');
+    const count = Number(decodeURIComponent(params.get('count'))) || 2;
+    const timeout = Number(decodeURIComponent(params.get('timeout'))) || 2000;
+    if (!validateHostname(host)) {
+      immediateError(render, 'Invalid host given for ping check.');
       return;
     }
     (async () => {
       try {
         const configuration = {
           timeout: Math.round(timeout/1000),
-          numberOfEchos: count > 0 ? count : undefined,
+          numberOfEchos: count,
           IPV4: true,
+          IPV6: true,
         };
         const response = await ping(host, configuration);
         const results = {
