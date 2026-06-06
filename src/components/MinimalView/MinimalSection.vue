@@ -129,10 +129,6 @@ export default {
       if (interval < 1) interval = 0;
       return interval;
     },
-    shouldEnablePingCheck(itemPreference) {
-      const globalPreference = this.appConfig.pingCheckEnabled || false;
-      return (itemPreference !== undefined ? itemPreference : globalPreference) && !!this.pingCheckHost;
-    },
     getPingCheckInterval() {
       let interval = this.item.pingCheckInterval;
       if (!interval) interval = this.appConfig.pingCheckInterval;
