@@ -75,8 +75,7 @@
 
 ## Features 🌈
 - 📃 Support for multiple pages
-- 🚦 Real-time status monitoring for each of your apps/links
-- 🚦 Real-time ping monitoring for each of your hosts
+- 🚦 Real-time status monitoring for each of your apps/links/hosts
 - 📊 Use widgets to display info and dynamic content from self-hosted services
 - 🔎 Instant search by name, domain, or tags + customizable hotkeys & keyboard shortcuts
 - 🎨 Many built-in color themes, with UI color editor and support for custom CSS
