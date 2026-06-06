@@ -51,7 +51,6 @@ COPY --chown=node:node --from=build /app/dist ./dist
 COPY --chown=node:node --from=build /app/public ./public
 COPY --chown=node:node --from=build /app/services ./services
 COPY --chown=node:node --from=build /app/src/utils/config/ConfigSchema.json ./src/utils/config/ConfigSchema.json
-COPY --chown=node:node --from=build /app/src/utils/Validator.js ./src/utils/Validator.js
 COPY --chown=node:node --from=build /app/server.js ./server.js
 COPY --chown=node:node --from=build /app/package.json ./package.json
 COPY --chown=node:node --from=build /app/user-data/conf.yml ./user-data/conf.yml

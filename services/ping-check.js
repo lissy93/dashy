@@ -4,12 +4,7 @@
  * request and then resolve the average response time.
  */
 const ping = require('pingman');
-
-const {
-  validateHostname,
-  validateIpV4Address,
-  validateIpV6Address
-} = require('../src/utils/Validator.js');
+const net = require('net');
 
 /* Returned if the URL params are not present or correct */
 const immediateError = (render, error) => {
@@ -29,7 +24,7 @@ module.exports = (paramStr, render) => {
     const host = decodeURIComponent(params.get('host'));
     const count = Number(decodeURIComponent(params.get('count'))) || 2;
     const timeout = Number(decodeURIComponent(params.get('timeout'))) || 2000;
-    if (!validateHostname(host)) {
+    if (!host || typeof host !== 'string') {
       immediateError(render, 'Invalid host given for ping check.');
       return;
     }
@@ -38,8 +33,8 @@ module.exports = (paramStr, render) => {
         const configuration = {
           timeout: Math.round(timeout/1000),
           numberOfEchos: count,
-          IPV4: validateIpV4Address(host),
-          IPV6: validateIpV6Address(host),
+          IPV4: net.isIPv4(host),
+          IPV6: net.isIPv6(host),
         };
         const response = await ping(host, configuration);
         const results = {

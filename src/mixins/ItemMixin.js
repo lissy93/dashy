@@ -9,7 +9,6 @@ import {
   localStorageKeys,
   iconSize as defaultSize,
 } from '@/utils/config/defaults';
-import { validateHostname } from '@/utils/Validator.js';
 
 export default {
   directives: {
@@ -67,7 +66,7 @@ export default {
       let host = this.item.pingCheckHost;
       if (!host || typeof host !== 'string') host = new URL(this.item.url, import.meta.url)?.hostname;
       if (!host || typeof host !== 'string') return undefined;
-      return validateHostname(host) ? host : '';
+      return host.trim();
     },
     /* Determines if user has enabled hosts ping checks */
     isPingCheckEnabled() {
