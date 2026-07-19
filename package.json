@@ -42,7 +42,7 @@
     "express": "^4.22.2",
     "express-basic-auth": "^1.2.1",
     "frappe-charts": "^1.6.2",
-    "jose": "^5.10.0",
+    "jose": "^6.2.3",
     "js-yaml": "^4.2.0",
     "keycloak-js": "^26.0.0",
     "oidc-client-ts": "^3.0.1",
