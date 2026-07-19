@@ -43,7 +43,7 @@
     "express-basic-auth": "^1.2.1",
     "frappe-charts": "^1.6.2",
     "jose": "^5.10.0",
-    "js-yaml": "^4.2.0",
+    "js-yaml": "^5.2.1",
     "keycloak-js": "^26.0.0",
     "oidc-client-ts": "^3.0.1",
     "pingman": "^2.2.0",
