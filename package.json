@@ -48,7 +48,7 @@
     "oidc-client-ts": "^3.0.1",
     "pingman": "^2.2.0",
     "rsup-progress": "^3.2.0",
-    "simple-icons": "^16.26.0",
+    "simple-icons": "^16.27.0",
     "vue": "^3.5.40",
     "vue-i18n": "^9.14.0",
     "vue-router": "^4.4.0",
