@@ -102,8 +102,11 @@ module.exports = (paramStr, render) => {
   if (!paramStr || !paramStr.includes('=')) {
     immediateError(render);
   } else {
-    // Prepare the parameters, which are got from the URL
-    const params = new URLSearchParams(paramStr);
+    // Prepare the parameters, which are got from the URL. paramStr is either a bare
+    // query string (e.g. Netlify's rawQuery) or Express's mount-relative req.url
+    // ('/?url=...') - drop anything before the '?' or the first key is mis-parsed
+    const queryStr = paramStr.includes('?') ? paramStr.slice(paramStr.indexOf('?') + 1) : paramStr;
+    const params = new URLSearchParams(queryStr);
     const url = decodeURIComponent(params.get('url'));
     const acceptCodes = decodeURIComponent(params.get('acceptCodes'));
     const maxRedirects = decodeURIComponent(params.get('maxRedirects')) || 0;

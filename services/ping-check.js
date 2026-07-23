@@ -19,8 +19,11 @@ module.exports = (paramStr, render) => {
   if (!paramStr || !paramStr.includes('=')) {
     immediateError(render);
   } else {
-    // Prepare the parameters, which are got from the URL
-    const params = new URLSearchParams(paramStr);
+    // Prepare the parameters, which are got from the URL. paramStr is either a bare
+    // query string or Express's mount-relative req.url ('/?host=...') - drop
+    // anything before the '?' or the first key is mis-parsed
+    const queryStr = paramStr.includes('?') ? paramStr.slice(paramStr.indexOf('?') + 1) : paramStr;
+    const params = new URLSearchParams(queryStr);
     const host = decodeURIComponent(params.get('host'));
     const count = Number(decodeURIComponent(params.get('count'))) || 2;
     const timeout = Number(decodeURIComponent(params.get('timeout'))) || 2000;
