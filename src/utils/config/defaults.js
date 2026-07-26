@@ -214,6 +214,7 @@ const defaults = {
     blacklistCheck: 'https://api.blacklistchecker.com/check',
     chuckNorris: 'https://api.chucknorris.io/jokes/random',
     codeStats: 'https://codestats.net/',
+    congressTrades: 'https://www.bargo.ai/free-apis/congress/v1/trades',
     covidStats: 'https://disease.sh/v3/covid-19',
     cryptoPrices: 'https://api.coingecko.com/api/v3/coins/',
     cryptoWatchList: 'https://api.coingecko.com/api/v3/coins/markets/',

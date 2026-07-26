@@ -28,6 +28,7 @@ Dashy has support for displaying dynamic content in the form of widgets. There a
   - [News Headlines](#news-headlines)
   - [TFL Status](#tfl-status)
   - [Stock Price History](#stock-price-history)
+  - [Congress Trades](#congress-trades)
   - [ETH Gas Prices](#eth-gas-prices)
   - [Joke of the Day](#joke)
   - [Chuck Norris quotes](#chucknorris)
@@ -1018,6 +1019,57 @@ Shows recent price history for a given publicly-traded stock or share
 - **Price**: 🟠 Free plan (up to 500 requests/day)
 - **Host**: Managed Instance Only
 - **Privacy**: _See [AlphaVantage Privacy Policy](https://www.alphavantage.co/privacy/)_
+
+---
+
+### Congress Trades
+
+Shows recent U.S. House and Senate STOCK Act transaction disclosures from the [Bargo Congress Trades API](https://www.bargo.ai/free-apis/congress). Results can be filtered by ticker, member, chamber or transaction type.
+
+<p align="center"><img width="400" src="./assets/congress-trades-widget.png" /></p>
+
+#### Options
+
+**Field** | **Type** | **Required** | **Description**
+--- | --- | --- | ---
+**`apiKey`** | `string` | _Optional_ | Free Bargo API key. Anonymous requests are also supported
+**`ticker`** | `string` | _Optional_ | Only show disclosures for this ticker symbol
+**`member`** | `string` | _Optional_ | Only show disclosures matching this member name
+**`chamber`** | `string` | _Optional_ | Filter by `house` or `senate`
+**`transactionType`** | `string` | _Optional_ | Filter by `purchase`, `sale` or `exchange`
+**`limit`** | `number` | _Optional_ | Number of disclosures to show, between 1 and 20. Defaults to `5`
+**`hidePerformance`** | `boolean` | _Optional_ | Hide the post-transaction price performance value
+
+#### Example
+
+Anonymous access needs no configuration beyond the widget type:
+
+```yaml
+- type: congress-trades
+  options:
+    chamber: house
+    limit: 5
+```
+
+An optional API key can be passed directly or through Dashy's server-side environment variable handling:
+
+```yaml
+- type: congress-trades
+  useProxy: true
+  options:
+    ticker: AAPL
+    apiKey: DASHY_BARGO_API_KEY
+```
+
+Disclosures are delayed regulatory filings rather than real-time trade alerts. The widget refreshes every five minutes by default, matching the API cache period.
+
+#### Info
+
+- **CORS**: 🟢 Enabled
+- **Auth**: 🟢 Optional
+- **Price**: 🟢 Free
+- **Host**: Managed Instance Only
+- **Terms**: _See [Bargo Free API Terms](https://www.bargo.ai/free-apis/terms)_
 
 ---
 

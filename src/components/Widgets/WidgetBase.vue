@@ -61,6 +61,7 @@ const COMPAT = {
   chucknorris: 'ChuckNorris',
   clock: 'Clock',
   'code-stats': 'CodeStats',
+  'congress-trades': 'CongressTrades',
   'covid-stats': 'CovidStats',
   'crypto-price-chart': 'CryptoPriceChart',
   'crypto-watch-list': 'CryptoWatchList',
