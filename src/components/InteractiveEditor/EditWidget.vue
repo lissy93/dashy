@@ -45,9 +45,36 @@
         :options="boolRadioOptions"
         :initialOption="form.ignoreErrors"
       />
-      <h4 class="options-heading">
-        {{ $t('interactive-editor.edit-widget.options-heading') }}
-      </h4>
+
+      <div v-if="currentOptionDefinitions.length">
+        <h4 class="options-heading">Calendar options</h4>
+        <div
+          class="row option-row"
+          v-for="option in currentOptionDefinitions"
+          :key="option.name"
+        >
+          <Input
+            v-if="option.type === 'text' || option.type === 'number' || option.type === 'password'
+              || option.type === 'text'
+            "
+            :type="option.type"
+            v-model="form.options[option.name]"
+            :label="option.label"
+            :description="option.description"
+            layout="horizontal"
+          />
+          <Radio
+            v-else-if="option.type === 'boolean'"
+            v-model="form.options[option.name]"
+            :label="option.label"
+            :description="option.description"
+            :options="boolRadioOptions"
+            :initialOption="boolToStr(form.options[option.name])"
+          />
+        </div>
+      </div>
+
+      <h4 class="options-heading">Additional options</h4>
       <div class="row option-row" v-for="(opt, i) in optionRows" :key="i">
         <Input
           v-model="opt.key"
@@ -89,6 +116,7 @@ const emptyForm = () => ({
   timeout: '',
   useProxy: '',
   ignoreErrors: '',
+  options: {},
 });
 
 /* Coerce a string from a free-form options input back to its likely native type. */
@@ -102,6 +130,55 @@ const coerceValue = (raw) => {
   if (/^-?\d*\.\d+$/.test(trimmed)) return parseFloat(trimmed);
   return raw;
 };
+
+const widgetOptionDefinitions = {
+  'nextcloud-calendar': [
+    {
+      name: 'icsUrl',
+      label: 'Calendar URL',
+      description: 'Public ICS export URL or shared calendar export URL.',
+      type: 'text',
+    },
+    {
+      name: 'calendarId',
+      label: 'Calendar ID',
+      description: 'Nextcloud calendar ID for authenticated calendars.',
+      type: 'text',
+    },
+    {
+      name: 'username',
+      label: 'Username',
+      description: 'Optional. Only required for private Nextcloud calendars that need authentication.',
+      type: 'text',
+    },
+    {
+      name: 'password',
+      label: 'Password',
+      description: 'Optional. Use only with authenticated Nextcloud calendar access (app password or account password).',
+      type: 'password',
+    },
+    {
+      name: 'pastDays',
+      label: 'Include recent past days',
+      description: 'Number of past days to show. Set 0 to show only future events.',
+      type: 'number',
+    },
+    {
+      name: 'limit',
+      label: 'Event count',
+      description: 'Maximum upcoming events to display.',
+      type: 'number',
+    },
+    {
+      name: 'taskLimit',
+      label: 'Task count',
+      description: 'Maximum tasks to display.',
+      type: 'number',
+    },
+  ],
+};
+
+const getWidgetOptionDefinitions = (widgetType) => widgetOptionDefinitions[(widgetType || '').toLowerCase()] || [];
 
 export default {
   name: 'EditWidget',
@@ -127,6 +204,9 @@ export default {
   },
   computed: {
     allowViewConfig() { return this.$store.getters.permissions.allowViewConfig; },
+    currentOptionDefinitions() {
+      return getWidgetOptionDefinitions(this.form.type);
+    },
   },
   /* Populate form before children render so Radio's `initialOption` is set on its first creation. */
   created() {
@@ -140,11 +220,20 @@ export default {
       timeout: widget.timeout ?? '',
       useProxy: widget.useProxy === undefined ? '' : String(widget.useProxy),
       ignoreErrors: widget.ignoreErrors === undefined ? '' : String(widget.ignoreErrors),
+      options: Object.fromEntries(
+        Object.entries(widget.options || {}).map(([key, value]) => [
+          key,
+          typeof value === 'object' ? JSON.stringify(value) : String(value),
+        ]),
+      ),
     };
-    this.optionRows = Object.entries(widget.options || {}).map(([key, value]) => ({
-      key,
-      value: typeof value === 'object' ? JSON.stringify(value) : String(value),
-    }));
+    const reservedKeys = getWidgetOptionDefinitions(widget.type || this.form.type).map((field) => field.name);
+    this.optionRows = Object.entries(widget.options || {})
+      .filter(([key]) => !reservedKeys.includes(key))
+      .map(([key, value]) => ({
+        key,
+        value: typeof value === 'object' ? JSON.stringify(value) : String(value),
+      }));
   },
   mounted() {
     this.$modal.show(this.modalName);
@@ -171,6 +260,11 @@ export default {
       if (this.form.ignoreErrors === 'true') widget.ignoreErrors = true;
       else if (this.form.ignoreErrors === 'false') widget.ignoreErrors = false;
       const options = {};
+      Object.entries(this.form.options || {}).forEach(([key, value]) => {
+        if (value !== '' && value !== null && value !== undefined) {
+          options[key] = coerceValue(value);
+        }
+      });
       this.optionRows.forEach(({ key, value }) => {
         const k = (key || '').trim();
         if (k) options[k] = coerceValue(value);
@@ -201,6 +295,11 @@ export default {
         ErrorHandler('Failed to save widget', e);
         this.$toast.error('Error saving widget. See Logs.');
       }
+    },
+    boolToStr(value) {
+      if (value === true || value === 'true') return 'true';
+      if (value === false || value === 'false') return 'false';
+      return '';
     },
     closeModal() {
       this.$modal.hide(this.modalName);

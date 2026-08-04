@@ -113,6 +113,7 @@ const COMPAT = {
   'nd-ram-history': 'NdRamHistory',
   'news-headlines': 'NewsHeadlines',
   'nextcloud-notifications': 'NextcloudNotifications',
+    'nextcloud-calendar': 'NextcloudCalendar',
   'nextcloud-php-opcache': 'NextcloudPhpOpcache',
   'nextcloud-stats': 'NextcloudStats',
   'nextcloud-system': 'NextcloudSystem',

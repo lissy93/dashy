@@ -56,3 +56,16 @@ sections:
         options:
           rssUrl: https://github.com/lissy93/dashy/releases.atom
           limit: 5
+
+  - name: Nextcloud
+    icon: fas fa-calendar-alt
+    widgets:
+      - type: nextcloud-calendar
+        label: Nextcloud Calendar (public)
+        options:
+          icsUrl: https://example.com/your-calendar.ics
+          useProxy: true
+          pastDays: 0
+          showTasks: true
+          limit: 5
+          taskLimit: 20
