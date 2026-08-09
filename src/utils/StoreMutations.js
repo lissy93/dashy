@@ -35,6 +35,9 @@ const KEY_NAMES = [
   'CONF_MENU_INDEX',
   'CRITICAL_ERROR_MSG',
   'AUTH_CHANGED',
+  'SET_CONFIG_HASH',
+  'SET_ROOT_CONFIG_HASH',
+  'SET_SAVE_CONFLICT',
 ];
 
 // Convert array of key names into an object, and export

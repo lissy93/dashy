@@ -279,7 +279,21 @@
     "status-warning": "{n} Warning",
     "status-warnings": "{n} Warnings",
     "parse-fail-msg": "YAML parse error: {message}",
-    "editor-init-fail-msg": "Editor failed to start: {message}"
+    "editor-init-fail-msg": "Editor failed to start: {message}",
+    "conflict-title": "Someone else changed this config",
+    "conflict-summary": "{count} change(s) were saved by someone else {when}. Your page was loaded before that. Review the differences below before deciding.",
+    "conflict-theirs-label": "On disk now (theirs)",
+    "conflict-yours-label": "Your version",
+    "conflict-keep-theirs": "Discard mine, reload theirs",
+    "conflict-overwrite": "Overwrite with mine",
+    "conflict-save-merged": "Save merged version",
+    "conflict-overwrite-confirm": "This permanently discards {count} change(s) made by someone else. A backup of their version is kept. Continue?",
+    "conflict-invalid-yaml": "The merged config is not valid YAML, so it cannot be saved yet",
+    "conflict-time-just-now": "just now",
+    "conflict-time-minutes": "{mins} minute(s) ago",
+    "conflict-time-hours": "{hours} hour(s) ago",
+    "conflict-review-later": "Review later",
+    "conflict-discard-merge-confirm": "You have unsaved hand-merged changes. Discard them?"
   },
   "cloud-sync": {
     "title": "Cloud Backup & Restore",

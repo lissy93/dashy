@@ -13,6 +13,7 @@ const rootDir = path.join(__dirname, '..');
 
 /* Import NPM dependencies */
 const yaml = require('./utils/yaml');
+const { hashFileSync } = require('./utils/config-hash');
 
 /* Import Express + middleware functions */
 const express = require('express');
@@ -329,6 +330,14 @@ const app = express()
     const ymlFile = req.path.split('/').pop();
     const userDataDir = path.resolve(rootDir, process.env.USER_DATA_DIR || 'user-data');
     const filePath = path.resolve(userDataDir, ymlFile);
+    // Version token for optimistic concurrency on save. Describes the file on
+    // disk, so it must be set before the bootstrap-strip branch below, which
+    // sends a modified body but must still report the real file's hash.
+    const configHash = hashFileSync(filePath);
+    if (configHash) {
+      res.set('X-Config-Hash', configHash)
+        .set('Access-Control-Expose-Headers', 'X-Config-Hash');
+    }
     if (authIsConfigured) {
       res.set('Cache-Control', 'private, no-store').set('Vary', 'Authorization');
       try {

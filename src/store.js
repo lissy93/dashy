@@ -1,6 +1,6 @@
 import { createStore } from 'vuex';
 import { load as yamlLoad } from '@/utils/yaml';
-import request from '@/utils/request';
+import request, { readHeader } from '@/utils/request';
 import Keys from '@/utils/StoreMutations';
 import {
   makePageName, formatConfigPath, componentVisibility, configScope, stripRootOwnedFields,
@@ -24,6 +24,9 @@ const {
   APPLY_EDITED_CONFIG,
   SET_ROOT_CONFIG,
   SET_CURRENT_CONFIG_INFO,
+  SET_CONFIG_HASH,
+  SET_ROOT_CONFIG_HASH,
+  SET_SAVE_CONFLICT,
   SET_IS_USING_LOCAL_CONFIG,
   SET_MODAL_OPEN,
   SET_LANGUAGE,
@@ -172,6 +175,9 @@ const store = createStore({
     editMode: false, // While true, the user can drag and edit items + sections
     modalOpen: false, // KB shortcut functionality will be disabled when modal is open
     currentConfigInfo: {}, // For multi-page support, will store info about config file
+    configHash: null, // Load-time hash of the active config, for conflict detection
+    rootConfigHash: null, // Load-time hash of the root conf.yml
+    saveConflict: null, // Set when a save is refused because the file changed
     isUsingLocalConfig: false, // If true, will use local config instead of fetched
     criticalError: null, // Will store a message, if a critical error occurs
     navigateConfToTab: undefined, // Used to switch active tab in config modal
@@ -309,6 +315,15 @@ const store = createStore({
     },
     [SET_CURRENT_CONFIG_INFO](state, subConfigInfo) {
       state.currentConfigInfo = subConfigInfo;
+    },
+    [SET_CONFIG_HASH](state, hash) {
+      state.configHash = hash || null;
+    },
+    [SET_ROOT_CONFIG_HASH](state, hash) {
+      state.rootConfigHash = hash || null;
+    },
+    [SET_SAVE_CONFLICT](state, conflict) {
+      state.saveConflict = conflict || null;
     },
     [SET_IS_USING_LOCAL_CONFIG](state, isUsingLocalConfig) {
       state.isUsingLocalConfig = isUsingLocalConfig;
@@ -462,6 +477,7 @@ const store = createStore({
         if (!data.sections) data.sections = [];
         // Set the state, and return data
         commit(SET_ROOT_CONFIG, data);
+        commit(SET_ROOT_CONFIG_HASH, readHeader(response.headers, 'x-config-hash'));
         commit(CRITICAL_ERROR_MSG, null);
         if (!data._bootstrap) sessionStorage.removeItem(SUB_CONFIG_RELOAD_KEY);
         return data;
@@ -494,6 +510,7 @@ const store = createStore({
           commit(SET_CONFIG, rootEffective);
           commit(SET_CONFIG_SOURCE, rootEffective);
           commit(SET_CURRENT_CONFIG_INFO, {});
+          commit(SET_CONFIG_HASH, state.rootConfigHash);
           commit(SET_IS_USING_LOCAL_CONFIG, rootHasStructural);
           return rootEffective;
         }
@@ -543,6 +560,7 @@ const store = createStore({
         commit(SET_CONFIG, mergeWithRoot(rootEffective, subOwn));
         commit(SET_CONFIG_SOURCE, subOwn);
         commit(SET_CURRENT_CONFIG_INFO, { confPath: subConfigPath, confId: targetId });
+        commit(SET_CONFIG_HASH, readHeader(response.headers, 'x-config-hash'));
         commit(SET_IS_USING_LOCAL_CONFIG, subHasStructural);
         return state.config;
       } catch (err) { // If we get here, then somethings really fucked up

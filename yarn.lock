@@ -897,6 +897,17 @@
     "@codemirror/view" "^6.42.0"
     crelt "^1.0.5"
 
+"@codemirror/merge@^6.12.2":
+  version "6.12.2"
+  resolved "https://registry.yarnpkg.com/@codemirror/merge/-/merge-6.12.2.tgz#00870b0451b555189e6dd91317d1ff218f28b414"
+  integrity sha512-V8JvyAPjHbPupqP7BeMcsdsYCbyPij74jxIbaIJDORI+VZzW44zFmon8bF+oxGWvOKhcRmkiUMXd8MxHr3YA2w==
+  dependencies:
+    "@codemirror/language" "^6.0.0"
+    "@codemirror/state" "^6.0.0"
+    "@codemirror/view" "^6.17.0"
+    "@lezer/highlight" "^1.0.0"
+    style-mod "^4.1.0"
+
 "@codemirror/search@^6.7.1":
   version "6.7.1"
   resolved "https://registry.yarnpkg.com/@codemirror/search/-/search-6.7.1.tgz#2523a762871d18ad982edc2d4b2fa1da483b0392"

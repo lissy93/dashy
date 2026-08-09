@@ -4,7 +4,7 @@ import request from '@/utils/request';
 import ErrorHandler, { InfoHandler } from '@/utils/logging/ErrorHandler';
 import { localStorageKeys, serviceEndpoints } from '@/utils/config/defaults';
 import {
-  configScope, stripRootOwnedFields, clearScopedLocalConfig,
+  configScope, stripRootOwnedFields, clearScopedLocalConfig, toSaveShape,
 } from '@/utils/config/ConfigHelpers';
 import StoreKeys from '@/utils/StoreMutations';
 
@@ -17,7 +17,7 @@ export default {
     };
   },
   methods: {
-    writeConfigToDisk(config) {
+    writeConfigToDisk(config, force = false) {
       const { state } = this.$store;
       if (state.config?.appConfig?.preventWriteToDisk) {
         ErrorHandler('Unable to write changes to disk, as this functionality is disabled');
@@ -29,23 +29,43 @@ export default {
         return Promise.resolve(false);
       }
       // Strip runtime-only `filteredItems` and (for sub-pages) root-owned fields.
-      // Spread to avoid mutating the caller's object (may be state.configSource)
-      const base = isSubPag ? stripRootOwnedFields(config) : { ...(config || {}) };
-      const jsonConfig = {
-        ...base,
-        sections: (base.sections || []).map(({ filteredItems: _filteredItems, ...s }) => s),
-      };
+      // Shared with ConflictResolver.vue's diff-normalization so both sides of
+      // a conflict diff are guaranteed the same serialization shape.
+      const jsonConfig = toSaveShape(config, isSubPag);
       const yaml = yamlDump(JSON.parse(JSON.stringify(jsonConfig)));
       const baseUrl = import.meta.env.VITE_APP_DOMAIN || window.location.origin;
       const endpoint = `${baseUrl}${serviceEndpoints.save}`;
       const filename = isSubPag ? (state.currentConfigInfo.confPath || '') : '';
-      const body = { config: yaml, timestamp: new Date(), filename };
+      const body = {
+        config: yaml, timestamp: new Date(), filename, baseHash: state.configHash, force,
+      };
       const saveRequest = request.post(endpoint, body);
       this.progress.start();
       return saveRequest.then((response) => {
+        if (response.data.conflict) {
+          this.progress.end();
+          this.$store.commit(StoreKeys.SET_SAVE_CONFLICT, {
+            yours: yaml,
+            theirs: response.data.currentConfig,
+            theirMtime: response.data.currentMtime,
+          });
+          return false;
+        }
         this.saveSuccess = response.data.success || false;
         this.responseText = response.data.message;
         if (this.saveSuccess) {
+          this.$store.commit(StoreKeys.SET_CONFIG_HASH, response.data.newHash);
+          if (!isSubPag) {
+            // A successful root save leaves disk holding exactly `jsonConfig`.
+            // INITIALIZE_CONFIG's root branch rebuilds state.config from
+            // state.rootConfig and re-derives configHash from rootConfigHash
+            // on every re-initialize (nav away/back, Cancel, reset-to-defaults).
+            // Without updating both here, that path would silently revert to
+            // the page-load snapshot and the very next save would raise a
+            // spurious conflict against our own just-completed write.
+            this.$store.commit(StoreKeys.SET_ROOT_CONFIG, jsonConfig);
+            this.$store.commit(StoreKeys.SET_ROOT_CONFIG_HASH, response.data.newHash);
+          }
           this.carefullyClearLocalStorage();
           this.showToast(this.$t('config-editor.success-msg-disk'), true);
           InfoHandler('Config has been written to disk successfully', 'Config Update');

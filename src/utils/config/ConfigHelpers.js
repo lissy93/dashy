@@ -26,6 +26,21 @@ export const stripRootOwnedFields = (config) => {
   return clean;
 };
 
+/* The exact shape ConfigSaving.js's writeConfigToDisk serializes to disk (and
+ * uses as the "yours" side of a conflict diff): root-owned fields stripped
+ * for sub-pages, and the runtime-only `filteredItems` dropped from every
+ * section. This is deliberately the single place that logic lives - both the
+ * real save path and ConflictResolver's diff-normalization import it, so
+ * neither can drift out of sync with the other and reintroduce
+ * serialization-shape noise into the conflict diff. */
+export const toSaveShape = (config, isSubPage) => {
+  const base = isSubPage ? stripRootOwnedFields(config) : { ...(config || {}) };
+  return {
+    ...base,
+    sections: (base.sections || []).map(({ filteredItems: _filteredItems, ...s }) => s),
+  };
+};
+
 /* Local storage keys for local settings, if confId is set it's for a sub-page */
 export const configScope = (confId) => {
   const suffix = confId ? `-${confId}` : '';

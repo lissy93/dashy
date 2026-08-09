@@ -6,6 +6,7 @@
  */
 const fsPromises = require('fs').promises;
 const path = require('path');
+const { hashString, readFileMeta } = require('../utils/config-hash');
 
 const MAX_CONFIG_BYTES = 256 * 1024;
 
@@ -13,7 +14,9 @@ const MAX_CONFIG_BYTES = 256 * 1024;
 const SAFE_FILENAME = /^(?!\.+$)[^\\/\0\r\n]+\.ya?ml$/i;
 
 module.exports = async (newConfig, render) => {
-  const respond = (success, message) => render(JSON.stringify({ success, message }));
+  const respond = (success, message, extra) => render(
+    JSON.stringify({ success, message, ...(extra || {}) }),
+  );
 
   // Validate request body
   if (!newConfig || typeof newConfig.config !== 'string' || newConfig.config.length === 0) {
@@ -46,6 +49,28 @@ module.exports = async (newConfig, render) => {
   const backupBase = targetFile.replace(/\.ya?ml$/i, '');
   const backupFilePath = path.join(backupLocation, `${backupBase}-${Date.now()}.backup.yml`);
 
+  // Optimistic concurrency: if the caller told us which version they started
+  // from, refuse to write when the file has moved on since. Absent baseHash
+  // means an older client or the REST API, so we fail open and write as usual.
+  if (typeof newConfig.baseHash === 'string' && newConfig.baseHash && newConfig.force !== true) {
+    let current;
+    try {
+      current = await readFileMeta(targetFilePath);
+    } catch (error) {
+      respond(false, `Unable to read ${targetFile} to check for conflicts: ${error}`);
+      return;
+    }
+    if (current && current.hash !== newConfig.baseHash) {
+      respond(false, 'Config was modified by someone else since this page was loaded', {
+        conflict: true,
+        currentConfig: current.contents,
+        currentHash: current.hash,
+        currentMtime: current.mtimeMs,
+      });
+      return;
+    }
+  }
+
   // Backup current config before proceeding (unless disabled via DISABLE_CONFIG_BACKUPS)
   let backedUp = false;
   if (backupsEnabled) {
@@ -74,5 +99,5 @@ module.exports = async (newConfig, render) => {
   if (backedUp) {
     responseMsg += ` Previous ${targetFile} was backed up to ${backupFilePath}.`;
   }
-  respond(true, responseMsg);
+  respond(true, responseMsg, { newHash: hashString(newConfig.config) });
 };

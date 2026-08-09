@@ -4,6 +4,9 @@
  *
  * Supports: .get(), .post(), .put(), .request()
  * Returns: { data, status, statusText, headers }
+ * `headers` is a plain object with lowercase keys (like axios), NOT the
+ * native `Headers` instance `fetch` returns - so callers can safely use
+ * `response.headers['some-header']` instead of `.get('some-header')`.
  * Throws on non-2xx responses (matching axios behavior)
  */
 
@@ -25,6 +28,30 @@ function isLocalRequest(url) {
 function hasAuthorization(headers) {
   return Object.keys(headers).some((key) => key.toLowerCase() === 'authorization');
 }
+
+/* Normalizes a native `Headers` instance (what fetch returns) into a plain,
+   lowercase-keyed object, matching axios' response.headers shape. Tolerates
+   already-plain objects (e.g. test mocks) by lowercasing their keys too. */
+function normalizeHeaders(headers) {
+  const plain = {};
+  if (!headers) return plain;
+  if (typeof headers.forEach === 'function' && typeof headers.get === 'function') {
+    headers.forEach((value, key) => { plain[key.toLowerCase()] = value; });
+    return plain;
+  }
+  Object.keys(headers).forEach((key) => { plain[key.toLowerCase()] = headers[key]; });
+  return plain;
+}
+
+/* Reads a response header, tolerating both a native Headers instance
+   (what fetch returns, and what test mocks should use to match it) and a
+   plain object (what the normalized response above - and looser mocks -
+   pass). Case-insensitive either way. */
+export const readHeader = (headers, name) => {
+  if (!headers) return undefined;
+  if (typeof headers.get === 'function') return headers.get(name) ?? undefined;
+  return headers[name] ?? headers[name.toLowerCase()];
+};
 
 function ssoState() {
   return { oidc: isOidcEnabled(), keycloak: isKeycloakEnabled() };
@@ -141,7 +168,7 @@ async function makeRequest(config, retriedAfterRenew = false) {
       data: responseData,
       status: res.status,
       statusText: res.statusText,
-      headers: res.headers,
+      headers: normalizeHeaders(res.headers),
     };
 
     // Throw on non-2xx (matching axios behavior)

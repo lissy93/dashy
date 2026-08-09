@@ -5,6 +5,7 @@
     <Header :pageInfo="pageInfo" />
     <router-view v-if="!isFetching" />
     <CriticalError v-if="hasCriticalError" />
+    <ConflictResolver />
     <Footer :text="footerText" v-if="footerVisible && !isFetching" />
     <RemoteConfigLoader v-if="!isFetching" />
   </div>
@@ -15,6 +16,7 @@ import Header from '@/components/PageStrcture/Header.vue';
 import Footer from '@/components/PageStrcture/Footer.vue';
 import EditModeTopBanner from '@/components/InteractiveEditor/EditModeTopBanner.vue';
 import CriticalError from '@/components/PageStrcture/CriticalError.vue';
+import ConflictResolver from '@/components/Configuration/ConflictResolver.vue';
 import LoadingScreen from '@/components/PageStrcture/LoadingScreen.vue';
 import RemoteConfigLoader from '@/components/Configuration/RemoteConfigLoader.vue';
 import { welcomeMsg } from '@/utils/logging/CoolConsole';
@@ -39,6 +41,7 @@ export default {
     LoadingScreen,
     EditModeTopBanner,
     CriticalError,
+    ConflictResolver,
     RemoteConfigLoader,
   },
   data() {
