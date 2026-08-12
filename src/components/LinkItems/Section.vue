@@ -46,12 +46,7 @@
       </template>
       <!-- When in edit mode, show additional item, for Add New item -->
       <Item v-if="isEditMode"
-        :item="{
-          icon: ':heavy_plus_sign:',
-          title: 'Add New Item',
-          description: 'Click to add new item',
-          id: 'add-new',
-        }"
+        :item="addNewItemPlaceholder"
         :isAddNew="true"
         :parentSectionTitle="title"
         key="add-new"
@@ -198,6 +193,14 @@ export default {
     },
     isEditMode() {
       return this.$store.state.editMode;
+    },
+    addNewItemPlaceholder() {
+      return {
+        icon: ':heavy_plus_sign:',
+        title: this.$t('interactive-editor.edit-item.add-new-title'),
+        description: this.$t('interactive-editor.edit-item.add-new-description'),
+        id: 'add-new',
+      };
     },
     itemSize() {
       return this.displayData.itemSize || this.$store.getters.iconSize;
