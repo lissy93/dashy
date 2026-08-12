@@ -43,7 +43,8 @@
     "error-no-user-configured": "Kimlik doğrulama etkinleştirilmemiş veya hiçbir kullanıcı yapılandırılmamış",
     "error-go-home-button": "Anasayfaya git",
     "logged-in-guest": "Misafir olarak giriş yapıldı, Yönlendiriliyor...",
-    "error-guest-access": "Misafir Erişimine İzin Verilmiyor"
+    "error-guest-access": "Misafir Erişimine İzin Verilmiyor",
+    "authenticated-redirecting": "Kimlik doğrulandı, yönlendiriliyor..."
   },
   "app-info": {
     "title": "Uygulama Bilgisi",
@@ -228,16 +229,53 @@
       "edit-mode-description": "Bu, yapılandırmanızda değişiklikler yapabileceğiniz ve sonuçları önizleyebileceğiniz anlamına gelir, ancak siz kaydedene kadar değişikliklerinizin hiçbiri korunmaz.",
       "save-stage-btn": "Kaydet",
       "cancel-stage-btn": "İptal",
-      "save-locally-warning": "Devam ederseniz, değişiklikler yalnızca tarayıcınıza kaydedilecektir. Diğer makinelerde kullanmak için yapılandırmanızın bir kopyasını dışa aktarmalısınız. Devam etmek ister misin?"
+      "save-locally-warning": "Devam ederseniz, değişiklikler yalnızca tarayıcınıza kaydedilecektir. Diğer makinelerde kullanmak için yapılandırmanızın bir kopyasını dışa aktarmalısınız. Devam etmek ister misin?",
+      "edit-mode-enabled": "Düzenleme Modu Açık"
     },
     "edit-item": {
-      "missing-title-err": "Öğe başlığı gerekli"
+      "missing-title-err": "Öğe başlığı gerekli",
+      "add-new-title": "Yeni Öğe Ekle",
+      "add-new-description": "Yeni öğe eklemek için tıklayın"
     },
     "edit-section": {
       "edit-section-title": "Bölümü düzenle",
       "add-section-title": "Yeni Bölüm Ekle",
       "edit-tooltip": "Düzenlemek için tıklayın veya daha fazla seçenek için sağ tıklayın",
-      "remove-confirm": "Bu bölümü kaldırmak istediğinizden emin misiniz? Bu işlem daha sonra geri alınabilir."
+      "remove-confirm": "Bu bölümü kaldırmak istediğinizden emin misiniz? Bu işlem daha sonra geri alınabilir.",
+      "fields": {
+        "name": {
+          "title": "Bölüm Adı",
+          "description": "Bölüm için başlık. Zorunlu ve benzersiz olmalı"
+        },
+        "icon": {
+          "title": "Bölüm Simgesi",
+          "description": "Simge başlığın yanında gösterilir"
+        },
+        "displayData": {
+          "title": "Görüntüleme Verileri",
+          "description": "Bölümü özelleştirmek için isteğe bağlı meta veriler"
+        },
+        "sortBy": {
+          "title": "Sıralama",
+          "description": "Bölüm içindeki öğelerin nasıl sıralanacağı. Varsayılan olarak öğeler, yapılandırmada listelendikleri sırada gösterilir"
+        },
+        "rows": {
+          "title": "Satır Sayısı",
+          "description": "Bölümün dikey olarak kapladığı alan (varsayılan 'auto' düzeni için geçerli; 'masonry' düzeninde yükseklik içeriğe göre belirlenir)"
+        },
+        "cols": {
+          "title": "Sütun Sayısı",
+          "description": "Bölümün yatay olarak kapladığı alan"
+        },
+        "collapsed": {
+          "title": "Daraltılmış mı?",
+          "description": "Etkinse bölümü açmak için tıklamak gerekir"
+        },
+        "hideForGuests": {
+          "title": "Misafirlerden Gizle?",
+          "description": "Etkinse bölüm yalnızca giriş yapmış kullanıcılara görünür, misafirlere değil"
+        }
+      }
     },
     "edit-app-config": {
       "warning-msg-title": "Dikkatle ilerleyin",
