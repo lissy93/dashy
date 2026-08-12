@@ -356,6 +356,7 @@
       "cancel-changes-tooltip": "Modifikationen zurücksetzen und Bearbeitungsmodus schließen. Dies hat keinen Einfluss auf die Konfigurationsdatei",
       "leave-while-editing-confirm": "Sie haben ungespeicherte Änderungen. Möchten Sie diese Seite verlassen und die Änderungen verwerfen?",
       "edit-mode-name": "Bearbeitung",
+      "edit-mode-enabled": "Bearbeitungsmodus aktiv",
       "edit-mode-subtitle": "Sie sind im Bearbeitungsmodus",
       "edit-mode-description": "Das bedeutet, dass Änderungen an der Konfigurationsdatei vorgenommen werden können. Änderungen können vor dem Speichern betrachtet werden.",
       "save-stage-btn": "Speichern",
@@ -363,7 +364,9 @@
       "save-locally-warning": "Wenn Sie fortfahren werden die Änderungen nur in Ihrem Browser gespeichert. Um die Konfiguration auf anderen Geräten zu nutzen sollten Sie sie exportieren. Möchten Sie fortfahren?"
     },
     "edit-item": {
-      "missing-title-err": "Ein Titel ist zwingend erforderlich"
+      "missing-title-err": "Ein Titel ist zwingend erforderlich",
+      "add-new-title": "Neues Element hinzufügen",
+      "add-new-description": "Klicken, um neues Element hinzuzufügen"
     },
     "edit-section": {
       "edit-section-title": "Sektion bearbeiten",
@@ -372,7 +375,41 @@
       "edit-tooltip-basic": "Klicken zum Bearbeiten",
       "remove-confirm": "Sind Sie sicher, dass Sie diese Sektion entfernen möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
       "missing-name-err": "Ein Sektionsname ist erforderlich",
-      "duplicate-name-err": "Eine Sektion namens '{name}' existiert bereits"
+      "duplicate-name-err": "Eine Sektion namens '{name}' existiert bereits",
+      "fields": {
+        "name": {
+          "title": "Sektionsname",
+          "description": "Titel/Überschrift für eine Sektion. Erforderlich und muss eindeutig sein"
+        },
+        "icon": {
+          "title": "Sektions-Icon",
+          "description": "Icon wird neben dem Titel angezeigt"
+        },
+        "displayData": {
+          "title": "Anzeigedaten",
+          "description": "Optionale Metadaten zur Anpassung einer Sektion"
+        },
+        "sortBy": {
+          "title": "Sortieren nach",
+          "description": "Wie Elemente innerhalb der Sektion sortiert werden. Standardmäßig werden Elemente in der Reihenfolge angezeigt, in der sie in der Konfiguration aufgeführt sind"
+        },
+        "rows": {
+          "title": "Anzahl Zeilen",
+          "description": "Vertikaler Platzbedarf der Sektion (gilt für das Standardlayout „auto“; bei „masonry“ wird die Höhe vom Inhalt bestimmt)"
+        },
+        "cols": {
+          "title": "Anzahl Spalten",
+          "description": "Horizontaler Platzbedarf der Sektion"
+        },
+        "collapsed": {
+          "title": "Eingeklappt?",
+          "description": "Wenn aktiv, muss die Sektion angeklickt werden, um sie zu öffnen"
+        },
+        "hideForGuests": {
+          "title": "Für Gäste ausblenden?",
+          "description": "Wenn aktiv, ist die Sektion für angemeldete Benutzer sichtbar, aber nicht für Gäste"
+        }
+      }
     },
     "edit-widget": {
       "edit-widget-title": "Widget bearbeiten",

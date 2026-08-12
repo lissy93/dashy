@@ -20,6 +20,7 @@ import dragSort from '@/directives/DragSort';         // Drag-and-drop list sort
 import { initKeycloakAuth, isKeycloakEnabled } from '@/utils/auth/KeycloakAuth';
 import { initHeaderAuth, isHeaderAuthEnabled } from '@/utils/auth/HeaderAuth';
 import { initOidcAuth, isOidcEnabled } from '@/utils/auth/OidcAuth';
+import { applyUserLocale } from '@/utils/applyLocale';
 import Keys from '@/utils/StoreMutations';
 import ErrorHandler from '@/utils/logging/ErrorHandler';
 import Toast from '@/utils/Toast';
@@ -67,7 +68,8 @@ const handleAuthFailure = (provider, err) => {
   router.replace({ name: 'login' }).catch(() => {}).finally(mount);
 };
 
-router.isReady().then(() => {
+router.isReady().then(async () => {
+  await applyUserLocale();
   if (isOidcEnabled()) {
     initOidcAuth().then((reloading) => { if (!reloading) mount(); })
       .catch((e) => handleAuthFailure('OIDC', e));

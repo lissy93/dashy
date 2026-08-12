@@ -1,6 +1,6 @@
 <template>
   <div class="edit-mode-top-banner">
-    <span>Edit Mode Enabled</span>
+    <span>{{ $t('interactive-editor.menu.edit-mode-enabled') }}</span>
   </div>
 </template>
 

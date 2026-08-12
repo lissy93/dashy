@@ -29,30 +29,8 @@ import AccessError from '@/components/Configuration/AccessError';
 
 const SchemaForm = defineAsyncComponent(() => import('@/components/FormElements/SchemaForm.vue'));
 
-/* Curated subset of the section schema: omits `items` (edited per-item elsewhere)
- * and trims displayData to the commonly-tweaked attributes. */
 const sectionProps = DashySchema.properties.sections.items.properties;
 const displayProps = sectionProps.displayData.properties;
-const SECTION_SCHEMA = {
-  type: 'object',
-  required: DashySchema.properties.sections.items.required,
-  properties: {
-    name: sectionProps.name,
-    icon: sectionProps.icon,
-    displayData: {
-      type: 'object',
-      title: sectionProps.displayData.title,
-      description: sectionProps.displayData.description,
-      properties: {
-        sortBy: displayProps.sortBy,
-        rows: displayProps.rows,
-        cols: displayProps.cols,
-        collapsed: displayProps.collapsed,
-        hideForGuests: displayProps.hideForGuests,
-      },
-    },
-  },
-};
 
 export default {
   name: 'EditSection',
@@ -65,12 +43,62 @@ export default {
   data() {
     return {
       modalName: modalNames.EDIT_SECTION,
-      customSchema: SECTION_SCHEMA,
       sectionData: {},
     };
   },
   computed: {
     allowViewConfig() { return this.$store.getters.permissions.allowViewConfig; },
+    customSchema() {
+      const t = (key) => this.$t(`interactive-editor.edit-section.fields.${key}`);
+      return {
+        type: 'object',
+        required: DashySchema.properties.sections.items.required,
+        properties: {
+          name: {
+            ...sectionProps.name,
+            title: t('name.title'),
+            description: t('name.description'),
+          },
+          icon: {
+            ...sectionProps.icon,
+            title: t('icon.title'),
+            description: t('icon.description'),
+          },
+          displayData: {
+            type: 'object',
+            title: t('displayData.title'),
+            description: t('displayData.description'),
+            properties: {
+              sortBy: {
+                ...displayProps.sortBy,
+                title: t('sortBy.title'),
+                description: t('sortBy.description'),
+              },
+              rows: {
+                ...displayProps.rows,
+                title: t('rows.title'),
+                description: t('rows.description'),
+              },
+              cols: {
+                ...displayProps.cols,
+                title: t('cols.title'),
+                description: t('cols.description'),
+              },
+              collapsed: {
+                ...displayProps.collapsed,
+                title: t('collapsed.title'),
+                description: t('collapsed.description'),
+              },
+              hideForGuests: {
+                ...displayProps.hideForGuests,
+                title: t('hideForGuests.title'),
+                description: t('hideForGuests.description'),
+              },
+            },
+          },
+        },
+      };
+    },
   },
   mounted() {
     const live = this.isAddNew ? null : this.$store.getters.getSectionByName(this.sectionName);
@@ -82,7 +110,6 @@ export default {
       this.$store.commit(StoreKeys.SET_MODAL_OPEN, false);
       this.$emit('closeEditSection');
     },
-    /* Section names used as id, so need to be present and unique  */
     validateName(name) {
       if (!name || !name.trim()) return this.$t('interactive-editor.edit-section.missing-name-err');
       const slug = makePageName(name);
@@ -95,7 +122,6 @@ export default {
     },
     saveSection() {
       try {
-        /* Form only edits metadata, so preserve the live section's items array. */
         const payload = pruneSchemaDefaults(this.sectionData, this.customSchema);
         const nameError = this.validateName(payload.name);
         if (nameError) { this.$toast.error(nameError); return; }
