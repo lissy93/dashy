@@ -23,7 +23,8 @@ import { syncPageMeta } from '@/utils/PageMeta';
 import { viewFromPath } from '@/utils/config/ConfigHelpers';
 import { applyTheme } from '@/utils/Theming';
 import Keys from '@/utils/StoreMutations';
-import { applyUserLocale } from '@/utils/applyLocale';
+import { loadLocale } from '@/utils/languages';
+import i18n from '@/utils/i18n';
 import {
   localStorageKeys,
   splashScreenTime,
@@ -213,9 +214,17 @@ export default {
       return this.autoDetectLanguage(availibleLocales);
     },
 
+    /* Fetch or detect users language, then apply it */
     async applyLanguage() {
-      const language = await applyUserLocale(this.getLanguage());
+      const language = this.getLanguage();
+      try {
+        const msg = await loadLocale(language);
+        i18n.global.setLocaleMessage(language, msg);
+      } catch (e) {
+        ErrorHandler(`Failed to load locale '${language}'`, e);
+      }
       this.$store.commit(Keys.SET_LANGUAGE, language);
+      this.$i18n.locale = language;
       document.getElementsByTagName('html')[0].setAttribute('lang', language);
     },
     /* If placeholder element still visible, hide it */

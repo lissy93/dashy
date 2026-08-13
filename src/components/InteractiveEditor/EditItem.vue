@@ -9,11 +9,13 @@
   >
   <div class="edit-item-inner" v-if="allowViewConfig">
     <!-- Title and Item ID -->
-    <h3 class="title">Edit Item</h3>
-    <p class="sub-title">Editing {{item.title}} (ID: {{itemId}})</p>
+    <h3 class="title">{{ $t(isNew ? 'interactive-editor.edit-item.add-new-title' : 'interactive-editor.edit-item.edit-title') }}</h3>
+    <p class="sub-title" v-if="!isNew">
+      {{ $t('interactive-editor.edit-item.editing-subtitle', { title: item.title, id: itemId }) }}
+    </p>
     <!-- If no elements added to form, show info message -->
     <p class="warning-note" v-if="formData.length === 0">
-      No data configured yet. Click an attribute in the list below to add the field to the form.
+      {{ $t('interactive-editor.edit-item.empty-form') }}
     </p>
     <!-- For each data attribute, render the correct type of input field -->
     <div class="row" v-for="(row, index) in formData" :key="row.name">
@@ -53,7 +55,7 @@
     </div>
     <!-- Show Add chips, for adding more data elements to the form -->
     <div class="add-more-inputs" v-if="additionalFormData.length > 0">
-      <h4>More Fields</h4>
+      <h4>{{ $t('interactive-editor.edit-item.more-fields') }}</h4>
       <div class="more-fields">
         <span
           v-for="row in additionalFormData"

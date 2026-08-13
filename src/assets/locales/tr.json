@@ -235,47 +235,17 @@
     "edit-item": {
       "missing-title-err": "Öğe başlığı gerekli",
       "add-new-title": "Yeni Öğe Ekle",
-      "add-new-description": "Yeni öğe eklemek için tıklayın"
+      "add-new-description": "Yeni öğe eklemek için tıklayın",
+      "edit-title": "Öğeyi Düzenle",
+      "editing-subtitle": "{title} düzenleniyor (ID: {id})",
+      "empty-form": "Henüz veri yok. Forma alan eklemek için aşağıdaki listeden bir özellik seç.",
+      "more-fields": "Daha Fazla Alan"
     },
     "edit-section": {
       "edit-section-title": "Bölümü düzenle",
       "add-section-title": "Yeni Bölüm Ekle",
       "edit-tooltip": "Düzenlemek için tıklayın veya daha fazla seçenek için sağ tıklayın",
-      "remove-confirm": "Bu bölümü kaldırmak istediğinizden emin misiniz? Bu işlem daha sonra geri alınabilir.",
-      "fields": {
-        "name": {
-          "title": "Bölüm Adı",
-          "description": "Bölüm için başlık. Zorunlu ve benzersiz olmalı"
-        },
-        "icon": {
-          "title": "Bölüm Simgesi",
-          "description": "Simge başlığın yanında gösterilir"
-        },
-        "displayData": {
-          "title": "Görüntüleme Verileri",
-          "description": "Bölümü özelleştirmek için isteğe bağlı meta veriler"
-        },
-        "sortBy": {
-          "title": "Sıralama",
-          "description": "Bölüm içindeki öğelerin nasıl sıralanacağı. Varsayılan olarak öğeler, yapılandırmada listelendikleri sırada gösterilir"
-        },
-        "rows": {
-          "title": "Satır Sayısı",
-          "description": "Bölümün dikey olarak kapladığı alan (varsayılan 'auto' düzeni için geçerli; 'masonry' düzeninde yükseklik içeriğe göre belirlenir)"
-        },
-        "cols": {
-          "title": "Sütun Sayısı",
-          "description": "Bölümün yatay olarak kapladığı alan"
-        },
-        "collapsed": {
-          "title": "Daraltılmış mı?",
-          "description": "Etkinse bölümü açmak için tıklamak gerekir"
-        },
-        "hideForGuests": {
-          "title": "Misafirlerden Gizle?",
-          "description": "Etkinse bölüm yalnızca giriş yapmış kullanıcılara görünür, misafirlere değil"
-        }
-      }
+      "remove-confirm": "Bu bölümü kaldırmak istediğinizden emin misiniz? Bu işlem daha sonra geri alınabilir."
     },
     "edit-app-config": {
       "warning-msg-title": "Dikkatle ilerleyin",

@@ -366,7 +366,11 @@
     "edit-item": {
       "missing-title-err": "An item title is required",
       "add-new-title": "Add New Item",
-      "add-new-description": "Click to add new item"
+      "add-new-description": "Click to add new item",
+      "edit-title": "Edit Item",
+      "editing-subtitle": "Editing {title} (ID: {id})",
+      "empty-form": "No data configured yet. Click an attribute in the list below to add the field to the form.",
+      "more-fields": "More Fields"
     },
     "edit-section": {
       "edit-section-title": "Edit Section",
@@ -375,41 +379,7 @@
       "edit-tooltip-basic": "Click to Edit",
       "remove-confirm": "Are you sure you want to remove this section? This action can be undone later.",
       "missing-name-err": "A section name is required",
-      "duplicate-name-err": "A section named '{name}' already exists",
-      "fields": {
-        "name": {
-          "title": "Section Name",
-          "description": "Title/ heading for a section. Required and must be unique"
-        },
-        "icon": {
-          "title": "Section Icon",
-          "description": "Icon will be displayed next to title"
-        },
-        "displayData": {
-          "title": "Display Data",
-          "description": "Optional meta data for customizing a section"
-        },
-        "sortBy": {
-          "title": "Sort By",
-          "description": "How to sort items within the section. By default items are displayed in the order in which they are listed in within the config"
-        },
-        "rows": {
-          "title": "Num Rows",
-          "description": "The amount of space that the section spans vertically (applies to the default 'auto' layout; ignored by 'masonry' where heights follow content)"
-        },
-        "cols": {
-          "title": "Num Cols",
-          "description": "The amount of space that the section spans horizontally"
-        },
-        "collapsed": {
-          "title": "Is Collapsed?",
-          "description": "If true, section needs to be clicked to open"
-        },
-        "hideForGuests": {
-          "title": "Hide for Guests?",
-          "description": "If set to true, section will be visible for logged in users, but not for guests"
-        }
-      }
+      "duplicate-name-err": "A section named '{name}' already exists"
     },
     "edit-widget": {
       "edit-widget-title": "Edit Widget",
