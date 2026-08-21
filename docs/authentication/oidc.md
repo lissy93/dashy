@@ -28,6 +28,7 @@ appConfig:
       adminGroup: dashy-admins           # Members of this group are admins
       adminRole: dashy-admin             # Or grant admin by role instead
       enableSilentRenew: true            # Refresh the session in the background before it expires
+      # showLoginPage: false             # If true, login redirects to Dashy's own login page
       # postLogoutRedirectUri: 'https://dashy.example.com' # Where to send users after logout (must be registered with the provider)
       # allowedIssuers: []               # Only for multi-tenant providers to override discovery document
       # disableServerSideCheck: false    # Leave as false / unset. Setting to true makes auth just client-side
@@ -66,6 +67,19 @@ When set, tokens are accepted only if their `iss` matches one of these (signatur
 ## Guest access
 
 Set `enableGuestAccess: true` to let people view the dashboard read-only without signing in. They get the full config but can't save anything, and sections or items marked `hideForGuests` stay hidden. With it off (the default), anyone who isn't signed in is sent to the login flow.
+
+## Showing Dashy's login page
+
+By default, anyone who isn't signed in is sent straight to your provider's login page (or, with `enableGuestAccess: true`, straight into the dashboard as a guest). Set `showLoginPage: true` under `auth.oidc` to show Dashy's own login page first instead:
+
+```yaml
+    oidc:
+      clientId: dashy
+      endpoint: 'https://your-oidc-provider.example.com'
+      showLoginPage: true
+```
+
+The page has a button to sign in with your provider, plus a *Proceed as Guest* button if guest access is enabled, so the user picks which they want. This is useful when Dashy is the landing page after another redirect (e.g. a captive portal), where an immediate second redirect off to the IdP is disorienting. It's shown on each page load until you sign in; the choice isn't remembered. See [#2302](https://github.com/lissy93/dashy/issues/2302) for info.
 
 ## Using with a PWA
 

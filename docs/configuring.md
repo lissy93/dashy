@@ -213,6 +213,7 @@ For more info, see the **[Authentication Docs](/docs/authentication)**
 **`adminRole`** | `string` | _Optional_ | The role that will be considered as admin.
 **`adminGroup`** | `string` | _Optional_ | The group that will be considered as admin.
 **`scope`** | `string` | Required | The scope(s) to request from the OIDC provider
+**`showLoginPage`** | `boolean` | _Optional_ | Set to `true` to redirect to Dashy's login page, instead of your OIDC auth page
 **`enableSilentRenew`** | `boolean` | _Optional_ | If set to `true`, your session is silently renewed in the background before it expires (only works for providers which support the `offline_access` scope)
 **`postLogoutRedirectUri`** | `string` | _Optional_ | URL to send users back to after logging out at the provider (sent as `post_logout_redirect_uri`). Must be registered as a valid post-logout redirect URI with your provider. If unset, no redirect is requested
 **`allowedIssuers`** | `array` | _Optional_ | List of issuer URLs to accept tokens from. Needed for multi-tenant providers (e.g. Microsoft Entra) where the token issuer differs from the configured `endpoint`. If unset, the issuer from the discovery document is used
