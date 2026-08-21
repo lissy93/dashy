@@ -6,8 +6,24 @@
     <atom:link href="https://dashy.to/rss.xml" rel="self" type="application/rss+xml" />
     <description>New releases and version tags for Dashy, the self-hosted dashboard for your homelab.</description>
     <language>en</language>
-    <lastBuildDate>Fri, 21 Aug 2026 07:44:52 GMT</lastBuildDate>
+    <lastBuildDate>Fri, 21 Aug 2026 12:15:21 GMT</lastBuildDate>
     <generator>dashy-docs github-data plugin</generator>
+    <item>
+      <title>4.5.15</title>
+      <link>https://github.com/lissy93/dashy/releases/tag/4.5.15</link>
+      <guid isPermaLink="true">https://github.com/lissy93/dashy/releases/tag/4.5.15</guid>
+      <pubDate>Fri, 21 Aug 2026 12:11:19 GMT</pubDate>
+      <category>Tag</category>
+      <description>Tag 4.5.15</description>
+    </item>
+    <item>
+      <title>4.5.14</title>
+      <link>https://github.com/lissy93/dashy/releases/tag/4.5.14</link>
+      <guid isPermaLink="true">https://github.com/lissy93/dashy/releases/tag/4.5.14</guid>
+      <pubDate>Fri, 21 Aug 2026 11:12:18 GMT</pubDate>
+      <category>Tag</category>
+      <description>Tag 4.5.14</description>
+    </item>
     <item>
       <title>4.5.13</title>
       <link>https://github.com/lissy93/dashy/releases/tag/4.5.13</link>
