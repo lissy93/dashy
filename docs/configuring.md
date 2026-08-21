@@ -49,6 +49,7 @@ The following file provides a reference of all supported configuration options.
 - [**Notes**](#notes)
   - [Editing Config through the UI](#editing-config-through-the-ui)
   - [About YAML](#about-yaml)
+  - [Schema Validation in your Editor](#schema-validation-in-your-editor)
   - [Config Saving Methods](#config-saving-methods)
   - [Preventing Changes](#preventing-changes)
   - [Example](#example)
@@ -400,6 +401,26 @@ Config can be modified directly through the UI, and then written to disk, or app
 ### About YAML
 
 If you're new to YAML, it's pretty straight-forward. The format is exactly the same as that of JSON, but instead of using curly braces, structure is denoted using whitespace. This [quick guide](https://linuxhandbook.com/yaml-basics/) should get you up to speed in a few minutes, for more advanced topics take a look at this [Wikipedia article](https://en.wikipedia.org/wiki/YAML).
+
+### Schema Validation in your Editor
+
+Dashy's config is described by a [JSON schema](https://github.com/Lissy93/dashy/blob/master/src/utils/config/ConfigSchema.json) (and served up at `[your-dashy-instance.local]/schema.json`).
+
+Most editors can use this to give you validation, auto-complete and inline docs as you type, so long as you have the `$schema` key pointing to the schema URL.
+
+If you have the [YAML Language Server](https://github.com/redhat-developer/yaml-language-server) in your editor (which comes with the YAML extension), then you can also add the schema directly. E.g. for VS Code, put the following in your `settings.json`.
+
+```json
+{
+  "yaml.schemas": {
+    "https://raw.githubusercontent.com/Lissy93/dashy/master/src/utils/config/ConfigSchema.json": ["conf.yml", "user-data/*.yml"]
+  }
+}
+```
+
+The built-in YAML editor (under Config --> Edit Config) also has live validation and auto-complete from the schema.
+
+<img width="700" src="https://pixelflare.cc/alicia/dashy/yaml-editor" alt="YAML editor screenshot" />
 
 ### Config Saving Methods
 
