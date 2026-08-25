@@ -174,6 +174,7 @@ Dashy supports **1-Click deployments** on several popular cloud platforms. To sp
 - [<img src="https://i.ibb.co/HVWVYF7/docker.png" width="18"/> Deploy to PWD](https://labs.play-with-docker.com/?stack=https://raw.githubusercontent.com/Lissy93/dashy/master/docker-compose.yml)
 - [<img src="https://i.ibb.co/7NxnM2P/easypanel.png" width="18"/> Deploy to Easypanel](https://easypanel.io/docs/templates/dashy)
 - [<img src="https://cloudcache.tencent-cloud.com/qcloud/ui/static/other_external_resource/af4a7321-0f56-47ae-a39e-3fd1d162d8e6.jpeg" width="18"/> Deploy to EdgeOne](https://edgeone.ai/pages/new?repository-url=https://github.com/lissy93/dashy)
+- [<img src="https://d16t0pc4846x52.cloudfront.net/deploylobe.svg" width="18"/> Deploy to RepoCloud](https://repocloud.io/details/Dashy/)
 
 > For more 1-click cloud deployments, see [Cloud Deployment](./docs/deployment.md#deploy-to-cloud-service)
 
