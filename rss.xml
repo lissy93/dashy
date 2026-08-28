@@ -6,8 +6,48 @@
     <atom:link href="https://dashy.to/rss.xml" rel="self" type="application/rss+xml" />
     <description>New releases and version tags for Dashy, the self-hosted dashboard for your homelab.</description>
     <language>en</language>
-    <lastBuildDate>Fri, 21 Aug 2026 12:15:21 GMT</lastBuildDate>
+    <lastBuildDate>Fri, 28 Aug 2026 13:11:26 GMT</lastBuildDate>
     <generator>dashy-docs github-data plugin</generator>
+    <item>
+      <title>4.6.4</title>
+      <link>https://github.com/lissy93/dashy/releases/tag/4.6.4</link>
+      <guid isPermaLink="true">https://github.com/lissy93/dashy/releases/tag/4.6.4</guid>
+      <pubDate>Fri, 28 Aug 2026 13:06:45 GMT</pubDate>
+      <category>Tag</category>
+      <description>Tag 4.6.4</description>
+    </item>
+    <item>
+      <title>4.6.3</title>
+      <link>https://github.com/lissy93/dashy/releases/tag/4.6.3</link>
+      <guid isPermaLink="true">https://github.com/lissy93/dashy/releases/tag/4.6.3</guid>
+      <pubDate>Fri, 28 Aug 2026 11:41:52 GMT</pubDate>
+      <category>Tag</category>
+      <description>Tag 4.6.3</description>
+    </item>
+    <item>
+      <title>4.6.2</title>
+      <link>https://github.com/lissy93/dashy/releases/tag/4.6.2</link>
+      <guid isPermaLink="true">https://github.com/lissy93/dashy/releases/tag/4.6.2</guid>
+      <pubDate>Fri, 28 Aug 2026 11:01:15 GMT</pubDate>
+      <category>Tag</category>
+      <description>Tag 4.6.2</description>
+    </item>
+    <item>
+      <title>4.6.1</title>
+      <link>https://github.com/lissy93/dashy/releases/tag/4.6.1</link>
+      <guid isPermaLink="true">https://github.com/lissy93/dashy/releases/tag/4.6.1</guid>
+      <pubDate>Fri, 28 Aug 2026 10:59:42 GMT</pubDate>
+      <category>Tag</category>
+      <description>Tag 4.6.1</description>
+    </item>
+    <item>
+      <title>Release 4.6.0</title>
+      <link>https://github.com/lissy93/dashy/releases/tag/4.6.0</link>
+      <guid isPermaLink="true">https://github.com/lissy93/dashy/releases/tag/4.6.0</guid>
+      <pubDate>Fri, 21 Aug 2026 12:36:39 GMT</pubDate>
+      <category>Release</category>
+      <description>Happy Friday everyone! 4.6.0 is out, nothing major here just a few QoL features, fixes, bumps and docs :)  What&apos;s Changed  ✨ Features  Added ability to sort items by Provider and by Item ID by @h</description>
+    </item>
     <item>
       <title>4.5.15</title>
       <link>https://github.com/lissy93/dashy/releases/tag/4.5.15</link>
