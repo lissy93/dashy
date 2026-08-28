@@ -73,8 +73,8 @@ Dashy has support for displaying dynamic content in the form of widgets. There a
   - [Drone CI Build](#drone-ci-builds)
   - [Filebrowser](#filebrowser)
   - [Linkding](#linkding)
-  - [Uptime Kuma](#uptime-kuma)
   - [Uptime Kuma Status Page](#uptime-kuma-status-page)
+  - [Uptime Kuma](#uptime-kuma)
   - [Tactical RMM](#tactical-rmm)
 - **[System Resource Monitoring](#system-resource-monitoring)**
   - [CPU Usage Current](#current-cpu-usage)
@@ -2790,6 +2790,42 @@ Linkding is a self-hosted bookmarking service, which has a clean interface and i
 
 ---
 
+### Uptime Kuma Status Page
+
+[Uptime Kuma](https://github.com/louislam/uptime-kuma) is an easy-to-use self-hosted monitoring tool.
+This widget displays the status of your Uptime Kuma monitors from a given status page, including their current history, uptime history, response times and recent failures.
+
+#### Options
+
+| **Field**          | **Type** | **Required** | **Description**                                                                   |
+| ------------------ | -------- | ------------ | --------------------------------------------------------------------------------- |
+| **`host`**         | `string` | Required     | The URL of the Uptime Kuma instance                                               |
+| **`slug`**         | `string` | Required     | The slug of the status page                                                       |
+| **`monitorNames`** | `string[]` | _Optional_   | Optional labels to override the monitor names from Uptime Kuma, in the same order as they appear on the status page |
+| **`hideHistory`**  | `boolean` | _Optional_   | Optionally hide the strip of recent heartbeats |
+| **`hideUptime`**   | `boolean` | _Optional_   | Optionally hide the 24-hour uptime percentage |
+| **`hideStatus`**   | `boolean` | _Optional_   | Optionally hide the up/ down status pill |
+
+#### Example
+
+```yaml
+- type: uptime-kuma-status-page
+  useProxy: true
+  options:
+    host: https://uptime.as93.net
+    slug: domain-locker
+```
+
+#### Info
+
+- **CORS**: 🔴 Proxied (Uptime Kuma only sends CORS headers when running in development mode, so `useProxy: true` is required)
+- **Auth**: 🟢 Not Needed
+- **Price**: 🟢 Free
+- **Host**: Self-Hosted (see [Uptime Kuma](https://github.com/louislam/uptime-kuma) )
+- **Privacy**: _See [Uptime Kuma](https://github.com/louislam/uptime-kuma)_
+
+---
+
 ### Uptime Kuma
 
 [Uptime Kuma](https://github.com/louislam/uptime-kuma) is an easy-to-use self-hosted monitoring tool.
@@ -2800,6 +2836,11 @@ Linkding is a self-hosted bookmarking service, which has a clean interface and i
 | ------------ | -------- | ------------ | ------------------------------------------------------------------------ |
 | **`url`**    | `string` | Required     | The URL of the Uptime Kuma instance                                      |
 | **`apiKey`** | `string` | Required     | The API key (see https://github.com/louislam/uptime-kuma/wiki/API-Keys). |
+| **`hideStatus`** | `boolean` | _Optional_ | Optionally hide the up/ down status pill |
+| **`hideResponseTime`** | `boolean` | _Optional_ | Optionally hide the response time |
+| **`hideUptime`** | `boolean` | _Optional_ | Optionally hide the 24-hour uptime percentage |
+
+Each monitor shows its status, response time and 24-hour uptime. Hover a monitor for its 30-day and 1-year uptime, and average response times. Hide any of the columns with the options above.
 
 #### Example
 
@@ -2813,42 +2854,8 @@ Linkding is a self-hosted bookmarking service, which has a clean interface and i
 
 #### Info
 
-- **CORS**: 🟢 Enabled
+- **CORS**: 🔴 Proxied
 - **Auth**: 🟢 Required
-- **Price**: 🟢 Free
-- **Host**: Self-Hosted (see [Uptime Kuma](https://github.com/louislam/uptime-kuma) )
-- **Privacy**: _See [Uptime Kuma](https://github.com/louislam/uptime-kuma)_
-
----
-
-### Uptime Kuma Status Page
-
-[Uptime Kuma](https://github.com/louislam/uptime-kuma) is an easy-to-use self-hosted monitoring tool.
-
-#### Options
-
-| **Field**          | **Type** | **Required** | **Description**                                                                   |
-| ------------------ | -------- | ------------ | --------------------------------------------------------------------------------- |
-| **`host`**         | `string` | Required     | The URL of the Uptime Kuma instance                                               |
-| **`slug`**         | `string` | Required     | The slug of the status page                                                       |
-| **`monitorNames`** | `strins` | _Optional_   | Names of monitored services (in the same order as on the kuma uptime status page) |
-
-#### Example
-
-```yaml
-- type: uptime-kuma-status-page
-  options:
-    host: http://localhost:3001
-    slug: another-beautiful-status-page
-    monitorNames:
-      - "Name1"
-      - "Name2"
-```
-
-#### Info
-
-- **CORS**: 🟢 Enabled
-- **Auth**: 🟢 Not Needed
 - **Price**: 🟢 Free
 - **Host**: Self-Hosted (see [Uptime Kuma](https://github.com/louislam/uptime-kuma) )
 - **Privacy**: _See [Uptime Kuma](https://github.com/louislam/uptime-kuma)_
