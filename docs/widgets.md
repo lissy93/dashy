@@ -3342,6 +3342,7 @@ Many websites and apps provide their own embeddable widgets. These can be used w
 **Field** | **Type** | **Required** | **Description**
 --- | --- | --- | ---
 **`html`** | `string` |  _Optional_ | HTML contents to render in the widget
+**`htmlSrc`** | `string` |  _Optional_ | A URL (local or remote) to fetch HTML contents from, instead of defining `html`
 **`script`** | `string` |  _Optional_ | Raw JavaScript code to execute (caution)
 **`scriptSrc`** | `string` |  _Optional_ | A URL to JavaScript content (caution)
 **`css`** | `string` |  _Optional_ | Any stylings for widget contents
@@ -3370,6 +3371,15 @@ Or
       css: '.coinmarketcap-currency-widget { color: var(--widget-text-color); }'
       html: '<div class="coinmarketcap-currency-widget" data-currencyid="1" data-base="USD" data-secondary="" data-ticker="true" data-rank="true" data-marketcap="true" data-volume="true" data-statsticker="true" data-stats="USD"></div>'
       scriptSrc: 'https://files.coinmarketcap.com/static/widget/currency.js'
+```
+
+Or fetch the markup from a file, so it's styled like the rest of your dashboard:
+
+```yaml
+- type: embed
+  options:
+    htmlSrc: /component.html
+    css: 'p { color: var(--widget-text-color); }'
 ```
 
 You can also use this widget to display an image, wither locally or from a remote origin.
