@@ -234,6 +234,16 @@
 
 ---
 
+## NMDashboard
+
+> By [@alexNMD](https://github.com/alexNMD) <sup>Re: [#2319](https://github.com/Lissy93/dashy/issues/2319)</sup>
+
+> I preferred the flexibility of Grafana dashboards over the built-in widgets for integrating Glances Exporter data.
+
+![screenshot-nmdashboard](https://github.com/user-attachments/assets/7e8fde0f-8f31-4bf5-a661-5a2fd1cf229c)
+
+---
+
 ## Submitting your Dashboard
 
 ### How to Submit
