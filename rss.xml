@@ -6,7 +6,7 @@
     <atom:link href="https://dashy.to/rss.xml" rel="self" type="application/rss+xml" />
     <description>New releases and version tags for Dashy, the self-hosted dashboard for your homelab.</description>
     <language>en</language>
-    <lastBuildDate>Sat, 29 Aug 2026 18:26:40 GMT</lastBuildDate>
+    <lastBuildDate>Sun, 30 Aug 2026 09:46:31 GMT</lastBuildDate>
     <generator>dashy-docs github-data plugin</generator>
     <item>
       <title>4.6.5</title>
