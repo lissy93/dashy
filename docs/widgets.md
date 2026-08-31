@@ -2805,6 +2805,7 @@ This widget displays the status of your Uptime Kuma monitors from a given status
 | **`hideHistory`**  | `boolean` | _Optional_   | Optionally hide the strip of recent heartbeats |
 | **`hideUptime`**   | `boolean` | _Optional_   | Optionally hide the 24-hour uptime percentage |
 | **`hideStatus`**   | `boolean` | _Optional_   | Optionally hide the up/ down status pill |
+| **`statusLabels`** | `object` | _Optional_   | Optional text overrides for the status pill, keyed by status: `up`, `down`, `pending`, `maintenance`, `unknown` |
 
 #### Example
 
@@ -2839,6 +2840,7 @@ This widget displays the status of your Uptime Kuma monitors from a given status
 | **`hideStatus`** | `boolean` | _Optional_ | Optionally hide the up/ down status pill |
 | **`hideResponseTime`** | `boolean` | _Optional_ | Optionally hide the response time |
 | **`hideUptime`** | `boolean` | _Optional_ | Optionally hide the 24-hour uptime percentage |
+| **`statusLabels`** | `object` | _Optional_ | Optional text overrides for the status pill, keyed by status: `up`, `down`, `pending`, `maintenance`, `unknown` |
 
 Each monitor shows its status, response time and 24-hour uptime. Hover a monitor for its 30-day and 1-year uptime, and average response times. Hide any of the columns with the options above.
 
