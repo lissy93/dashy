@@ -103,6 +103,7 @@ Dashy has support for displaying dynamic content in the form of widgets. There a
   - [Widget Usage Guide](#widget-usage-guide)
   - [Continuous Updates](#continuous-updates)
   - [Proxying Requests](#proxying-requests)
+  - [Ignoring Certificate Errors](#ignoring-certificate-errors)
   - [Handling Secrets](#handling-secrets)
   - [Setting Timeout](#setting-timeout)
   - [Adding Labels](#adding-labels)
@@ -3577,6 +3578,28 @@ Alternatively, and more securely, you can set the auth headers on your service t
 Access-Control-Allow-Origin: https://location-of-dashy/
 Vary: Origin
 ```
+
+---
+
+### Ignoring Certificate Errors
+
+If you're calling a local service with a self-signed certificate, then you'll get an error (like `UNABLE_TO_VERIFY_LEAF_SIGNATURE` or `ERR_TLS_CERT_ALTNAME_INVALID`).
+
+If you trust the host, you can choose to skip certificate verification for that widget, by setting `allowInsecure: true`, this will fix your issue.
+
+Note that this only works if `useProxy: true` is also set, since browsers don't allow you to skip cert checks.
+
+```yaml
+widgets:
+- type: customapi
+  useProxy: true
+  allowInsecure: true
+  options:
+    url: https://tool.ad.local/api/status
+```
+
+> [!WARNING]
+> With verification off, nothing checks that you're talking to the server you think you are. Any headers you've set on the widget (API keys, basic auth) are sent over that unverified connection. Prefer fixing the certificate, or adding your CA with `NODE_EXTRA_CA_CERTS`, where you can.
 
 ---
 
