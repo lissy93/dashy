@@ -9,6 +9,7 @@ Dashy has support for displaying dynamic content in the form of widgets. There a
   - [Weather](#weather)
   - [Weather Forecast](#weather-forecast)
   - [RSS Feed](#rss-feed)
+  - [Calendar](#calendar)
   - [Image](#image)
   - [Public IP Address](#public-ip)
   - [IP Blacklist Checker](#ip-blacklist)
@@ -260,6 +261,83 @@ Display news and updates from any RSS-enabled service.
 - **Auth**: 🟠 Optional
 - **Price**: 🟠 Free Plan (up to 10,000 requests / day)
 - **Privacy**: _See [Rss2Json Privacy Policy](https://rss2json.com/privacy-policy)_
+
+---
+
+### Calendar
+
+Shows upcoming events from any calendar that publishes an iCalendar (`.ics`) feed. Works with Nextcloud, Google, Proton, iCloud, Outlook, Radicale,  Baïkal, etc.
+
+Note that this needs to be proxied through Dashy, since calendar providers don't send CORS headers.
+`webcal://` links are accepted, same as `https://`.
+Recurring events, exceptions and moved occurrences are all expanded, and times are converted to your browser's timezone.
+Events already underway stay listed until they end, and calendars with no `name` set use the name their feed publishes.
+
+#### Options
+
+**Field** | **Type** | **Required** | **Description**
+--- | --- | --- | ---
+**`calendarUrl`** | `string` or `array` |  Required | The URL of your ICS feed. Pass an array to combine several, each either a URL or an object with `url`, plus optional `name` and `color`
+**`days`** | `number` |  _Optional_ | How many days ahead to show. Min: `1`, max: `365`. Defaults to `7`
+**`limit`** | `number` |  _Optional_ | Maximum number of events to show. Defaults to `10`
+**`hideAllDay`** | `boolean` |  _Optional_ | If `true`, all-day events are omitted
+**`showLocation`** | `boolean` |  _Optional_ | If `true`, shows each event's location under its title
+**`showDescription`** | `boolean` |  _Optional_ | If `true`, shows each event's description under its title
+**`startDate`** | `string` |  _Optional_ | Show events from this date instead of today, e.g. `2026-09-03`
+
+#### Example
+
+```yaml
+- type: calendar
+  options:
+    calendarUrl: https://nextcloud.example.com/remote.php/dav/public-calendars/AbCdEf123?export
+    days: 14
+```
+
+Combining calendars, and colour-coding them:
+
+```yaml
+- type: calendar
+  options:
+    limit: 15
+    calendarUrl:
+      - url: https://calendar.google.com/calendar/ical/xxxx/private-xxxx/basic.ics
+        name: Personal
+        color: '#5cabca'
+      - url: webcal://p12-calendars.icloud.com/published/2/xxxx
+        name: Family
+        color: '#e8j54a'
+```
+
+#### Getting your feed URL
+
+**Provider** | **Where to find it**
+--- | ---
+Nextcloud | Calendar → **⋯** → _Copy subscription link_, then append `?export`. Or, for a private calendar, use `https://user:app-password@host/remote.php/dav/calendars/user/calendar-name?export`
+Google | Settings → _Settings for my calendars_ → **Integrate calendar** → _Secret address in iCal format_
+Proton | Settings → Calendars → _Share with anyone_. Requires a paid plan, and the link must be set to **Full view**
+iCloud | Right-click the calendar → _Share Calendar_ → **Public Calendar**
+Outlook | Settings → Calendar → _Shared calendars_ → **Publish a calendar**, choosing the ICS link
+
+#### Keeping your URL private
+
+A calendar URL is a password in disguise: anyone who has it can read your calendar. Since widget options are sent to the browser, don't put a secret feed URL directly in your config if other people can view your dashboard. Instead, set it as an environment variable prefixed with `DASHY_`, and reference the name:
+
+```yaml
+- type: calendar
+  options:
+    calendarUrl: DASHY_MY_CALENDAR
+```
+
+The proxy substitutes the real value server-side, so the URL never reaches the browser.
+
+#### Info
+
+- **CORS**: 🔴 Proxied
+- **Auth**: 🟠 Optional (a secret or authenticated feed URL, where the calendar isn't public)
+- **Price**: 🟢 Free
+- **Host**: Self-Hosted or Managed
+- **Privacy**: _No third-party service is used; Dashy fetches your feed directly_
 
 ---
 
