@@ -174,6 +174,7 @@ Dashy supports **1-Click deployments** on several popular cloud platforms. To sp
 - [<img src="https://pixelflare.cc/alicia/icons/google-cloud-run.png/w128" width="18"/> Deploy to GCP](https://deploy.cloud.run/?git_repo=https://github.com/lissy93/dashy.git)
 - [<img src="https://pixelflare.cc/alicia/icons/easy-panel.png/w128" width="18"/> Deploy to Easypanel](https://easypanel.io/docs/templates/dashy)
 - [<img src="https://pixelflare.cc/alicia/icons/edgeone.png" width="18"/> Deploy to EdgeOne](https://edgeone.ai/pages/new?repository-url=https://github.com/lissy93/dashy)
+- [<img src="https://zop.dev/favicon.svg" width="18"/> Deploy to ZopDay](https://zop.dev/zopday/app/deploy?image=lissy93/dashy:latest&port=8080)
 
 > For more 1-click cloud deployments, see [Cloud Deployment](./docs/deployment.md#deploy-to-cloud-service)
 
