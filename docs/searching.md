@@ -14,7 +14,7 @@ You can launch a elected app by hitting <kbd>Enter</kbd>. This will open the app
 
 ## Tags
 
-By default, when searching items are filtered by the `title`, (as well as the `url`, `provider` and `description`). If you need to find results based on text which isn't included in these attributes, then you can add `tags` to a given item.
+By default, when searching items are filtered by the `title`, (as well as the `url`, `provider`, `description` and `alias`). If you need to find results based on text which isn't included in these attributes, then you can add `tags` to a given item.
 
 ```yaml
   items:
@@ -64,6 +64,38 @@ For apps that you use regularly, you can set a custom keybinding. Use the `hotke
 ```
 
 In the above example, pressing <kbd>2</kbd> will launch Bookstack. Or hitting <kbd>3</kbd> will open Git in the workspace view.
+
+## URL Aliases
+
+Set an `alias` on an item, and visiting that word as a path on your dashboard will redirect you straight to the item's URL. This lets you jump to an app by typing `dashy/jelly` into the address bar, without loading the dashboard first.
+
+```yaml
+- title: Jellyfin
+  icon: sh-jellyfin
+  url: https://jellyfin.lab.local
+  alias: jelly
+```
+
+Above, visiting `https://dashy.lab.local/jelly` sends you to Jellyfin. Matching ignores case, and an alias which doesn't match any item shows the 404 page. Aliases are also searchable, so typing `jelly` into Dashy's search will surface Jellyfin.
+
+Some limitations to be aware of:
+- Aliases must be lowercase, may only contain letters, numbers, hyphens and underscores
+- Only items in your main config file are reachable - items on [multi-page](/docs/pages-and-sections) sub-pages are not
+- Only `http://` and `https://` item URLs can be redirected to
+- Items hidden from the current user (via `displayData`) are not reachable by their alias (you need to login to a user with access first)
+- Requires history routing (the default). Under `VITE_APP_ROUTING_MODE=hash` the URL would need to be `dashy/#/jelly`
+- It's not possible to create aliases for pages Dashy already uses, including: 'home', 'minimal', 'workspace', 'login', 'download' and '404'
+- If two items share an alias, the first one in the config wins
+
+## Searching From The Address Bar
+
+Dashy publishes an [OpenSearch](https://developer.mozilla.org/en-US/docs/Web/XML/Guides/OpenSearch) descriptor (at `/opensearch.xml`), so your browser can offer it as a search keyword. Once added, typing `dashy jelly` into the address bar jumps straight to Jellyfin if you've setup an `alias` for this.
+
+Most browsers pick this up after you've visited your dashboard, then need the keyword assigning by hand:
+- **Chrome / Edge**: Settings → Search engines → Site search, find your dashboard and set a shortcut
+- **Firefox**: Settings → Search → Search Shortcuts, or right-click the address bar and choose "Add search engine"
+
+You can also skip OpenSearch and add the engine manually, using `https://dashy.lab.local/%s` as the URL.
 
 ## Web Search
 
