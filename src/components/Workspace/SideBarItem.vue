@@ -71,7 +71,6 @@ export default {
 <style lang="scss" scoped>
 
 div.side-bar-item {
-  position: relative;
   color: var(--side-bar-item-color);
   background: var(--side-bar-item-background);
   text-align: center;
@@ -91,10 +90,10 @@ div.side-bar-item {
     display: flex;
     align-items: center;
     justify-content: center;
-    position: absolute;
-    top: 50%;
-    right: 4px;
-    transform: translateY(-50%);
+    // Reserve a separate row so the button never intercepts icon or title clicks.
+    width: 1rem;
+    height: 1rem;
+    margin: 0.5rem auto 0;
     background: none;
     border: none;
     cursor: pointer;
@@ -123,6 +122,13 @@ div.side-bar-item {
   &:focus-within .popout-btn {
     opacity: 0.7;
     pointer-events: auto;
+  }
+
+  @media (hover: none) {
+    .popout-btn {
+      opacity: 0.7;
+      pointer-events: auto;
+    }
   }
 }
 </style>

@@ -65,6 +65,20 @@ describe('SideBarItem', () => {
     expect(openSpy).not.toHaveBeenCalled();
   });
 
+  it('launches the workspace app when the icon is clicked', async () => {
+    const wrapper = mountItem({ icon: 'fas fa-server', title: 'App', url: 'https://example.com', target: 'workspace' });
+    await wrapper.findComponent({ name: 'Icon' }).trigger('click');
+    expect(wrapper.emitted('launch-app')).toEqual([[{ url: 'https://example.com', target: 'workspace' }]]);
+    expect(openSpy).not.toHaveBeenCalled();
+  });
+
+  it('launches the workspace app when the title is clicked', async () => {
+    const wrapper = mountItem({ title: 'App', url: 'https://example.com', target: 'workspace' });
+    await wrapper.find('.small-title').trigger('click');
+    expect(wrapper.emitted('launch-app')).toEqual([[{ url: 'https://example.com', target: 'workspace' }]]);
+    expect(openSpy).not.toHaveBeenCalled();
+  });
+
   it('opens in new tab on popout button click without emitting launch-app', async () => {
     const wrapper = mountItem({ title: 'App', url: 'https://example.com', target: 'workspace' });
     const popoutBtn = wrapper.find('.popout-btn');
