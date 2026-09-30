@@ -70,26 +70,26 @@ describe('SideBarItem', () => {
     const popoutBtn = wrapper.find('.popout-btn');
     expect(popoutBtn.exists()).toBe(true);
     await popoutBtn.trigger('click');
-    expect(openSpy).toHaveBeenCalledWith('https://example.com', '_blank');
+    expect(openSpy).toHaveBeenCalledWith('https://example.com', '_blank', 'noopener,noreferrer');
     expect(wrapper.emitted('launch-app')).toBeFalsy();
   });
 
   it('opens in new tab when clicked with ctrlKey or metaKey', async () => {
     const wrapper = mountItem({ title: 'App', url: 'https://example.com', target: 'workspace' });
     await wrapper.trigger('click', { ctrlKey: true });
-    expect(openSpy).toHaveBeenCalledWith('https://example.com', '_blank');
+    expect(openSpy).toHaveBeenCalledWith('https://example.com', '_blank', 'noopener,noreferrer');
     expect(wrapper.emitted('launch-app')).toBeFalsy();
 
     openSpy.mockClear();
 
     await wrapper.trigger('click', { metaKey: true });
-    expect(openSpy).toHaveBeenCalledWith('https://example.com', '_blank');
+    expect(openSpy).toHaveBeenCalledWith('https://example.com', '_blank', 'noopener,noreferrer');
     expect(wrapper.emitted('launch-app')).toBeFalsy();
   });
 
   it('opens in new tab when middle clicked (auxclick button 1)', async () => {
     const wrapper = mountItem({ title: 'App', url: 'https://example.com', target: 'workspace' });
     await wrapper.trigger('auxclick', { button: 1 });
-    expect(openSpy).toHaveBeenCalledWith('https://example.com', '_blank');
+    expect(openSpy).toHaveBeenCalledWith('https://example.com', '_blank', 'noopener,noreferrer');
   });
 });

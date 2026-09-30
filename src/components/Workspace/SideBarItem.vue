@@ -53,7 +53,7 @@ export default {
     },
     openInNewTab(e) {
       if (e && e.preventDefault) e.preventDefault();
-      if (this.url) window.open(this.url, '_blank');
+      if (this.url) window.open(this.url, '_blank', 'noopener,noreferrer');
     },
   },
   data() {
@@ -88,7 +88,9 @@ div.side-bar-item {
   }
 
   .popout-btn {
-    display: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: absolute;
     top: 50%;
     right: 4px;
@@ -98,23 +100,29 @@ div.side-bar-item {
     cursor: pointer;
     padding: 2px;
     color: currentColor;
-    opacity: 0.7;
+    opacity: 0;
+    pointer-events: none;
     border-radius: var(--curve-factor, 4px);
     transition: opacity 0.15s ease-in-out, background 0.15s ease-in-out;
-    &:hover {
+
+    &:hover,
+    &:focus-visible {
       opacity: 1;
       background: rgba(255, 255, 255, 0.15);
+      outline: 1px solid currentColor;
+      pointer-events: auto;
     }
+
     svg {
       width: 0.75rem;
       height: 0.75rem;
     }
   }
 
-  &:hover .popout-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  &:hover .popout-btn,
+  &:focus-within .popout-btn {
+    opacity: 0.7;
+    pointer-events: auto;
   }
 }
 </style>
