@@ -1257,18 +1257,28 @@ Displays airport departure and arrival flights, using data from [AeroDataBox](ht
 
 ### Astronomy Picture of the Day
 
-Show the NASA Astronomy Picture of the Day. Data is fetched from [APOD](https://apod.nasa.gov/apod/) using [@Lissy93/go-apod](https://github.com/lissy93/go-apod) / hosted at [apod.as93.net](https://apod.as93.net/).
+Show the NASA Astronomy Picture of the Day. Data is fetched from [APOD](https://science.nasa.gov/apod/) using [@Lissy93/go-apod](https://github.com/lissy93/go-apod) / hosted at [apod.as93.net](https://apod.as93.net/).
 
 <p align="center"><img width="400" src="https://storage.googleapis.com/as93-screenshots/dashy/apod.png" /></p>
 
 #### Options
 
-_No config options._
+**Field** | **Type** | **Required** | **Description**
+--- | --- | --- | ---
+**`hostname`** | `string` |  _Optional_ | The URL of your own [go-apod](https://github.com/lissy93/go-apod) instance. Defaults to `https://apod.as93.net`
 
 #### Example
 
 ```yaml
 - type: apod
+```
+
+Or, using a self-hosted instance:
+
+```yaml
+- type: apod
+  options:
+    hostname: https://apod.example.com
 ```
 
 #### Info
