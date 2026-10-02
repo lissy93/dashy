@@ -7,22 +7,12 @@
   >
     <Icon v-if="icon" :icon="icon" size="small" :url="url" />
     <p class="small-title" v-else>{{ title }}</p>
-    <button
-      v-if="url"
-      class="popout-btn"
-      :title="$t ? $t('context-menus.item.newtab') : 'Open in new tab'"
-      :aria-label="$t ? $t('context-menus.item.newtab') : 'Open in new tab'"
-      @click.stop="openInNewTab($event)"
-    >
-      <NewTabOpenIcon />
-    </button>
   </div>
 </template>
 
 <script>
 
 import Icon from '@/components/LinkItems/ItemIcon.vue';
-import NewTabOpenIcon from '@/assets/interface-icons/open-new-tab.svg';
 
 export default {
   name: 'SideBarItem',
@@ -36,7 +26,6 @@ export default {
   emits: ['launch-app'],
   components: {
     Icon,
-    NewTabOpenIcon,
   },
   methods: {
     itemClicked(e) {
@@ -83,51 +72,6 @@ div.side-bar-item {
       font-size: 0.6rem;
       transform: rotate(-25deg);
       padding: 0.5rem 0;
-    }
-  }
-
-  .popout-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    // Reserve a separate row so the button never intercepts icon or title clicks.
-    width: 1rem;
-    height: 1rem;
-    margin: 0.5rem auto 0;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 2px;
-    color: currentColor;
-    opacity: 0;
-    pointer-events: none;
-    border-radius: var(--curve-factor, 4px);
-    transition: opacity 0.15s ease-in-out, background 0.15s ease-in-out;
-
-    &:hover,
-    &:focus-visible {
-      opacity: 1;
-      background: rgba(255, 255, 255, 0.15);
-      outline: 1px solid currentColor;
-      pointer-events: auto;
-    }
-
-    svg {
-      width: 0.75rem;
-      height: 0.75rem;
-    }
-  }
-
-  &:hover .popout-btn,
-  &:focus-within .popout-btn {
-    opacity: 0.7;
-    pointer-events: auto;
-  }
-
-  @media (hover: none) {
-    .popout-btn {
-      opacity: 0.7;
-      pointer-events: auto;
     }
   }
 }

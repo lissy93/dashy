@@ -16,7 +16,6 @@ function mountItem(props = {}) {
       },
       stubs: {
         Icon: true,
-        NewTabOpenIcon: true,
       },
     },
   });
@@ -47,16 +46,6 @@ describe('SideBarItem', () => {
     expect(wrapper.find('p.small-title').text()).toBe('No Icon App');
   });
 
-  it('does not render popout button when url is not set', () => {
-    const wrapper = mountItem({ title: 'Section Header' });
-    expect(wrapper.find('.popout-btn').exists()).toBe(false);
-  });
-
-  it('renders popout button when url is provided', () => {
-    const wrapper = mountItem({ title: 'App', url: 'https://example.com' });
-    expect(wrapper.find('.popout-btn').exists()).toBe(true);
-  });
-
   it('emits launch-app on normal click', async () => {
     const wrapper = mountItem({ title: 'App', url: 'https://example.com', target: 'workspace' });
     await wrapper.trigger('click');
@@ -77,15 +66,6 @@ describe('SideBarItem', () => {
     await wrapper.find('.small-title').trigger('click');
     expect(wrapper.emitted('launch-app')).toEqual([[{ url: 'https://example.com', target: 'workspace' }]]);
     expect(openSpy).not.toHaveBeenCalled();
-  });
-
-  it('opens in new tab on popout button click without emitting launch-app', async () => {
-    const wrapper = mountItem({ title: 'App', url: 'https://example.com', target: 'workspace' });
-    const popoutBtn = wrapper.find('.popout-btn');
-    expect(popoutBtn.exists()).toBe(true);
-    await popoutBtn.trigger('click');
-    expect(openSpy).toHaveBeenCalledWith('https://example.com', '_blank', 'noopener,noreferrer');
-    expect(wrapper.emitted('launch-app')).toBeFalsy();
   });
 
   it('opens in new tab when clicked with ctrlKey or metaKey', async () => {
