@@ -1,4 +1,6 @@
 
+
+[![Deploy to Railyard](https://app.railyard.run/deploy/badge)](https://app.railyard.run/deploy?repo=https://github.com/lissy93/dashy)
 <h1 align="center">Dashy</h1>
 <p align="center">
   <i>The most customizable dashboard for self-hosters</i><br>
