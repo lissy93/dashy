@@ -6,14 +6,14 @@
     tabindex="-2"
   />
   <div v-else-if="authLabel" class="auth-buttons">
-    <span v-if="greeting" class="user-type-note">{{ greeting }}</span>
-    <span v-else-if="isGuest" class="user-type-note">{{ $t('settings.please-login') }}</span>
+    <span v-if="showGreeting && greeting" class="user-type-note">{{ greeting }}</span>
+    <span v-else-if="showGreeting && isGuest" class="user-type-note">{{ $t('settings.please-login') }}</span>
     <button
       type="button"
       class="auth-btn"
       @click="run"
       v-tooltip="tooltip($t(authLabel))"
-      tabindex="-2"
+      :tabindex="buttonTabIndex"
     >
       <IconLogout />
       <span>{{ $t(authLabel) }}</span>
@@ -41,6 +41,8 @@ export default {
   components: { IconLogout },
   props: {
     userType: { type: Number, required: true },
+    buttonTabIndex: { type: Number, default: -2 },
+    showGreeting: { type: Boolean, default: true },
     iconOnly: Boolean, // If true, render just the icon (used by ConfigLauncher)
   },
   computed: {
