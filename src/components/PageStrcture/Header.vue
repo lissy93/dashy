@@ -14,10 +14,10 @@
 </template>
 
 <script>
+import { defineAsyncComponent } from 'vue';
 import PageTitle from '@/components/PageStrcture/PageTitle.vue';
 import Nav from '@/components/PageStrcture/Nav.vue';
 import { shouldBeVisible } from '@/utils/config/SectionHelpers';
-import { defineAsyncComponent } from 'vue';
 
 export default {
   name: 'Header',
