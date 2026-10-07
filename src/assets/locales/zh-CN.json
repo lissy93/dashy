@@ -1,4 +1,11 @@
 {
+  "account-menu": {
+    "guest": "访客",
+    "signed-in": "已登录",
+    "signed-out": "未登录",
+    "admin": "Dashy 管理员",
+    "sso-logout-note": "退出可能同时结束统一登录会话。"
+  },
   "general": {
     "close-modal": "关闭对话框",
     "confirm": "确认",

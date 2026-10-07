@@ -6,11 +6,15 @@
         :description="pageInfo.description"
         :logo="pageInfo.logo"
       />
-      <Nav :links="pageInfo.navLinks" :user-hidden="!navVisible" class="nav" />
+      <div class="header-actions">
+        <Nav :links="pageInfo.navLinks" :user-hidden="!navVisible" class="nav" />
+        <AccountMenu v-if="$store.getters.appConfig.showAccountMenu" />
+      </div>
     </header>
 </template>
 
 <script>
+import AccountMenu from '@/components/PageStrcture/AccountMenu.vue';
 import PageTitle from '@/components/PageStrcture/PageTitle.vue';
 import Nav from '@/components/PageStrcture/Nav.vue';
 import { shouldBeVisible } from '@/utils/config/SectionHelpers';
@@ -18,6 +22,7 @@ import { shouldBeVisible } from '@/utils/config/SectionHelpers';
 export default {
   name: 'Header',
   components: {
+    AccountMenu,
     PageTitle,
     Nav,
   },
@@ -44,6 +49,16 @@ export default {
 <style scoped lang="scss">
 
 @import '@/styles/media-queries.scss';
+
+  .header-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    min-width: 0;
+    max-width: 100%;
+  }
 
   header {
     position: relative;

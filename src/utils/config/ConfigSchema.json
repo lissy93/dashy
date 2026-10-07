@@ -814,6 +814,12 @@
             }
           }
         },
+        "showAccountMenu": {
+          "title": "Show Account Menu",
+          "type": "boolean",
+          "default": false,
+          "description": "Show the current user, sign-in state, Dashy admin badge and account actions in the header when authentication is configured"
+        },
         "showSplashScreen": {
           "title": "Show splash screen",
           "type": "boolean",
