@@ -14,15 +14,15 @@
 </template>
 
 <script>
-import AccountMenu from '@/components/PageStrcture/AccountMenu.vue';
 import PageTitle from '@/components/PageStrcture/PageTitle.vue';
 import Nav from '@/components/PageStrcture/Nav.vue';
 import { shouldBeVisible } from '@/utils/config/SectionHelpers';
+import { defineAsyncComponent } from 'vue';
 
 export default {
   name: 'Header',
   components: {
-    AccountMenu,
+    AccountMenu: defineAsyncComponent(() => import('@/components/PageStrcture/AccountMenu.vue')),
     PageTitle,
     Nav,
   },
