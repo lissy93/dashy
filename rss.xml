@@ -6,8 +6,80 @@
     <atom:link href="https://dashy.to/rss.xml" rel="self" type="application/rss+xml" />
     <description>New releases and version tags for Dashy, the self-hosted dashboard for your homelab.</description>
     <language>en</language>
-    <lastBuildDate>Wed, 30 Sep 2026 13:28:33 GMT</lastBuildDate>
+    <lastBuildDate>Thu, 08 Oct 2026 14:00:19 GMT</lastBuildDate>
     <generator>dashy-docs github-data plugin</generator>
+    <item>
+      <title>4.7.20</title>
+      <link>https://github.com/lissy93/dashy/releases/tag/4.7.20</link>
+      <guid isPermaLink="true">https://github.com/lissy93/dashy/releases/tag/4.7.20</guid>
+      <pubDate>Thu, 08 Oct 2026 13:55:00 GMT</pubDate>
+      <category>Tag</category>
+      <description>Tag 4.7.20</description>
+    </item>
+    <item>
+      <title>4.7.19</title>
+      <link>https://github.com/lissy93/dashy/releases/tag/4.7.19</link>
+      <guid isPermaLink="true">https://github.com/lissy93/dashy/releases/tag/4.7.19</guid>
+      <pubDate>Wed, 07 Oct 2026 09:38:35 GMT</pubDate>
+      <category>Tag</category>
+      <description>Tag 4.7.19</description>
+    </item>
+    <item>
+      <title>4.7.18</title>
+      <link>https://github.com/lissy93/dashy/releases/tag/4.7.18</link>
+      <guid isPermaLink="true">https://github.com/lissy93/dashy/releases/tag/4.7.18</guid>
+      <pubDate>Wed, 07 Oct 2026 08:29:55 GMT</pubDate>
+      <category>Tag</category>
+      <description>Tag 4.7.18</description>
+    </item>
+    <item>
+      <title>4.7.17</title>
+      <link>https://github.com/lissy93/dashy/releases/tag/4.7.17</link>
+      <guid isPermaLink="true">https://github.com/lissy93/dashy/releases/tag/4.7.17</guid>
+      <pubDate>Sat, 03 Oct 2026 06:04:15 GMT</pubDate>
+      <category>Tag</category>
+      <description>Tag 4.7.17</description>
+    </item>
+    <item>
+      <title>4.7.16</title>
+      <link>https://github.com/lissy93/dashy/releases/tag/4.7.16</link>
+      <guid isPermaLink="true">https://github.com/lissy93/dashy/releases/tag/4.7.16</guid>
+      <pubDate>Sat, 03 Oct 2026 05:55:40 GMT</pubDate>
+      <category>Tag</category>
+      <description>Tag 4.7.16</description>
+    </item>
+    <item>
+      <title>4.7.15</title>
+      <link>https://github.com/lissy93/dashy/releases/tag/4.7.15</link>
+      <guid isPermaLink="true">https://github.com/lissy93/dashy/releases/tag/4.7.15</guid>
+      <pubDate>Fri, 02 Oct 2026 18:52:33 GMT</pubDate>
+      <category>Tag</category>
+      <description>Tag 4.7.15</description>
+    </item>
+    <item>
+      <title>4.7.14</title>
+      <link>https://github.com/lissy93/dashy/releases/tag/4.7.14</link>
+      <guid isPermaLink="true">https://github.com/lissy93/dashy/releases/tag/4.7.14</guid>
+      <pubDate>Thu, 01 Oct 2026 08:27:16 GMT</pubDate>
+      <category>Tag</category>
+      <description>Tag 4.7.14</description>
+    </item>
+    <item>
+      <title>4.7.13</title>
+      <link>https://github.com/lissy93/dashy/releases/tag/4.7.13</link>
+      <guid isPermaLink="true">https://github.com/lissy93/dashy/releases/tag/4.7.13</guid>
+      <pubDate>Thu, 01 Oct 2026 08:26:09 GMT</pubDate>
+      <category>Tag</category>
+      <description>Tag 4.7.13</description>
+    </item>
+    <item>
+      <title>4.7.12</title>
+      <link>https://github.com/lissy93/dashy/releases/tag/4.7.12</link>
+      <guid isPermaLink="true">https://github.com/lissy93/dashy/releases/tag/4.7.12</guid>
+      <pubDate>Wed, 30 Sep 2026 17:55:35 GMT</pubDate>
+      <category>Tag</category>
+      <description>Tag 4.7.12</description>
+    </item>
     <item>
       <title>4.7.11</title>
       <link>https://github.com/lissy93/dashy/releases/tag/4.7.11</link>
