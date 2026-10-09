@@ -353,7 +353,8 @@
             "solarized-light",
             "brutalist",
             "midnight",
-            "catppuccin"
+            "catppuccin",
+            "liquid-glass"
           ]
         },
         "dayTheme": {
