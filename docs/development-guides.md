@@ -24,8 +24,7 @@ Choose a snappy name for your theme, and add it to the `builtInThemes` array ins
 
 ### 2. Write some Styles
 
-Put your theme styles inside [`color-themes.scss`](https://github.com/Lissy93/dashy/blob/master/src/styles/color-themes.scss).
-Create a new block, and make sure that `data-theme` matches the theme name you chose above. For example:
+Put your theme styles in a dedicated partial under [`src/styles/themes/`](https://github.com/Lissy93/dashy/tree/master/src/styles/themes), import it from [`color-themes.scss`](https://github.com/Lissy93/dashy/blob/master/src/styles/color-themes.scss), and make sure that `data-theme` matches the theme name you chose above. For example:
 
 ```css
 html[data-theme='tiger'] {

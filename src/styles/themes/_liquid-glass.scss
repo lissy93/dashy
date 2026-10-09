@@ -1,0 +1,222 @@
+/*
+ * Liquid Glass
+ *
+ * A lightweight glass surface theme. The blur is deliberately restricted to
+ * a small set of navigation and modal surfaces; link items stay translucent
+ * without backdrop-filter so larger dashboards remain responsive.
+ */
+html[data-theme='liquid-glass'] {
+  --primary: #f1f7ff;
+  --foreground: #e8f2ff;
+  --background: #091426;
+  --background-darker: #06101f;
+  --item-group-outer-background: rgba(12, 28, 52, 0.82);
+  --item-group-background: rgba(21, 45, 78, 0.58);
+  --item-group-heading-text-color: #e8f2ff;
+  --item-group-heading-text-color-hover: #ffffff;
+  --item-group-shadow: 0 14px 34px rgba(1, 8, 20, 0.28);
+  --item-shadow: 0 8px 22px rgba(1, 8, 20, 0.2);
+  --item-hover-shadow: 0 12px 28px rgba(1, 8, 20, 0.34);
+  --settings-background: rgba(10, 25, 46, 0.82);
+  --settings-text-color: #e8f2ff;
+  --search-container-background: rgba(10, 25, 46, 0.62);
+  --config-settings-background: #0c1b31;
+  --cloud-backup-background: #0c1b31;
+  --minimal-view-background-color: transparent;
+  --minimal-view-group-background: rgba(21, 45, 78, 0.58);
+  --minimal-view-section-heading-background: rgba(21, 45, 78, 0.72);
+  --minimal-view-section-heading-color: #e8f2ff;
+  --curve-factor: 0.9rem;
+  --curve-factor-navbar: 1.1rem;
+  --liquid-glass-surface: rgba(18, 39, 68, 0.62);
+  --liquid-glass-surface-strong: rgba(12, 29, 52, 0.84);
+  --liquid-glass-border: rgba(225, 241, 255, 0.22);
+  --liquid-glass-highlight: rgba(255, 255, 255, 0.13);
+  --liquid-glass-blur: 14px;
+
+  color: var(--foreground);
+
+  body {
+    background-color: var(--background);
+    background-image:
+      radial-gradient(circle at 10% 0%, rgba(86, 179, 255, 0.2), transparent 34rem),
+      radial-gradient(circle at 90% 12%, rgba(173, 122, 255, 0.18), transparent 30rem),
+      linear-gradient(145deg, #0a1830 0%, #091426 52%, #11102a 100%);
+    background-attachment: fixed;
+  }
+
+  .home {
+    background: transparent;
+  }
+
+  .collapsable {
+    border: 1px solid var(--liquid-glass-border);
+    border-radius: var(--curve-factor);
+    background: var(--item-group-outer-background);
+    box-shadow: var(--item-group-shadow);
+  }
+
+  .collapsable .collapsible-content {
+    background: var(--item-group-background);
+  }
+
+  .item {
+    border: 1px solid transparent;
+    border-radius: calc(var(--curve-factor) - 0.15rem);
+    background: var(--liquid-glass-surface);
+    box-shadow: var(--item-shadow);
+    transition: border-color 180ms ease, background-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+
+    &:hover, &:focus {
+      border-color: var(--liquid-glass-border);
+      background: rgba(47, 83, 128, 0.72);
+      box-shadow: var(--item-hover-shadow);
+      transform: translateY(-1px);
+    }
+  }
+
+  .nav-outer nav .nav-item,
+  .search-wrap form,
+  .search-wrap input,
+  .theme-dropdown .vs__dropdown-toggle,
+  .display-options svg,
+  svg.color-button {
+    border: 1px solid var(--liquid-glass-border);
+    border-radius: var(--curve-factor);
+    background: var(--liquid-glass-surface);
+    color: var(--foreground);
+  }
+
+  .nav-outer nav .nav-item:hover,
+  .nav-outer nav .nav-item:focus,
+  .display-options svg:hover,
+  .display-options svg.selected,
+  svg.color-button:hover,
+  svg.color-button.selected {
+    background: var(--liquid-glass-highlight);
+    border-color: rgba(225, 241, 255, 0.4);
+  }
+
+  /* Keep blur to bounded chrome surfaces instead of every card/item. */
+  @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    header,
+    section.settings-outer,
+    .options-panel,
+    dialog.dashy-modal,
+    .theme-configurator-wrapper,
+    .view-switcher {
+      -webkit-backdrop-filter: blur(var(--liquid-glass-blur)) saturate(125%);
+      backdrop-filter: blur(var(--liquid-glass-blur)) saturate(125%);
+      background: var(--liquid-glass-surface-strong);
+      border: 1px solid var(--liquid-glass-border);
+      box-shadow: 0 18px 42px rgba(1, 8, 20, 0.3);
+    }
+  }
+
+  /* Solid surface fallback for browsers without backdrop-filter support. */
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    header,
+    section.settings-outer,
+    .options-panel,
+    dialog.dashy-modal,
+    .theme-configurator-wrapper,
+    .view-switcher {
+      background: #122947;
+      border: 1px solid #496888;
+      box-shadow: 0 12px 28px rgba(1, 8, 20, 0.3);
+    }
+  }
+}
+
+/* Reduce GPU work on touch devices and constrained/reduced-data sessions. */
+@media (max-width: 780px), (hover: none), (prefers-reduced-data: reduce) {
+  html[data-theme='liquid-glass'] {
+    --liquid-glass-blur: 0px;
+
+    body {
+      background-attachment: scroll;
+    }
+
+    header,
+    section.settings-outer,
+    .options-panel,
+    dialog.dashy-modal,
+    .theme-configurator-wrapper,
+    .view-switcher {
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+      background: var(--liquid-glass-surface-strong);
+    }
+
+    .item {
+      box-shadow: 0 4px 12px rgba(1, 8, 20, 0.2);
+      transition: none;
+
+      &:hover, &:focus {
+        transform: none;
+      }
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme='liquid-glass'] {
+    body {
+      background-attachment: scroll;
+    }
+
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+      transition-duration: 0.01ms !important;
+    }
+
+    .item:hover, .item:focus {
+      transform: none;
+    }
+  }
+}
+
+@media (forced-colors: active) {
+  html[data-theme='liquid-glass'] {
+    --primary: LinkText;
+    --foreground: CanvasText;
+    --background: Canvas;
+    --background-darker: Canvas;
+    --item-group-outer-background: Canvas;
+    --item-group-background: Canvas;
+    --item-group-heading-text-color: CanvasText;
+    --settings-background: Canvas;
+    --settings-text-color: CanvasText;
+
+    body {
+      background: Canvas;
+      color: CanvasText;
+    }
+
+    header,
+    section.settings-outer,
+    .options-panel,
+    dialog.dashy-modal,
+    .theme-configurator-wrapper,
+    .view-switcher,
+    .collapsable,
+    .item,
+    .nav-outer nav .nav-item {
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+      background: Canvas;
+      border: 1px solid ButtonText;
+      box-shadow: none;
+      color: CanvasText;
+    }
+
+    .item:hover, .item:focus,
+    .nav-outer nav .nav-item:hover,
+    .nav-outer nav .nav-item:focus {
+      background: Highlight;
+      color: HighlightText;
+    }
+  }
+}

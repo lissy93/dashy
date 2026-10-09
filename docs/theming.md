@@ -1,6 +1,6 @@
 # Theming
 
-By default Dashy comes with 40+ built-in themes, which can be applied from the dropdown menu in the UI.
+By default Dashy comes with 50+ built-in themes, which can be applied from the dropdown menu in the UI.
 
 ![Built-in Themes](https://i.ibb.co/GV3wRss/Dashy-Themes.png)
 
@@ -14,9 +14,27 @@ The following content requires that you have a basic understanding of CSS. If yo
 
 The theme switching is done by simply changing the `data-theme` attribute on the root DOM element, which can then be targeted by CSS. All colors and styles are managed with CSS variables.
 
-The theme switcher in the UI will list all themes defined in [here](github.com/Lissy93/dashy/blob/3.3.1/src/utils/defaults.js#L50), as well as any extras that you add yourself under `appConfig.cssThemes`. Then, when a theme is selected, any CSS within `html[data-theme='my-theme']{}` will be applied.
+The theme switcher in the UI lists the built-in themes registered in [`src/utils/config/defaults.js`](https://github.com/Lissy93/dashy/blob/master/src/utils/config/defaults.js), as well as any extras that you add under `appConfig.cssThemes`. When a theme is selected, its name is applied to the root `data-theme` attribute and the selection is persisted through Dashy's existing local config storage flow.
 
 To apply a default theme to your instance, set `appConfig.theme` (or, use `dayTheme` and `nightTheme` to adjust according to your OS light/dark preferences).
+
+### Liquid Glass
+
+`liquid-glass` is a built-in glass surface theme that uses the same CSS variable/token system as the other themes. It adds a cool, translucent palette and applies `backdrop-filter` only to bounded chrome surfaces such as the header, settings panel, modals and view switcher. Item cards remain translucent without blur so larger dashboards do not pay the cost of a blur layer for every item.
+
+The theme has several graceful fallbacks:
+
+- Browsers without `backdrop-filter` support receive solid, high-contrast surfaces.
+- `prefers-reduced-motion: reduce` disables transitions and hover transforms.
+- `forced-colors: active` switches to system colors and removes transparency and blur.
+- Touch, narrow, or reduced-data contexts disable blur and reduce shadows.
+
+To use it in `conf.yml`:
+
+```yaml
+appConfig:
+  theme: liquid-glass
+```
 
 ## Adding Your Own Theme
 

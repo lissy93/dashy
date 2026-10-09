@@ -89,6 +89,7 @@ const defaults = {
     'tama',
     'neomorphic',
     'glass-2',
+    'liquid-glass',
     'night-bat',
     'tokyo-night',
     'gruvbox',
