@@ -121,7 +121,7 @@ If either any of your sections, items or themes are mdi icons, then it will be a
 
 If an item's icon is set to `favicon`, then it will be auto-fetched from the corresponding URL. Since not all websites have their icon located at `/favicon.ico`, and if they do, it's often very low resolution (like `16 x 16 px`). Therefore, the default behavior is for Dashy to check if the URL is public, and if so will use an API to fetch the favicon. For self-hosted services, the favicon will be fetched from the default path, and no external requests will be made.
 
-The default favicon API is [allesedv.com](https://favicon.allesedv.com/), but this can be changed by setting `appConfig.faviconApi` to an alternate source (`iconhorse`, `faviconkit`, `besticon`, `duckduckgo`, `yandex`, `google`, `webmasterapi`, `mcapi` and `allesedv` are supported). If you do not want to use any API, then you can set this property to `local`, and the favicon will be fetched from the default path. For hosted services, this will still incur an external request.
+The default favicon API is [allesedv.com](https://favicon.allesedv.com/), but this can be changed by setting `appConfig.faviconApi` to an alternate source (`iconhorse`, `faviconkit`, `besticon`, `duckduckgo`, `yandex`, `google`, `webmasterapi`, `mcapi`, `favicondl` and `allesedv` are supported). If you do not want to use any API, then you can set this property to `local`, and the favicon will be fetched from the default path. For hosted services, this will still incur an external request.
 
 #### Generative Icons
 

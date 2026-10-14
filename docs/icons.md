@@ -45,6 +45,7 @@ The following favicon APIs are supported:
 - `google` - Official Google favicon API service, good support for all sites, but poor quality
 - `yandex` - Lower quality icons, but useful in some regions where other services are blocked
 - `webmasterapi` - [WebMasterAPI](https://www.webmasterapi.com/) fetches website favicons via their API
+- `favicondl` - [FaviconDL](https://favicondl.com/documentation.html) checks the page's link tags, web manifest and /favicon.ico, and redirects to the best icon it finds (no API key)
 - `local` - Set to local to fetch the default icon at /favicon.ico instead of using an API
 
 If for a given service none of the APIs work in your situation, and nor does local, then the best option is to find the path of the services logo or favicon, and set the icon to the URL of the raw image. For example, `icon: https://monitoring.local/faviconx128.png`- you can find this path using the browser dev tools.

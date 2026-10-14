@@ -384,7 +384,8 @@
             "google",
             "besticon",
             "webmasterapi",
-            "mcapi"
+            "mcapi",
+            "favicondl"
           ],
           "default": "allesedv",
           "description": "Which service to use to resolve favicons. Set to local to do this locally instead"
