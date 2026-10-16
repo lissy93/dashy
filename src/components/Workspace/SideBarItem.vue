@@ -1,6 +1,10 @@
 <template>
-  <div @click="itemClicked()"
-    :class="`side-bar-item ${icon ? 'w-icon' : 'text-only'}`" v-tooltip="tooltip">
+  <div
+    @click="itemClicked($event)"
+    @auxclick="itemAuxClicked($event)"
+    :class="`side-bar-item ${icon ? 'w-icon' : 'text-only'}`"
+    v-tooltip="tooltip"
+  >
     <Icon v-if="icon" :icon="icon" size="small" :url="url" />
     <p class="small-title" v-else>{{ title }}</p>
   </div>
@@ -24,8 +28,21 @@ export default {
     Icon,
   },
   methods: {
-    itemClicked() {
+    itemClicked(e) {
+      if (e && (e.ctrlKey || e.metaKey)) {
+        this.openInNewTab(e);
+        return;
+      }
       if (this.url) this.$emit('launch-app', { url: this.url, target: this.target });
+    },
+    itemAuxClicked(e) {
+      if (e && e.button === 1) {
+        this.openInNewTab(e);
+      }
+    },
+    openInNewTab(e) {
+      if (e && e.preventDefault) e.preventDefault();
+      if (this.url) window.open(this.url, '_blank', 'noopener,noreferrer');
     },
   },
   data() {
@@ -33,7 +50,6 @@ export default {
       tooltip: {
         disabled: !this.title,
         content: this.title,
-        
         placement: 'bottom-end',
       },
     };
