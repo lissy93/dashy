@@ -144,6 +144,7 @@ For more info, see the[Multi-Page docs](/docs/pages-and-sections.md#multi-page-s
 **`disableConfiguration`** | `boolean` | _Optional_ | If set to true, no users will be able to view or edit the config through the UI
 **`disableConfigurationForNonAdmin`** | `boolean` | _Optional_ | If set to true, only admin users will be able to view or edit the config through the UI. disableConfiguration must not be set to true.
 **`widgetsAlwaysUseProxy`** | `boolean` | _Optional_ | If set to `true`, requests made by widgets will always be proxied, same as setting `useProxy: true` on each widget. Note that this may break some widgets.
+**`showAccountMenu`** | `boolean` | _Optional_ | Show the current user, sign-in state, Dashy administrator badge and native sign-in/out actions in the header. Defaults to `false`. Requires configured authentication; colors follow the selected theme. The badge is display-only and does not grant permissions.
 **`showSplashScreen`** | `boolean` | _Optional_ | If set to `true`, a loading screen will be shown. Defaults to `false`.
 **`enableErrorReporting`** | `boolean` | _Optional_ | Enable reporting of unexpected errors and crashes. This is off by default, and **no data will ever be captured unless you explicitly enable it**. Turning on error reporting helps previously unknown bugs get discovered and fixed. Dashy uses [Sentry](https://github.com/getsentry/sentry) for error reporting. Defaults to `false`.
 **`sentryDsn`** | `boolean` | _Optional_ | If you need to monitor errors in your instance, then you can use Sentry to collect and process bug reports. Sentry can be self-hosted, or used as SaaS, once your instance is setup, then all you need to do is pass in the DSN here, and enable error reporting. You can learn more on the [Sentry DSN Docs](https://docs.sentry.io/product/sentry-basics/dsn-explainer/). Note that this will only ever be used if `enableErrorReporting` is explicitly enabled.
@@ -482,3 +483,20 @@ If you need any help, feel free to [Raise an Issue](https://github.com/Lissy93/d
 Happy Configuring 🤓🔧
 
 **[⬆️ Back to Top](#configuring)**
+
+### Header account menu
+
+Set `appConfig.showAccountMenu: true` to show account information beside the navigation.
+Signed-out visitors see **Guest / Not signed in**. Signed-in users see their Dashy
+username and, when applicable, a **Dashy admin** badge. Open the disclosure to use
+Dashy's existing sign-in or sign-out action. OIDC and Keycloak sign-out may also
+end the provider session. No authentication configured means no account menu,
+even though an unprotected dashboard can allow configuration changes.
+
+The menu uses the active theme's navigation and settings colors and supports long
+names, narrow screens, keyboard navigation and Escape to close. Its state follows
+Dashy's existing local session checks: auth changes, other-tab storage changes,
+window focus, and a local check every 15 seconds for cookie/token expiry. These
+checks do not contact the identity provider or guarantee immediate detection of
+provider-side account revocation. The badge describes Dashy permissions, not an
+identity provider's administrator role, and never authorizes server operations.

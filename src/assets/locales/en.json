@@ -1,4 +1,11 @@
 {
+  "account-menu": {
+    "guest": "Guest",
+    "signed-in": "Signed in",
+    "signed-out": "Not signed in",
+    "admin": "Dashy admin",
+    "sso-logout-note": "Signing out may also end your single sign-on session."
+  },
   "general": {
     "close-modal": "Close dialog",
     "confirm": "Confirm",

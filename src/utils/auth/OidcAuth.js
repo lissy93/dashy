@@ -6,6 +6,7 @@ import getApiAuthHeader, { getApiAuthState } from '@/utils/auth/getApiAuthHeader
 import i18n from '@/utils/i18n';
 import { toast } from '@/utils/Toast';
 import $store from '@/store';
+import Keys from '@/utils/StoreMutations';
 
 // Session storage config for storing last sign-in attempt
 const SIGNIN_GUARD_KEY = 'dashy.oidc.signin-attempt';
@@ -107,7 +108,7 @@ class OidcAuth {
     });
     // Mirror token renewals into localStorage so Bearer attachment stays fresh
     this.userManager.events.addUserLoaded((user) => {
-      if (user?.id_token) localStorage.setItem(localStorageKeys.ID_TOKEN, user.id_token);
+      if (user?.id_token) this.persistUserInfo(user);
     });
   }
 
@@ -267,6 +268,7 @@ class OidcAuth {
     localStorage.setItem(localStorageKeys.ISADMIN, isAdmin);
     if (user.id_token) localStorage.setItem(localStorageKeys.ID_TOKEN, user.id_token);
     sessionStorage.removeItem(SIGNIN_GUARD_KEY);
+    $store.commit(Keys.AUTH_CHANGED);
   }
 
   async logout() {
@@ -276,6 +278,7 @@ class OidcAuth {
     localStorage.removeItem(localStorageKeys.ISADMIN);
     localStorage.removeItem(localStorageKeys.ID_TOKEN);
 
+    $store.commit(Keys.AUTH_CHANGED);
     try {
       await this.userManager.signoutRedirect();
     } catch (reason) {
