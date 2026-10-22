@@ -224,6 +224,7 @@ const defaults = {
     ethGasPrices: 'https://www.ethgastracker.com/api/gas/network/mainnet',
     ethGasHistory: 'https://www.ethgastracker.com/api/gas/history',
     exchangeRates: 'https://v6.exchangerate-api.com/v6/',
+    exchangeRatesAllRatesToday: 'https://allratestoday.com/api/v1/rates',
     flights: 'https://aerodatabox.p.rapidapi.com/flights/airports/icao/',
     githubApi: 'https://api.github.com',
     githubTrending: 'https://trend.doforce.xyz/',

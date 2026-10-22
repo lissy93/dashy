@@ -792,7 +792,8 @@ Display current FX rates in your native currency. Hover over a row to view more 
 --- | --- | --- | ---
 **`inputCurrency`** | `string` | Required | The base currency to show results in. Specified as a 3-letter ISO-4217 code, see [here](https://www.exchangerate-api.com/docs/supported-currencies) for the full list of supported currencies, and their symbols
 **`outputCurrencies`** | `array` |  Required | List or currencies to show results for. Specified as a 3-letter ISO-4217 code, see [here](https://www.exchangerate-api.com/docs/supported-currencies) for the full list of supported currencies, and their symbols
-**`apiKey`** | `string` |  Required | API key for [exchangerate-api.com](https://www.exchangerate-api.com/), usually a 24-digit alpha-numeric string. You can sign up for a free account [here](https://app.exchangerate-api.com/sign-up)
+**`apiKey`** | `string` |  Required | API key for the selected provider. For [exchangerate-api.com](https://www.exchangerate-api.com/) (default) this is usually a 24-digit alpha-numeric string, and you can sign up for a free account [here](https://app.exchangerate-api.com/sign-up). For `allratestoday`, use an [AllRatesToday](https://allratestoday.com/) API key
+**`provider`** | `string` |  _Optional_ | One of `exchangerate-api` _(default)_ or `allratestoday`
 
 #### Example
 
@@ -808,13 +809,26 @@ Display current FX rates in your native currency. Hover over a row to view more 
       - KPW
 ```
 
+Using AllRatesToday instead:
+
+```yaml
+- type: exchange-rates
+  options:
+    provider: allratestoday
+    apiKey: xxxxxxxxxxxxxxxxxxxxxxxx
+    inputCurrency: GBP
+    outputCurrencies:
+      - USD
+      - JPY
+```
+
 #### Info
 
-- **CORS**: 🟢 Enabled
+- **CORS**: 🟢 Enabled for exchangerate-api. AllRatesToday requests are proxied through Dashy, since its keyed endpoints don't send CORS headers
 - **Auth**: 🔴 Required
-- **Price**: 🟠 Free plan (up to 100,000 requests/ month)
+- **Price**: 🟠 Free plan (up to 100,000 requests/ month) for exchangerate-api. AllRatesToday: free trial, then paid plans
 - **Host**: Managed Instance Only
-- **Privacy**: _See [ExchangeRateAPI Privacy Policy](https://www.exchangerate-api.com/terms)_
+- **Privacy**: _See [ExchangeRateAPI Privacy Policy](https://www.exchangerate-api.com/terms)_, or [AllRatesToday](https://allratestoday.com/) if using that provider
 
 ---
 

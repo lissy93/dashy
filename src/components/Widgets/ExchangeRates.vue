@@ -32,6 +32,9 @@ import WidgetMixin from '@/mixins/WidgetMixin';
 import { widgetApiEndpoints } from '@/utils/config/defaults';
 import { findCurrencySymbol, getCurrencyFlag, timestampToDate } from '@/utils/MiscHelpers';
 
+/* Supported rate providers. exchangerate-api is the default */
+const PROVIDERS = ['exchangerate-api', 'allratestoday'];
+
 export default {
   mixins: [WidgetMixin],
   components: {},
@@ -43,9 +46,13 @@ export default {
     };
   },
   computed: {
-    /* The users API key for exchangerate-api.com */
+    /* The users API key for the selected provider */
     apiKey() {
       return this.parseAsEnvVar(this.options.apiKey);
+    },
+    /* Which rate provider to use, defaults to exchangerate-api */
+    provider() {
+      return this.parseAsEnvVar(this.options.provider) || 'exchangerate-api';
     },
     /* The currency to convert results into */
     inputCurrency() {
@@ -57,6 +64,9 @@ export default {
     },
     endpoint() {
       const currency = this.newInputCurrency || this.inputCurrency;
+      if (this.provider === 'allratestoday') {
+        return `${widgetApiEndpoints.exchangeRatesAllRatesToday}?source=${currency}`;
+      }
       return `${widgetApiEndpoints.exchangeRates}${this.apiKey}/latest/${currency}`;
     },
   },
@@ -70,6 +80,18 @@ export default {
     },
     /* Make GET request to CoinGecko API endpoint */
     fetchData() {
+      if (!PROVIDERS.includes(this.provider)) {
+        this.error(`Unknown provider '${this.provider}'. Pick one of: ${PROVIDERS.join(', ')}.`);
+        return;
+      }
+      if (this.provider === 'allratestoday') {
+        // Keyed AllRatesToday endpoints send no CORS headers, so go through Dashy's proxy
+        this.overrideProxyChoice = true;
+        this.makeRequest(this.endpoint, { Authorization: `Bearer ${this.apiKey}` })
+          .then(this.processData)
+          .catch(() => {}); // makeRequest has already shown the error
+        return;
+      }
       request.get(this.endpoint)
         .then(response => {
           this.processData(response.data);
@@ -82,6 +104,10 @@ export default {
     },
     /* Assign data variables to the returned data */
     processData(data) {
+      if (this.provider === 'allratestoday') {
+        this.processAllRatesToday(data);
+        return;
+      }
       const results = [];
       const rates = data.conversion_rates;
       Object.keys(rates).forEach((currency) => {
@@ -91,6 +117,15 @@ export default {
       });
       this.exchangeRates = results;
       this.lastUpdated = timestampToDate(data.time_last_update_unix * 1000);
+    },
+    /* AllRatesToday returns an array of { source, target, rate, time } */
+    processAllRatesToday(data) {
+      const rows = Array.isArray(data) ? data : [];
+      this.exchangeRates = rows
+        .filter((row) => this.outputCurrencies.includes(row.target))
+        .map((row) => ({ currency: row.target, value: row.rate }));
+      const times = rows.map((row) => Date.parse(row.time)).filter((t) => !Number.isNaN(t));
+      this.lastUpdated = times.length ? timestampToDate(Math.max(...times)) : null;
     },
     updateInputCurrency(newCurrency) {
       this.startLoading();
