@@ -36,8 +36,7 @@ LABEL org.opencontainers.image.title="Dashy" \
 
 ENV NODE_ENV=production \
     IS_DOCKER=true \
-    PORT=8080 \
-    HOST=0.0.0.0
+    PORT=8080
 
 WORKDIR /app
 

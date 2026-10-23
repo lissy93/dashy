@@ -19,8 +19,8 @@ const isDocker = !!process.env.IS_DOCKER;
 /* Checks env var for port. If undefined, will use Port 8080 for Docker, or 4000 for metal */
 const port = process.env.PORT || (isDocker ? 8080 : 4000);
 
-/* Checks env var for host. If undefined, will use 0.0.0.0 */
-const host = process.env.HOST || '0.0.0.0';
+/* Let Node choose the unspecified address unless HOST is explicitly set. */
+const host = process.env.HOST || undefined;
 
 /* Gets the users local IP and port, then calls to print welcome message */
 const printWelcomeMessage = () => {
