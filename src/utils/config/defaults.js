@@ -252,6 +252,7 @@ const defaults = {
     stockPriceChart: 'https://www.alphavantage.co/query',
     tflStatus: 'https://api.tfl.gov.uk/line/mode/dlr,elizabeth-line,overground,tram,tube/status',
     walletBalance: 'https://api.blockcypher.com/v1',
+    walletBalanceSochain: 'https://sochain.com/api/v3',
     walletQrCode: 'https://www.bitcoinqrcodemaker.com/api',
     weather: 'https://api.openweathermap.org/data/2.5/weather',
     weatherForecast: 'https://api.openweathermap.org/data/2.5/forecast',

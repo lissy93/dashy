@@ -44,6 +44,22 @@ import WidgetMixin from '@/mixins/WidgetMixin';
 import { widgetApiEndpoints } from '@/utils/config/defaults';
 import { timestampToDate, timestampToTime, getTimeAgo } from '@/utils/MiscHelpers';
 
+/* Coins which SoChain serves, and their testnets */
+const SOCHAIN_COINS = ['btc', 'ltc', 'doge', 'zec'];
+
+/* SoChain amounts are exact decimal strings with 8 decimals, e.g. "0.00012345".
+ * These convert to and from whole units with BigInt, so sums are exact */
+const toUnits = (amount) => {
+  const [whole, fraction = ''] = String(amount || '0').replace('-', '').split('.');
+  const units = BigInt(whole || '0') * 100000000n + BigInt(fraction.padEnd(8, '0').slice(0, 8));
+  return String(amount).startsWith('-') ? -units : units;
+};
+const fromUnits = (units) => {
+  const sign = units < 0n ? '-' : '';
+  const abs = units < 0n ? -units : units;
+  return `${sign}${abs / 100000000n}.${String(abs % 100000000n).padStart(8, '0')}`;
+};
+
 export default {
   mixins: [WidgetMixin],
   computed: {
@@ -60,6 +76,21 @@ export default {
     },
     limit() {
       return this.options.limit || 10;
+    },
+    /* BlockCypher by default. Zcash is only available from SoChain */
+    provider() {
+      if (this.options.provider) return this.options.provider.toLowerCase();
+      return this.coin === 'zec' ? 'sochain' : 'blockcypher';
+    },
+    /* SoChain's network name, e.g. DOGE, or BTCTEST (Bitcoin testnet4) for network: test */
+    sochainNetwork() {
+      const suffix = this.network === 'test' ? 'TEST' : '';
+      return `${this.coin.toUpperCase()}${suffix}`;
+    },
+    /* Optional SoChain API key, sent as the API-KEY header */
+    sochainHeaders() {
+      const apiKey = this.parseAsEnvVar(this.options.apiKey);
+      return apiKey ? { 'API-KEY': apiKey } : null;
     },
     endpoint() {
       return `${widgetApiEndpoints.walletBalance}/`
@@ -82,7 +113,74 @@ export default {
   },
   methods: {
     fetchData() {
-      this.makeRequest(this.endpoint).then(this.processData);
+      if (this.provider === 'sochain') {
+        this.fetchSochainData();
+      } else {
+        this.makeRequest(this.endpoint).then(this.processData);
+      }
+    },
+    /* Checks SoChain supports the coin and network, and returns an error message if not */
+    sochainOptionsError() {
+      if (!SOCHAIN_COINS.includes(this.coin)) {
+        return `SoChain supports ${SOCHAIN_COINS.join(', ')}, not '${this.coin}'`;
+      }
+      if (!['main', 'test'].includes(this.network)) {
+        return 'With SoChain, network must be \'main\' or \'test\' (Bitcoin testnet4)';
+      }
+      return null;
+    },
+    fetchSochainData() {
+      const optionsError = this.sochainOptionsError();
+      if (optionsError) {
+        this.error(optionsError);
+        this.finishLoading();
+        return;
+      }
+      const base = widgetApiEndpoints.walletBalanceSochain;
+      const path = `${this.sochainNetwork}/${this.address}`;
+      Promise.all([
+        this.makeRequest(`${base}/address_summary/${path}`, this.sochainHeaders),
+        this.makeRequest(`${base}/transactions/${path}`, this.sochainHeaders),
+      ]).then(([summary, history]) => {
+        if (summary.status !== 'success' || history.status !== 'success') {
+          const failed = summary.status !== 'success' ? summary : history;
+          this.error('SoChain returned an error', (failed.data || {}).error_message);
+          return;
+        }
+        this.processSochainData(summary.data, history.data.transactions || []);
+      }).catch(() => {}); // Request errors are already shown by makeRequest
+    },
+    processSochainData(summary, transactions) {
+      const symbol = this.coin.toUpperCase();
+      const formatAmount = (units) => {
+        const abs = units < 0n ? -units : units;
+        return `${Number(fromUnits(abs)).toFixed(6)} ${symbol}`;
+      };
+      const confirmed = toUnits(summary.confirmed_balance);
+      const unconfirmed = toUnits(summary.unconfirmed_balance);
+      const received = toUnits(summary.confirmed_received);
+      const lastActive = summary.last_active;
+      this.balances = {
+        current: formatAmount(confirmed),
+        unconfirmed: formatAmount(unconfirmed),
+        final: formatAmount(confirmed + unconfirmed),
+        totalSent: formatAmount(received - confirmed),
+        totalReceived: formatAmount(received),
+        lastTransaction: lastActive ? getTimeAgo(lastActive.time * 1000) : 'Never',
+      };
+      const explorer = `https://sochain.com/${this.sochainNetwork.toLowerCase()}`;
+      this.transactions = transactions.slice(0, this.limit).map((transaction) => {
+        const change = toUnits(transaction.balance_change);
+        return {
+          hash: transaction.hash,
+          amount: formatAmount(change),
+          date: timestampToDate(transaction.time * 1000),
+          time: timestampToTime(transaction.time * 1000),
+          blockHeight: transaction.block === null ? 'Unconfirmed' : transaction.block,
+          incoming: change >= 0n,
+          url: `${explorer}/tx/${transaction.hash}`,
+        };
+      });
     },
     processData(data) {
       const formatAmount = (amount) => {
@@ -125,6 +223,7 @@ export default {
         xmr: 'Monero',
         ada: 'Cardano',
         bcy: 'BlockCypher',
+        zec: 'Zcash',
       };
       if (!symbol || !Object.keys(coins).includes(symbol.toLowerCase())) return '';
       return coins[symbol.toLowerCase()];
@@ -138,14 +237,18 @@ export default {
     makeTransactionTooltip(transaction) {
       return this.tooltip(
         `At ${transaction.time}<br>`
-        + `<b>BlockHeight:</b> ${transaction.blockHeight}<br>`
-        + `<b>Confirmations:</b> ${transaction.confirmations}<br>`
-        + `<b>Balance After:</b> ${transaction.balance}`,
+        + `<b>BlockHeight:</b> ${transaction.blockHeight}`
+        + (transaction.confirmations !== undefined
+          ? `<br><b>Confirmations:</b> ${transaction.confirmations}` : '')
+        + (transaction.balance !== undefined
+          ? `<br><b>Balance After:</b> ${transaction.balance}` : ''),
         true,
       );
     },
     makeMetaInfo() {
-      const explorer = `https://live.blockcypher.com/${this.coin}/address/${this.address}/`;
+      const explorer = this.provider === 'sochain'
+        ? `https://sochain.com/${this.sochainNetwork.toLowerCase()}/address/${this.address}`
+        : `https://live.blockcypher.com/${this.coin}/address/${this.address}/`;
       const coin = this.getCoinNameFromSymbol(this.coin).toLowerCase();
       const qrCode = `${widgetApiEndpoints.walletQrCode}/`
       + `?style=${coin.toLowerCase()}&color=11&address=${this.address}`;

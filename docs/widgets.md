@@ -598,7 +598,7 @@ Shows recent price history for a given crypto asset, using price data fetched fr
 
 ### Wallet Balance
 
-Keep track of your crypto balances and see recent transactions. Data is fetched from [BlockCypher](https://www.blockcypher.com/dev/)
+Keep track of your crypto balances and see recent transactions. Data is fetched from [BlockCypher](https://www.blockcypher.com/dev/), or from [SoChain](https://sochain.com/docs) with `provider: sochain` (Bitcoin, Litecoin, Dogecoin and Zcash)
 
 <p align="center"><img width="600" src="https://pixelflare.cc/alicia/dashy/crypto-wallet" /></p>
 
@@ -608,8 +608,10 @@ Keep track of your crypto balances and see recent transactions. Data is fetched 
 --- | --- | --- | ---
 **`coin`** | `string` |  Required | Symbol of coin or asset, e.g. `btc`, `eth` or `doge`
 **`address`** | `string` | Required | Address to monitor. This is your wallet's **public** / receiving address
-**`network`** | `string` |  _Optional_ | To use a different network, other than mainnet. Defaults to `main`
-**`limit`** | `number` | _Optional_ | Limit the number of transactions to display. Defaults to `10`, set to large number to show all
+**`network`** | `string` |  _Optional_ | To use a different network, other than mainnet. Defaults to `main`. With SoChain, use `test` for testnet (for Bitcoin, this is testnet4)
+**`limit`** | `number` | _Optional_ | Limit the number of transactions to display. Defaults to `10`, set to large number to show all. SoChain returns the 10 most recent
+**`provider`** | `string` | _Optional_ | Where data comes from, `blockcypher` or `sochain`. Defaults to `blockcypher`, except for `zec`, which only SoChain supports
+**`apiKey`** | `string` | _Optional_ | SoChain API key, only needed for more than 2,500 lookups a day. Get one at [sochain.com/dashboard](https://sochain.com/dashboard). Can be an environment variable
 
 #### Example
 
@@ -620,12 +622,24 @@ Keep track of your crypto balances and see recent transactions. Data is fetched 
     address: 3853bSxupMjvxEYfwGDGAaLZhTKxB2vEVC
 ```
 
+Or, using SoChain, with an optional API key kept in an environment variable (see [Handling Secrets](#handling-secrets)):
+
+```yaml
+- type: wallet-balance
+  useProxy: true
+  options:
+    coin: zec
+    address: t1bw1SefijsXRDQVxC9w64XsRK8hBhtQohQ
+    provider: sochain
+    apiKey: DASHY_SOCHAIN_API_KEY
+```
+
 #### Info
 
 - **CORS**: 🟢 Enabled
-- **Auth**: 🟢 Not Required
-- **Price**: 🟢 Free
-- **Privacy**: _See [BlockCypher Privacy Policy](https://www.blockcypher.com/privacy.html)_
+- **Auth**: 🟢 Not Required (SoChain: 🟠 Optional)
+- **Price**: 🟢 Free (SoChain: free up to 2,500 lookups a day without a key, [paid plans](https://sochain.com/pricing) for more)
+- **Privacy**: _See [BlockCypher Privacy Policy](https://www.blockcypher.com/privacy.html) or [SoChain Privacy Policy](https://sochain.com/privacy)_
 
 ---
 
