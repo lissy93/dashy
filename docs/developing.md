@@ -71,7 +71,7 @@ You can set variables either in your environment, or using the [`.env`](https://
 
 - `NODE_ENV` - Current environment, can be either development, production or test
 - `PORT` - The port to expose the running application on
-- `HOST` - The host that Dashy is running on, domain or IP
+- `HOST` - The address on which the HTTP and HTTPS servers listen. When unset, Node uses `::` if IPv6 is available, or `0.0.0.0` otherwise. On most systems `::` also accepts IPv4 connections (OpenBSD is the exception, so set `HOST=0.0.0.0` there). Set `HOST=0.0.0.0` to listen on IPv4 only, or a specific address to restrict the binding.
 - `VITE_APP_DOMAIN` - The address of Dashy's server, if it's not the same as where the frontend is served from
 - `INTEGRITY` - Should enable SRI for build script and link resources
 - `IS_DOCKER` - Computed automatically on build. Indicates if running in container
