@@ -14,6 +14,7 @@ Both sections and items can have an icon, which is specified using the `icon` at
 - [Local Icons](#local-icons)
 - [Using a Default Icon](#default-icon)
 - [No Icon](#no-icon)
+- [Icon Color](#icon-color)
 
   <img width="500" src="https://i.ibb.co/GTVmZnc/dashy-example-icons.png" />
 
@@ -177,6 +178,18 @@ If you'd like to set a default icon, to be applied to any items which don't have
 ## No Icon
 
 If you don't wish for a given item or section to have an icon, just leave out the `icon` attribute.
+
+---
+
+## Icon Color
+
+Font Awesome, Simple Icons and Material Design icons take on the item's `color`. To color just the icon, set `iconColor` to a hex code or color name:
+
+```yaml
+- title: GitHub
+  icon: si-github
+  iconColor: '#ffa500'
+```
 
 ---
 

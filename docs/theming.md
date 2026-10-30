@@ -127,6 +127,7 @@ Some UI components have a color option, that can be set in the config file, to f
 
 - `section.color` - Custom color for a given section
 - `item.color` - Font and icon color for a given item
+- `item.iconColor` - Icon color for a given item, overriding `item.color`
 - `item.backgroundColor` - Background color for a given icon
 
 ## Typography
