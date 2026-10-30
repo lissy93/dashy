@@ -6,8 +6,40 @@
     <atom:link href="https://dashy.to/rss.xml" rel="self" type="application/rss+xml" />
     <description>New releases and version tags for Dashy, the self-hosted dashboard for your homelab.</description>
     <language>en</language>
-    <lastBuildDate>Tue, 27 Oct 2026 00:08:41 GMT</lastBuildDate>
+    <lastBuildDate>Fri, 30 Oct 2026 15:49:02 GMT</lastBuildDate>
     <generator>dashy-docs github-data plugin</generator>
+    <item>
+      <title>4.9.10</title>
+      <link>https://github.com/lissy93/dashy/releases/tag/4.9.10</link>
+      <guid isPermaLink="true">https://github.com/lissy93/dashy/releases/tag/4.9.10</guid>
+      <pubDate>Fri, 30 Oct 2026 15:44:29 GMT</pubDate>
+      <category>Tag</category>
+      <description>Tag 4.9.10</description>
+    </item>
+    <item>
+      <title>4.9.9</title>
+      <link>https://github.com/lissy93/dashy/releases/tag/4.9.9</link>
+      <guid isPermaLink="true">https://github.com/lissy93/dashy/releases/tag/4.9.9</guid>
+      <pubDate>Fri, 30 Oct 2026 12:20:50 GMT</pubDate>
+      <category>Tag</category>
+      <description>Tag 4.9.9</description>
+    </item>
+    <item>
+      <title>4.9.8</title>
+      <link>https://github.com/lissy93/dashy/releases/tag/4.9.8</link>
+      <guid isPermaLink="true">https://github.com/lissy93/dashy/releases/tag/4.9.8</guid>
+      <pubDate>Tue, 27 Oct 2026 00:35:42 GMT</pubDate>
+      <category>Tag</category>
+      <description>Tag 4.9.8</description>
+    </item>
+    <item>
+      <title>4.9.7</title>
+      <link>https://github.com/lissy93/dashy/releases/tag/4.9.7</link>
+      <guid isPermaLink="true">https://github.com/lissy93/dashy/releases/tag/4.9.7</guid>
+      <pubDate>Tue, 27 Oct 2026 00:08:45 GMT</pubDate>
+      <category>Tag</category>
+      <description>Tag 4.9.7</description>
+    </item>
     <item>
       <title>4.9.6</title>
       <link>https://github.com/lissy93/dashy/releases/tag/4.9.6</link>
