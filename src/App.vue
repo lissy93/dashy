@@ -21,7 +21,7 @@ import { welcomeMsg } from '@/utils/logging/CoolConsole';
 import ErrorHandler from '@/utils/logging/ErrorHandler';
 import { syncPageMeta } from '@/utils/PageMeta';
 import { viewFromPath } from '@/utils/config/ConfigHelpers';
-import { applyTheme, loadExternalStyleSheets } from '@/utils/Theming';
+import { applyTheme, applyPageStyles } from '@/utils/Theming';
 import Keys from '@/utils/StoreMutations';
 import { loadLocale } from '@/utils/languages';
 import i18n from '@/utils/i18n';
@@ -61,9 +61,10 @@ export default {
       immediate: true,
       handler(t) { applyTheme(t, this.appConfig); },
     },
-    /* Sub-pages may set their own external stylesheets */
+    /* Apply custom CSS and stylesheets, and re-apply on page change for sub-pages */
     '$store.state.currentConfigInfo.confId': {
-      handler() { loadExternalStyleSheets(this.appConfig); },
+      immediate: true,
+      handler() { applyPageStyles(this.appConfig); },
     },
     /* Keep i18n in sync with the active page's language (incl. sub-page overrides) */
     'appConfig.language': {
@@ -150,19 +151,6 @@ export default {
       ErrorHandler(`Invalid contentMaxWidth value: '${usersCmw}'`);
       return null;
     },
-    /* Injects the users custom CSS as a style tag */
-    injectCustomStyles(usersCss) {
-      const style = document.createElement('style');
-      style.textContent = usersCss;
-      document.head.insertBefore(style, document.querySelector('[data-external-source]'));
-    },
-    /* Applies user-defined custom CSS from appConfig */
-    applyCustomStyles() {
-      if (this.appConfig.customCss) {
-        const cleanedCss = this.appConfig.customCss.replace(/<\/?[^>]+(>|$)/g, '');
-        this.injectCustomStyles(cleanedCss);
-      }
-    },
     /* Hide splash screen, either after 2 seconds, or immediately based on user preference */
     hideSplash() {
       if (this.shouldShowSplash) {
@@ -230,7 +218,6 @@ export default {
   mounted() {
     this.applyLanguage();
     this.hideSplash();
-    this.applyCustomStyles();
     this.hideLoader();
     welcomeMsg();
   },

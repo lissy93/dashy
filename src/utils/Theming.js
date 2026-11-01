@@ -6,6 +6,7 @@ import { localStorageKeys, mainCssVars, builtInThemes } from '@/utils/config/def
 import ErrorHandler from '@/utils/logging/ErrorHandler';
 
 const EXTERNAL_STYLE_ID = 'user-defined-stylesheet';
+const CUSTOM_CSS_ID = 'user-custom-css';
 const EXTERNAL_SHEETS_TIMEOUT = 3000;
 const html = () => document.documentElement;
 
@@ -44,6 +45,28 @@ export const loadExternalStyleSheets = (appConfig) => {
   });
   const timeout = new Promise((resolve) => { setTimeout(resolve, EXTERNAL_SHEETS_TIMEOUT); });
   return Promise.race([Promise.all(loads), timeout]);
+};
+
+/* Apply appConfig.customCss to the page, replacing whatever was applied before */
+export const applyCustomCss = (css) => {
+  const cleanCss = typeof css === 'string' ? css.replace(/<\/?[^>]+(>|$)/g, '') : '';
+  let style = document.getElementById(CUSTOM_CSS_ID);
+  if (!cleanCss) {
+    style?.remove();
+    return;
+  }
+  if (!style) {
+    style = document.createElement('style');
+    style.id = CUSTOM_CSS_ID;
+    document.head.insertBefore(style, document.querySelector('[data-external-source]'));
+  }
+  if (style.textContent !== cleanCss) style.textContent = cleanCss;
+};
+
+/* Apply a page's custom CSS and external stylesheets */
+export const applyPageStyles = (appConfig) => {
+  applyCustomCss(appConfig?.customCss);
+  return loadExternalStyleSheets(appConfig);
 };
 
 /* Names of user-defined themes (appConfig.cssThemes). Always returns an array. */
