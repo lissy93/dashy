@@ -23,15 +23,16 @@ export const getExternalThemes = (appConfig) => {
 
 /* Inject every appConfig.externalStyleSheet, resolving once all have loaded/failed, or timed out */
 export const loadExternalStyleSheets = (appConfig) => {
-  const ext = appConfig?.externalStyleSheet;
-  if (!ext) return Promise.resolve();
-  document.querySelectorAll('[data-external-source]').forEach((el) => el.remove());
-  const urls = Array.isArray(ext) ? ext : [ext];
+  const urls = [].concat(appConfig?.externalStyleSheet || []).filter((url) => {
+    const valid = typeof url === 'string' && (url.startsWith('http') || url.startsWith('/'));
+    if (!valid) ErrorHandler(`Invalid external stylesheet URL: ${url}`);
+    return valid;
+  });
+  const current = [...document.querySelectorAll('[data-external-source]')];
+  const currentUrls = current.map((el) => el.getAttribute('href'));
+  if (JSON.stringify(currentUrls) === JSON.stringify(urls)) return Promise.resolve();
+  current.forEach((el) => el.remove());
   const loads = urls.map((url) => {
-    if (typeof url !== 'string' || (!url.startsWith('http') && !url.startsWith('/'))) {
-      ErrorHandler(`Invalid external stylesheet URL: ${url}`);
-      return null;
-    }
     const link = document.createElement('link');
     link.rel = 'stylesheet';
     link.type = 'text/css';

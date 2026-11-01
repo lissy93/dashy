@@ -21,7 +21,7 @@ import { welcomeMsg } from '@/utils/logging/CoolConsole';
 import ErrorHandler from '@/utils/logging/ErrorHandler';
 import { syncPageMeta } from '@/utils/PageMeta';
 import { viewFromPath } from '@/utils/config/ConfigHelpers';
-import { applyTheme } from '@/utils/Theming';
+import { applyTheme, loadExternalStyleSheets } from '@/utils/Theming';
 import Keys from '@/utils/StoreMutations';
 import { loadLocale } from '@/utils/languages';
 import i18n from '@/utils/i18n';
@@ -60,6 +60,10 @@ export default {
     effectiveTheme: {
       immediate: true,
       handler(t) { applyTheme(t, this.appConfig); },
+    },
+    /* Sub-pages may set their own external stylesheets */
+    '$store.state.currentConfigInfo.confId': {
+      handler() { loadExternalStyleSheets(this.appConfig); },
     },
     /* Keep i18n in sync with the active page's language (incl. sub-page overrides) */
     'appConfig.language': {
