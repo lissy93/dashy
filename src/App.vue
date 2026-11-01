@@ -150,32 +150,13 @@ export default {
     injectCustomStyles(usersCss) {
       const style = document.createElement('style');
       style.textContent = usersCss;
-      document.head.append(style);
+      document.head.insertBefore(style, document.querySelector('[data-external-source]'));
     },
-    /* Applies user-defined custom CSS and external stylesheets from appConfig */
+    /* Applies user-defined custom CSS from appConfig */
     applyCustomStyles() {
       if (this.appConfig.customCss) {
         const cleanedCss = this.appConfig.customCss.replace(/<\/?[^>]+(>|$)/g, '');
         this.injectCustomStyles(cleanedCss);
-      }
-      if (this.appConfig.externalStyleSheet) {
-        // Remove any previously injected external stylesheets to avoid duplicates bug
-        document.querySelectorAll('[data-external-source]').forEach((el) => el.remove());
-        // Then add the external stylesheet(s)
-        const externals = this.appConfig.externalStyleSheet;
-        const urls = Array.isArray(externals) ? externals : [externals];
-        urls.forEach((url) => {
-          if (typeof url !== 'string' || (!url.startsWith('http') && !url.startsWith('/'))) {
-            ErrorHandler(`Invalid external stylesheet URL: ${url}`);
-            return;
-          }
-          const link = document.createElement('link');
-          link.setAttribute('rel', 'stylesheet');
-          link.setAttribute('type', 'text/css');
-          link.setAttribute('href', url);
-          link.setAttribute('data-external-source', 'dashy');
-          document.head.appendChild(link);
-        });
       }
     },
     /* Hide splash screen, either after 2 seconds, or immediately based on user preference */

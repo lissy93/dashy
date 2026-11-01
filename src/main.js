@@ -21,6 +21,7 @@ import { initKeycloakAuth, isKeycloakEnabled } from '@/utils/auth/KeycloakAuth';
 import { initHeaderAuth, isHeaderAuthEnabled } from '@/utils/auth/HeaderAuth';
 import { initOidcAuth, isOidcEnabled, isOidcLoginPageEnabled } from '@/utils/auth/OidcAuth';
 import { isLoggedIn } from '@/utils/auth/Auth';
+import { loadExternalStyleSheets } from '@/utils/Theming';
 import Keys from '@/utils/StoreMutations';
 import ErrorHandler from '@/utils/logging/ErrorHandler';
 import Toast from '@/utils/Toast';
@@ -58,8 +59,11 @@ serviceWorker();
 // Checks if user enabled error reporting, and if so will initialize it
 ErrorReporting(app, router);
 
-// Mount the app
-const mount = () => app.mount('#app');
+// Mount the app, once any external stylesheets are ready
+const mount = () => {
+  loadExternalStyleSheets(store.getters.appConfig)
+    .finally(() => app.mount('#app'));
+};
 
 /* Handle failures of third-party auth initialization */
 const handleAuthFailure = (provider, err) => {

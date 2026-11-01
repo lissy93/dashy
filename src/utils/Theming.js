@@ -6,6 +6,7 @@ import { localStorageKeys, mainCssVars, builtInThemes } from '@/utils/config/def
 import ErrorHandler from '@/utils/logging/ErrorHandler';
 
 const EXTERNAL_STYLE_ID = 'user-defined-stylesheet';
+const EXTERNAL_SHEETS_TIMEOUT = 3000;
 const html = () => document.documentElement;
 
 /* Map of { label: href } for stylesheets declared in appConfig.externalStyleSheet */
@@ -18,6 +19,30 @@ export const getExternalThemes = (appConfig) => {
   if (typeof ext === 'string') return { 'External Stylesheet': ext };
   ErrorHandler('External stylesheets must be of type string or string[]');
   return {};
+};
+
+/* Inject every appConfig.externalStyleSheet, resolving once all have loaded/failed, or timed out */
+export const loadExternalStyleSheets = (appConfig) => {
+  const ext = appConfig?.externalStyleSheet;
+  if (!ext) return Promise.resolve();
+  document.querySelectorAll('[data-external-source]').forEach((el) => el.remove());
+  const urls = Array.isArray(ext) ? ext : [ext];
+  const loads = urls.map((url) => {
+    if (typeof url !== 'string' || (!url.startsWith('http') && !url.startsWith('/'))) {
+      ErrorHandler(`Invalid external stylesheet URL: ${url}`);
+      return null;
+    }
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = url;
+    link.dataset.externalSource = 'dashy';
+    const loaded = new Promise((resolve) => { link.onload = resolve; link.onerror = resolve; });
+    document.head.appendChild(link);
+    return loaded;
+  });
+  const timeout = new Promise((resolve) => { setTimeout(resolve, EXTERNAL_SHEETS_TIMEOUT); });
+  return Promise.race([Promise.all(loads), timeout]);
 };
 
 /* Names of user-defined themes (appConfig.cssThemes). Always returns an array. */
