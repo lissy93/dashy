@@ -7,7 +7,7 @@
       <Button class="save-button" :click="save">{{ $t('config.css-save-btn') }}</Button>
       <p class="quick-note">
         <b>{{ $t('config.css-note-label') }}:</b>
-        {{ $t('config.css-note-l1') }} {{ $t('config.css-note-l2') }} {{ $t('config.css-note-l3') }}
+        {{ $t('config.css-note-l2') }} {{ $t('config.css-note-l3') }}
       </p>
     </div>
     <!-- Theme Selector -->
@@ -30,6 +30,7 @@ import Button from '@/components/FormElements/Button';
 import StoreKeys from '@/utils/StoreMutations';
 import { theme as defaultTheme } from '@/utils/config/defaults';
 import { configScope } from '@/utils/config/ConfigHelpers';
+import { applyCustomCss } from '@/utils/Theming';
 
 export default {
   name: 'StyleEditor',
@@ -61,16 +62,8 @@ export default {
       const css = this.customCss.replace(/<\/?[^>]+(>|$)/g, '');
       this.$store.commit(StoreKeys.UPDATE_CUSTOM_CSS, css);
       this.saveToBrowser(css);
-      this.injectToPage(css);
+      applyCustomCss(css);
       this.showSuccessMsg();
-      if (css === '') this.reloadPage();
-    },
-    /* Formats CSS, and applies it to page */
-    injectToPage(userStyles) {
-      const cleanedCss = userStyles.replace(/<\/?[^>]+(>|$)/g, '');
-      const style = document.createElement('style');
-      style.textContent = cleanedCss;
-      document.head.append(style);
     },
     /* Saves custom CSS to localStorage, scoped to the active page */
     saveToBrowser(css) {
@@ -78,10 +71,6 @@ export default {
       const localAppConfig = JSON.parse(localStorage.getItem(key) || '{}');
       localAppConfig.customCss = css;
       localStorage.setItem(key, JSON.stringify(localAppConfig));
-    },
-    /* Reload the page (only called if removing styles) */
-    reloadPage() {
-      setTimeout(() => { location.reload(); }, 1500);
     },
     /* Show success toast and lot update */
     showSuccessMsg() {

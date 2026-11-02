@@ -110,7 +110,6 @@
     "reset-config-label": "Konfiguration zurücksetzen",
     "css-save-btn": "Änderungen speichern",
     "css-note-label": "Bemerkung",
-    "css-note-l1": "Sie müssen die Seite aktualisieren, damit Ihre Änderungen wirksam werden.",
     "css-note-l2": "Stilüberschreibungen werden nur lokal gespeichert, daher wird empfohlen vorher eine Kopie Ihres CSS zu erstellen.",
     "css-note-l3": "Um alle benutzerdefinierten Stile zu entfernen löschen Sie den Inhalt und klicken Sie auf Änderungen speichern.",
     "custom-css": {

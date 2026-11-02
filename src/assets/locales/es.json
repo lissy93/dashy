@@ -56,7 +56,6 @@
     "reset-config-label": "Resetear la Configuración",
     "css-save-btn": "Guardar Cambios",
     "css-note-label": "Nota",
-    "css-note-l1": "Necesitarás refrescar tu navegador para que los cambios realizados tengan efecto.",
     "css-note-l2": "La modificación de la apariencia sólo se almacena localmente, es recomendable realizar una copia de seguridad de tu CSS.",
     "css-note-l3": "Para borrar las apariencias personalizadas, borra los contenidos y pulsa 'Guardar Cambios'"
   },

@@ -59,7 +59,6 @@
     "reset-config-label": "Återställ konfiguration",
     "css-save-btn": "Spara ändringar",
     "css-note-label": "Not",
-    "css-note-l1": "Du måste uppdatera sidan för att dina ändringar ska gälla.",
     "css-note-l2": "Styles overrides lagras bara lokalt, så det rekommenderas att du gör en kopia av din CSS.",
     "css-note-l3": "För att ta bort alla egna stilmallar, radera innehållet och tryck på Spara ändringar"
   },

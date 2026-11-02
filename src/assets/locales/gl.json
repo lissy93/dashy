@@ -90,7 +90,6 @@
     "reset-config-label": "Restablecer configuración",
     "css-save-btn": "Gardar cambios",
     "css-note-label": "Nota",
-    "css-note-l1": "Terás que actualizar a páxina para que se apliquen os cambios.",
     "css-note-l2": "As substitucións de estilos só se almacenan localmente, así que é recomendable facer unha copia do teu CSS.",
     "css-note-l3": "Para eliminar todos os estilos personalizados, borra o contido e preme Gardar cambios",
     "custom-css": {

@@ -67,6 +67,7 @@ import Input from '@/components/FormElements/Input';
 // Import utils and constants
 import StoreKeys from '@/utils/StoreMutations';
 import { backup, update, restore } from '@/utils/CloudBackup';
+import { applyPageStyles } from '@/utils/Theming';
 import { localStorageKeys } from '@/utils/config/defaults';
 import { configScope, stripRootOwnedFields } from '@/utils/config/ConfigHelpers';
 import { InfoHandler, WarningInfoHandler, InfoKeys } from '@/utils/logging/ErrorHandler';
@@ -178,7 +179,8 @@ export default {
         localStorage.setItem(localStorageKeys.CONF_PAGES, JSON.stringify(config.pages || []));
       }
       this.setBackupIdLocally(backupId, this.restorePassword);
-      this.$store.dispatch(StoreKeys.APPLY_EDITED_CONFIG, clean);
+      this.$store.dispatch(StoreKeys.APPLY_EDITED_CONFIG, clean)
+        .then(() => applyPageStyles(this.$store.getters.appConfig));
       this.showSuccessMsg(this.$t('cloud-sync.restore-success-msg'));
     },
     /* After backup/ update is made, then replace 'Make Backup' with 'Update Backup' */

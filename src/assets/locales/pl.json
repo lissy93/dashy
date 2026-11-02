@@ -54,7 +54,6 @@
     "reset-config-label": "Zresetuj konfigurację",
     "css-save-btn": "Zapisz zmiany",
     "css-note-label": "Informacja",
-    "css-note-l1": "Po dokonaniu zmian konieczne będzie odświeżenie strony.",
     "css-note-l2": "Nadpisane style przechowywane są w pamięci podręcznej, zaleca się więc wykonanie kopii stylu CSS.",
     "css-note-l3": "Aby usunąć niestandardowe style, wyczyść zawartość pola tekstowego i naciśnij Zapisz zmiany"
   },

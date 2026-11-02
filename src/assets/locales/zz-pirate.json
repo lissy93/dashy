@@ -30,7 +30,6 @@
     "reset-config-msg-l2": "ye should first backup any changes ye've made locally, if ye want t' use them in th' future.",
     "reset-config-msg-l3": "be ye sure ye want t' proceed?",
     "data-copied-msg": "Config has been copied t' clipboardd",
-    "css-note-l1": "ye will need t' refresh th' page fer yer changes t' take effect.",
     "css-note-l2": "Styles overrides be only stored locally, so it be recommended t' make a copy o' yer CSS.",
     "css-note-l3": "To remove all custom styles, delete th' contents and hit Save Changes"
   },

@@ -99,6 +99,7 @@ import { localStorageKeys, modalNames } from '@/utils/config/defaults';
 import { getUsersLanguage, clearScopedLocalConfig } from '@/utils/config/ConfigHelpers';
 import ErrorHandler from '@/utils/logging/ErrorHandler';
 import StoreKeys from '@/utils/StoreMutations';
+import { applyPageStyles } from '@/utils/Theming';
 import CustomCssEditor from '@/components/Configuration/CustomCss';
 import CloudBackupRestore from '@/components/Configuration/CloudBackupRestore';
 import AppInfo from '@/components/Configuration/AppInfo';
@@ -222,7 +223,8 @@ export default {
     confirmResetLocalSettings() {
       clearScopedLocalConfig(this.$store.getters.pages);
       this.$toast(this.$t('config.data-cleared-msg'));
-      this.$store.dispatch(StoreKeys.INITIALIZE_CONFIG, this.$store.state.currentConfigInfo.confId);
+      this.$store.dispatch(StoreKeys.INITIALIZE_CONFIG, this.$store.state.currentConfigInfo.confId)
+        .then(() => applyPageStyles(this.$store.getters.appConfig));
     },
     resetConfirmMessage() {
       return `${this.$t('config.reset-config-msg-l1')} `

@@ -22,15 +22,15 @@ The only caveat being, if you install Dashy as a PWA, the installed app's name, 
 
 ## Multi-Page Support
 
-You can have additional pages within your dashboard, with each having it's own config file. The config files for sub-pages can either be stored locally, or hosted separately. A link to each additional page will be displayed in the navigation bar.
+You can have additional pages within your dashboard, with each having its own config file. The config files for sub-pages can either be stored locally, or hosted separately. A link to each additional page will be displayed in the navigation bar.
 
-You can edit additional pages using the interactive editor, exactly the same was as your primary page (so long as it's local). But please save changes to one page, before you start editing the next.
+You can edit additional pages using the interactive editor, exactly the same way as your primary page (so long as it's local). If you switch pages while editing, you'll be asked to confirm, and any unsaved changes will be discarded.
 
 ### Using Local Sub-Pages
 
 To get started, create a new `.yml` config file for your sub-page, placing it within `/app/user-data`. Then within your primary `conf.yml`, choose a name, and specify the path to the new file.
 
-This is an example. Make sure to add this to the topmost line above appConfig:, or anywhere else appropriately, to match the yml syntax.
+For example, add this at the top level of your `conf.yml` (not nested under `appConfig` or `sections`):
 
 ```yaml
 pages:
@@ -44,9 +44,9 @@ The next step is to create the new page, if you mounted `/app/user-data` in the 
 
 If you mounted `/app/user-data/conf.yml` in docker, you can either switch to the volume or create another bind mount to your new additional page.
 
-If you're sub-page is located within `/app/user-data`, then you only need to specify the filename, but if it's anywhere else, then the full path is required.
+Sub-page files need to be directly within `/app/user-data` (not in a subfolder), and you only need to specify the filename. For a config stored anywhere else, use a URL instead (see [Remote Sub-Pages](#using-remote-sub-pages)).
 
-A default template a page can be found here: [https://github.com/lissy93/dashy/blob/master/user-data/conf.yml](https://github.com/lissy93/dashy/blob/master/user-data/conf.yml) Keep in mind the appConfig cannot be used on subpages and should be removed, for further info see [Restrictions](#restrictions)
+A default template for a page can be found here: [https://github.com/lissy93/dashy/blob/master/user-data/conf.yml](https://github.com/lissy93/dashy/blob/master/user-data/conf.yml)
 
 Now if you reload the page, on the top right there should be a new button to navigate to the new page. 🎉
 
@@ -69,7 +69,7 @@ pages:
 There are many options of how this can be used. You could store your config within a Git repository, in order to easily track and rollback changes. Or host your config on your NAS, to have it backed up with the rest of your files. Or use a hosted paste service, for example [snippet.host](https://snippet.host/), which supports never-expiring CORS-enabled pastes, which can also be edited later.
 
 You will obviously not be able to write updates to remote configs directly through the UI editor, but you can still make and preview changes, then use the export menu to get a copy of the new config, which can then be pasted to the remote source manually.
-The config file must, of course be accessible from within Dashy. If your config contains sensitive info (like API keys, credentials, secret URLs, etc), take care not to expose it to the internet.
+The config file must, of course, be accessible from within Dashy. If your config contains sensitive info (like API keys, credentials, secret URLs, etc), take care not to expose it to the internet.
 
 The following example shows creating a config, publishing it as a [Gist](https://gist.github.com/), copying the URL to the raw file, and using it within your dashboard.
 

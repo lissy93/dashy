@@ -110,7 +110,6 @@
     "reset-config-label": "Reset Config",
     "css-save-btn": "Save Changes",
     "css-note-label": "Note",
-    "css-note-l1": "You will need to refresh the page for your changes to take effect.",
     "css-note-l2": "Styles overrides are only stored locally, so it is recommended to make a copy of your CSS.",
     "css-note-l3": "To remove all custom styles, delete the contents and hit Save Changes",
     "custom-css": {
