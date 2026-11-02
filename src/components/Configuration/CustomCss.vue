@@ -7,7 +7,7 @@
       <Button class="save-button" :click="save">{{ $t('config.css-save-btn') }}</Button>
       <p class="quick-note">
         <b>{{ $t('config.css-note-label') }}:</b>
-        {{ $t('config.css-note-l1') }} {{ $t('config.css-note-l2') }} {{ $t('config.css-note-l3') }}
+        {{ $t('config.css-note-l2') }} {{ $t('config.css-note-l3') }}
       </p>
     </div>
     <!-- Theme Selector -->
@@ -64,7 +64,6 @@ export default {
       this.saveToBrowser(css);
       applyCustomCss(css);
       this.showSuccessMsg();
-      if (css === '') this.reloadPage();
     },
     /* Saves custom CSS to localStorage, scoped to the active page */
     saveToBrowser(css) {
@@ -72,10 +71,6 @@ export default {
       const localAppConfig = JSON.parse(localStorage.getItem(key) || '{}');
       localAppConfig.customCss = css;
       localStorage.setItem(key, JSON.stringify(localAppConfig));
-    },
-    /* Reload the page (only called if removing styles) */
-    reloadPage() {
-      setTimeout(() => { location.reload(); }, 1500);
     },
     /* Show success toast and lot update */
     showSuccessMsg() {
