@@ -1,7 +1,9 @@
 import {
   describe, it, expect, beforeAll, beforeEach, vi,
 } from 'vitest';
-import { applyCustomCss, applyPageStyles, loadExternalStyleSheets } from '@/utils/Theming';
+import {
+  applyCustomCss, applyPageStyles, applyTheme, loadExternalStyleSheets,
+} from '@/utils/Theming';
 import ErrorHandler from '@/utils/logging/ErrorHandler';
 
 vi.mock('@/utils/logging/ErrorHandler', () => ({ default: vi.fn() }));
@@ -110,5 +112,19 @@ describe('Theming - applyPageStyles', () => {
     applyPageStyles({});
     expect(customStyle()).toBeNull();
     expect(hrefs()).toEqual([]);
+  });
+});
+
+describe('Theming - applyTheme', () => {
+  const themeLink = () => document.getElementById('user-defined-stylesheet');
+
+  it('keeps the external theme link when its URL is unchanged, and swaps it when it changes', () => {
+    applyTheme('External Stylesheet', { externalStyleSheet: '/a.css' });
+    const first = themeLink();
+    applyTheme('External Stylesheet', { externalStyleSheet: '/a.css' });
+    expect(themeLink()).toBe(first);
+    applyTheme('External Stylesheet', { externalStyleSheet: '/b.css' });
+    expect(themeLink().getAttribute('href')).toBe('/b.css');
+    expect(document.querySelectorAll('#user-defined-stylesheet')).toHaveLength(1);
   });
 });

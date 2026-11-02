@@ -82,6 +82,7 @@ const resetDom = () => {
 };
 
 const applyRemote = (href) => {
+  if (document.getElementById(EXTERNAL_STYLE_ID)?.getAttribute('href') === href) return;
   resetDom();
   const link = document.createElement('link');
   link.rel = 'stylesheet';

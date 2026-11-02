@@ -61,10 +61,13 @@ export default {
       immediate: true,
       handler(t) { applyTheme(t, this.appConfig); },
     },
-    /* Apply custom CSS and stylesheets, and re-apply on page change for sub-pages */
+    /* Apply custom CSS, stylesheets and theme, and re-apply on page change for sub-pages */
     '$store.state.currentConfigInfo.confId': {
       immediate: true,
-      handler() { applyPageStyles(this.appConfig); },
+      handler() {
+        applyPageStyles(this.appConfig);
+        applyTheme(this.effectiveTheme, this.appConfig);
+      },
     },
     /* Keep i18n in sync with the active page's language (incl. sub-page overrides) */
     'appConfig.language': {
