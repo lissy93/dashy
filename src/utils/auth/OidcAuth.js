@@ -112,8 +112,9 @@ class OidcAuth {
   }
 
   /* Returns true when a same-page reload is scheduled, signalling the caller
-   * to skip mounting the throwaway frame the reload would immediately discard. */
-  async login() {
+   * to skip mounting the throwaway frame the reload would immediately discard.
+   * requestedUrl is the page the route guard redirected to /login from, if any */
+  async login(requestedUrl) {
     const hadValidToken = Boolean(getApiAuthHeader());
     const url = new URL(window.location.href);
     const code = url.searchParams.get('code');
@@ -145,7 +146,7 @@ class OidcAuth {
     const user = await this.userManager.getUser();
     if (user === null) {
       if (isOidcGuestAccessEnabled() || isOidcLoginPageEnabled()) return false;
-      await this.redirectToIdp();
+      await this.redirectToIdp(false, requestedUrl);
       return true;
     }
 
@@ -156,7 +157,10 @@ class OidcAuth {
       if (this.silentRenewEnabled && user.refresh_token
         && !recentlySilentRenewed() && await this.trySilentRenew()) {
         markSilentRenewAttempt();
-        setTimeout(() => window.location.reload(), 250);
+        setTimeout(() => {
+          if (requestedUrl) window.history.replaceState(null, '', safeReturnTo(requestedUrl));
+          window.location.reload();
+        }, 250);
         return true;
       }
       // But if the token is still good, so we don't refuse it
@@ -168,7 +172,7 @@ class OidcAuth {
       }
       await this.userManager.removeUser();
       localStorage.removeItem(localStorageKeys.ID_TOKEN);
-      await this.redirectToIdp();
+      await this.redirectToIdp(false, requestedUrl);
       return true;
     }
 
@@ -231,7 +235,7 @@ class OidcAuth {
 
 
   /* Redirects to IdP for signin. Bail on failed retry to prevent infinite redirect loop */
-  async redirectToIdp(userInitiated = false) {
+  async redirectToIdp(userInitiated = false, requestedUrl = undefined) {
     const lastAttempt = Number(sessionStorage.getItem(SIGNIN_GUARD_KEY)) || 0;
     if (!userInitiated && Date.now() - lastAttempt < SIGNIN_GUARD_THRESHOLD_MS) {
       sessionStorage.removeItem(SIGNIN_GUARD_KEY);
@@ -241,7 +245,8 @@ class OidcAuth {
       );
     }
     sessionStorage.setItem(SIGNIN_GUARD_KEY, String(Date.now()));
-    const returnTo = window.location.pathname + window.location.search + window.location.hash;
+    const returnTo = requestedUrl
+      || window.location.pathname + window.location.search + window.location.hash;
     await this.userManager.signinRedirect({ state: returnTo });
   }
 
@@ -293,14 +298,14 @@ export const isOidcEnabled = () => {
 
 let oidc;
 
-export const initOidcAuth = async () => {
+export const initOidcAuth = async (requestedUrl) => {
   const { UserManager, WebStorageStateStore, Log } = await import('oidc-client-ts');
   if (import.meta.env.DEV) {
     Log.setLogger(console);
     Log.setLevel(Log.INFO);
   }
   oidc = new OidcAuth(UserManager, WebStorageStateStore);
-  return oidc.login();
+  return oidc.login(requestedUrl);
 };
 
 export const getOidcAuth = () => {
