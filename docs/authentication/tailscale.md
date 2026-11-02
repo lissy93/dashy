@@ -291,7 +291,7 @@ Solution: The server reads the auth config only at boot. Restart the Dashy conta
 - `Tailscale-User-Name` - the display name
 - `Tailscale-User-Profile-Pic` - a URL to their avatar
 
-Dashy's [header auth middleware](https://github.com/lissy93/dashy/blob/4.1.5/services/app.js) checks `req.socket.remoteAddress` against `proxyWhitelist` (which is `127.0.0.1` because of the shared namespace), reads `Tailscale-User-Login`, and sets `req.auth = { user: <email> }`. The SPA's `HeaderAuth.js` then fetches `/get-user`, matches the email to `users[]`, and sets the session cookie. Same code path as the Cloudflare Tunnel guide, just a different proxy and a different header name.
+Dashy's [header auth middleware](https://github.com/lissy93/dashy/blob/4.1.5/services/app.js) checks `req.socket.remoteAddress` against `proxyWhitelist` (which is `127.0.0.1` because of the shared namespace), reads `Tailscale-User-Login`, and sets `req.auth = { user: <email> }` if that email is in `users[]`. The SPA's `HeaderAuth.js` then fetches `/get-user`, matches the email to `users[]`, and sets the session cookie. Same code path as the Cloudflare Tunnel guide, just a different proxy and a different header name.
 
 Identity flows from the user's tailnet membership all the way to Dashy's role-based UI without the user ever entering a password.
 
@@ -301,10 +301,13 @@ flowchart LR
     IP -- No --> R401a[/401 Unauthorized<br />not from trusted proxy/]:::err
     IP -- Yes --> Hdr{Tailscale-User-Login<br />present?}
     Hdr -- No --> R401b[/401 Unauthorized<br />missing user header/]:::err
-    Hdr -- Yes --> Pass[/Set req.auth = email<br />continue to route handler/]:::ok
+    Hdr -- Yes --> Listed{Email in<br />users?}
+    Listed -- Yes --> Pass[/Set req.auth = email<br />continue to route handler/]:::ok
+    Listed -- No --> Anon[/Continue signed out/]:::neutral
 
     classDef ok fill:#bbf7d0,stroke:#16a34a,color:#14532d
     classDef err fill:#fecaca,stroke:#dc2626,color:#7f1d1d
+    classDef neutral fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
 ```
 
 <details>
