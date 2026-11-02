@@ -85,10 +85,15 @@ const handleAbortedNavigation = (failure) => {
 
 router.isReady().then(() => {
   if (isOidcEnabled()) {
-    initOidcAuth().then((reloading) => {
+    const requestedUrl = router.currentRoute.value.redirectedFrom?.href;
+    initOidcAuth(requestedUrl).then((reloading) => {
       if (reloading) return;
-      if (needsOidcLoginPage()) router.replace({ name: 'login' }).catch(() => {}).finally(mount);
-      else mount();
+      if (needsOidcLoginPage()) {
+        router.replace({ name: 'login' }).catch(() => { }).finally(mount);
+      }
+      else {
+        mount();
+      }
     }).catch((e) => handleAuthFailure('OIDC', e));
   } else if (isKeycloakEnabled()) {
     initKeycloakAuth().then(mount).catch((e) => handleAuthFailure('Keycloak', e));
