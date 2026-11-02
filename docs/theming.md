@@ -107,7 +107,7 @@ For example, if the pages name was "CFT Toolbox", and you wanted to target `.ite
 ## Loading External Stylesheets
 
 The URI of a stylesheet, either local or hosted on a remote CDN can be passed into the config file. The attribute `appConfig.externalStyleSheet` accepts either a string, or an array of strings. You can also pass custom font stylesheets here, they must be in a CSS format (for example, `https://fonts.googleapis.com/css2?family=Cutive+Mono`).
-This is handled in [`App.vue`](https://github.com/Lissy93/dashy/blob/master/src/App.vue).
+This is handled in [`Theming.js`](https://github.com/Lissy93/dashy/blob/master/src/utils/Theming.js).
 
 For example:
 
