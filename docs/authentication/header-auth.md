@@ -191,7 +191,7 @@ The request reached Dashy from an IP that isn't in `proxyWhitelist`. The check i
 #### 401 "Unauthorized - missing user header"
 The request came from a trusted IP but had no username header. Either the proxy isn't forwarding it, or `userHeader` doesn't match the header name the proxy actually sends. Check the exact header in your proxy config.
 
-#### "User '...' from upstream proxy was not found in conf.yml"
+#### "Authentication failed (Header Auth)"
 The proxy sent a username with no matching entry in `auth.users`. Add a user whose `user` matches it (case doesn't matter).
 
 #### Logged in but can't save the config

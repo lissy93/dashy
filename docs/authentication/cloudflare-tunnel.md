@@ -231,7 +231,7 @@ Solution: In the Access application, add a Service Token, then create a Bypass p
 When Dashy has `enableHeaderAuth: true`, [`services/app.js`](https://github.com/lissy93/dashy/blob/4.1.5/services/app.js) installs a small middleware in front of every API and asset route. The middleware does two things per request:
 
 - Check `req.socket.remoteAddress` against `proxyWhitelist`. If the source IP isn't in the list, return 401 immediately. The header is never even inspected
-- Read the header named by `userHeader` (case-insensitive). If empty, return 401. Otherwise set `req.auth = { user: <email> }` and let the request through
+- Read the header named by `userHeader` (case-insensitive). If empty, return 401. If the email is in `users[]`, set `req.auth = { user: <email> }`. Otherwise the request continues as signed out
 
 The IP check is the security boundary. Cloudflare adds `Cf-Access-Authenticated-User-Email` only after a successful Access policy match, and `cloudflared` is the only thing that can talk to Dashy (no exposed port). So the only way that header can be set on a request reaching Dashy is via the Cloudflare to cloudflared to dashy path, after a real Cloudflare Access authentication.
 
@@ -245,10 +245,13 @@ flowchart LR
     IP -- No --> R401a[/401 Unauthorized<br/>not from trusted proxy/]:::err
     IP -- Yes --> Hdr{User header<br/>present?}
     Hdr -- No --> R401b[/401 Unauthorized<br/>missing user header/]:::err
-    Hdr -- Yes --> Pass[/Set req.auth = email<br/>continue to route handler/]:::ok
+    Hdr -- Yes --> Listed{Email in<br/>users?}
+    Listed -- Yes --> Pass[/Set req.auth = email<br/>continue to route handler/]:::ok
+    Listed -- No --> Anon[/Continue signed out/]:::neutral
 
     classDef ok fill:#bbf7d0,stroke:#16a34a,color:#14532d
     classDef err fill:#fecaca,stroke:#dc2626,color:#7f1d1d
+    classDef neutral fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
 ```
 
 
