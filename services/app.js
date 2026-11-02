@@ -175,7 +175,10 @@ function getAuthMiddleware(authConfig, oidcSettings) {
       if (!user) {
         return res.status(401).json({ success: false, message: 'Unauthorized - missing user header' });
       }
-      req.auth = { user };
+      const users = loadUserConfig() || [];
+      if (users.some(u => u.user?.toLowerCase() === user.toLowerCase())) {
+        req.auth = { user };
+      }
       return next();
     };
   }
