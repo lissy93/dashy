@@ -110,7 +110,6 @@
     "reset-config-label": "Yapılandırmayı Sıfırla",
     "css-save-btn": "Değişiklikleri Kaydet",
     "css-note-label": "Not",
-    "css-note-l1": "Değişikliklerinizin etkili olması için sayfayı yenilemeniz gerekecek.",
     "css-note-l2": "Stil geçersiz kılmaları yalnızca yerel olarak depolanır, bu nedenle CSS'nizin bir kopyasını oluşturmanız önerilir.",
     "css-note-l3": "Tüm özel stilleri kaldırmak için içeriği silin ve Değişiklikleri Kaydet'e basın.",
     "custom-css": {

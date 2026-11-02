@@ -52,7 +52,6 @@
     "reset-config-label": "Tilbakestill konfigurasjon",
     "css-save-btn": "Lagre endringer",
     "css-note-label": "Merk",
-    "css-note-l1": "Du må oppdatere siden for at endringene dine skal tre i kraft.",
     "css-note-l2": "Overstyring av stiler lagres bare lokalt, så det anbefales å lage en kopi av CSS.",
     "css-note-l3": "For å fjerne alle egendefinerte stiler, slett innholdet og trykk Lagre endringer"
   },

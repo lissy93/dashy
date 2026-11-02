@@ -54,7 +54,6 @@
     "reset-config-label": "Ponastavi Konfiguracijo",
     "css-save-btn": "Shrani spremembe",
     "css-note-label": "Opomba",
-    "css-note-l1": "Za uveljavitev sprememb boste morali osvežiti stran.",
     "css-note-l2": "Preglasitve slogov so shranjene samo lokalno, zato je priporočljivo narediti kopijo CSS -ja.",
     "css-note-l3": "Če želite odstraniti vse sloge po meri, izbrišite vsebino in pritisnite Shrani spremembe"
   },

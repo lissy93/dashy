@@ -56,7 +56,6 @@
     "reset-config-label": "Obnovit konfiguraci",
     "css-save-btn": "Uložit změny",
     "css-note-label": "Poznámka",
-    "css-note-l1": "Aby se změny projevily, budete muset obnoviť stránku.",
     "css-note-l2": "Vlastní přepsání stylů se ukladá pouze lokálně, proto se doporučuje vytvorit kopii vašeho CSS.",
     "css-note-l3": "Pokud chcete odstraniť všechny vlastní styly, odstraňte obsah a stiskněte 'Uložit zmeny'"
   },

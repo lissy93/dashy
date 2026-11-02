@@ -110,7 +110,6 @@
     "reset-config-label": "Ripristina configurazione",
     "css-save-btn": "Salvare le modifiche",
     "css-note-label": "Nota",
-    "css-note-l1": "Sarà necessario aggiornare la pagina affinché le modifiche abbiano effetto.",
     "css-note-l2": "Le personalizzazioni degli stili sono memorizzate solo localmente, quindi si consiglia di fare una copia del proprio CSS.",
     "css-note-l3": "Per rimuovere tutti gli stili personalizzati, elimina i contenuti e premi Salva modifiche",
     "custom-css": {

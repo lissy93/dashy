@@ -90,7 +90,6 @@
     "reset-config-label": "Beállítások visszaállítása",
     "css-save-btn": "Változtatások mentése",
     "css-note-label": "Megjegyzés",
-    "css-note-l1": "A változtatások életbe lépéséhez frissítened kell az oldalt.",
     "css-note-l2": "A stílusmódosítások csak helyben vannak mentve, ezért ajánlott másolatot készíteni a CSS-ről.",
     "css-note-l3": "Az összes egyéni stílus eltávolításához töröld a tartalmat, majd mentsd a változtatásokat.",
     "custom-css": {

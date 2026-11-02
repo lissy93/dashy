@@ -103,7 +103,6 @@
     "reset-config-label": "Réinitialiser la configuration",
     "css-save-btn": "Enregistrer les modifications",
     "css-note-label": "Note",
-    "css-note-l1": "Vous devrez actualiser la page pour que vos modifications prennent effet.",
     "css-note-l2": "Les modifications de styles ne sont stockées que localement donc il est recommandé de faire une copie de votre CSS.",
     "css-note-l3": "Pour supprimer tous les styles personnalisés, supprimez le contenu et appuyez sur Enregistrer les modifications.",
     "custom-css": {

@@ -110,7 +110,6 @@
     "reset-config-label": "重置配置",
     "css-save-btn": "保存更改",
     "css-note-label": "注意",
-    "css-note-l1": "需要刷新页面后更改才会生效。",
     "css-note-l2": "自定义样式的覆盖仅保存在本地，因此建议备份你的 CSS。",
     "css-note-l3": "如需移除所有自定义样式，请清空内容并点击“保存更改”。",
     "custom-css": {

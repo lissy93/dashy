@@ -110,7 +110,6 @@
     "reset-config-label": "Atur Ulang Konfigurasi",
     "css-save-btn": "Simpan Perubahan",
     "css-note-label": "Catatan",
-    "css-note-l1": "Anda perlu memuat ulang halaman agar perubahan diterapkan.",
     "css-note-l2": "Penggantian gaya hanya disimpan secara lokal, jadi sebaiknya simpan salinan CSS Anda.",
     "css-note-l3": "Untuk menghapus semua gaya kustom, hapus isinya lalu tekan Simpan Perubahan",
     "custom-css": {

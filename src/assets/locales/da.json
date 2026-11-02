@@ -56,7 +56,6 @@
     "reset-config-label": "Nulstil konfiguration",
     "css-save-btn": "Gem ændringer",
     "css-note-label": "Bemærk",
-    "css-note-l1": "Du skal opdatere siden for at dine ændringer træder i kraft.",
     "css-note-l2": "Styles overrides opbevares kun lokalt, så det anbefales at lave en kopi af din CSS.",
     "css-note-l3": "For at fjerne alle custom styles skal du slette indholdet og trykke på Gem ændringer"
   },

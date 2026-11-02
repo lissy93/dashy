@@ -70,7 +70,6 @@
     "reset-config-label": "Reset de configuração",
     "css-save-btn": "Salvar mudanças",
     "css-note-label": "Nota",
-    "css-note-l1": "Você precisará atualizar a página para que as mudanças sejam aplicadas",
     "css-note-l2": "Substituição de estilos CSS são aplicadas apenas localmente. É recomendado fazer uma cópia antes de modificar.",
     "css-note-l3": "Para remover todos os estilos personalizados, exclua o conteúdo e clique em Salvar"
   },

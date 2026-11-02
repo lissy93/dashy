@@ -108,7 +108,6 @@
     "reset-config-label": "重置設定",
     "css-save-btn": "儲存變更",
     "css-note-label": "注意",
-    "css-note-l1": "您需要重新整理頁面才能套用變更。",
     "css-note-l2": "樣式覆寫只會儲存在本機，因此建議您複製您的 CSS。",
     "css-note-l3": "若要删除所有自訂樣式，請刪除內容並點擊儲存變更",
     "custom-css": {

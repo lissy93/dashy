@@ -42,7 +42,6 @@
     "reset-config-label": "Reset Config",
     "css-save-btn": "Sla Wijzigingen Op",
     "css-note-label": "Let op",
-    "css-note-l1": "Herlaad de pagina om de veranderingen toe te passen.",
     "css-note-l2": "Stijl overrides worden alleen lokaal opgeslagen, het is verstandig om een kopie van de CSS te maken.",
     "css-note-l3": "Om alle aangepaste stijlen te verwijderen, verwijder de inhoud en druk op Sla Wijzigingen Op"
   },

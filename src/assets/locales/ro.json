@@ -97,7 +97,6 @@
     "reset-config-label": "Resetează Configurația",
     "css-save-btn": "Salvează Modificările",
     "css-note-label": "Notă",
-    "css-note-l1": "Va trebui să reîmprospătați pagina pentru ca modificările să aibă efect.",
     "css-note-l2": "Suprascrierile de stiluri sunt stocate doar local, deci este recomandat să faceți o copie a CSS-ului dvs.",
     "css-note-l3": "Pentru a elimina toate stilurile personalizate, ștergeți conținutul și apăsați 'Salvează Modificările'",
     "custom-css": {
