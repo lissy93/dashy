@@ -137,6 +137,7 @@ az containerapp up \
 - [Elestio](https://elest.io/open-source/dashy) - Fully managed Dashy, or bring your own VM
 - [PikaPods](https://www.pikapods.com/apps/) - Managed open-source app hosting; search for Dashy and click **Run Your Own**
 - [Hostinger](https://www.hostinger.com/applications/dashy) - VPS hosting with a one-click Dashy Docker template
+- [Podway](https://podway.io/start?app=dashy&ref=docs-dashy) - Dashy on your own small cloud machine, set up in one click; an AI admin checks for updates and upgrades with automatic rollback
 
 ---
 
