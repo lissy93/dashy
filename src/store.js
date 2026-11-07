@@ -177,7 +177,7 @@ const store = createStore({
     editMode: false, // While true, the user can drag and edit items + sections
     modalOpen: false, // KB shortcut functionality will be disabled when modal is open
     currentConfigInfo: {}, // For multi-page support, will store info about config file
-    requestedConfigId: null, // Page id most recently asked for, set before its config has loaded
+    requestedConfigId: null, // Page id last asked for, may still be loading
     isUsingLocalConfig: false, // If true, will use local config instead of fetched
     criticalError: null, // Will store a message, if a critical error occurs
     navigateConfToTab: undefined, // Used to switch active tab in config modal
@@ -493,8 +493,7 @@ const store = createStore({
      * Loads the active config. Pass a sub-page id to load that sub-page
      */
     async [INITIALIZE_CONFIG]({ commit, state }, subConfigId) {
-      latestConfigLoad += 1;
-      const thisLoad = latestConfigLoad;
+      const thisLoad = ++latestConfigLoad;
       const superseded = () => thisLoad !== latestConfigLoad;
       try {
         const targetId = subConfigId || null;
@@ -524,7 +523,7 @@ const store = createStore({
           response = await request.get(subConfigPath, isRemote ? {} : makeBasicAuthHeaders());
           sessionStorage.removeItem(SUB_CONFIG_RELOAD_KEY);
         } catch (fetchErr) {
-          if (superseded()) return state.config; // User has since moved on, not their error
+          if (superseded()) return state.config; // User moved on, so not their error
           const status = fetchErr.response?.status;
           const auth = state.rootConfig?.appConfig?.auth || {};
           const ssoActive = Boolean(auth.enableOidc || auth.enableKeycloak);

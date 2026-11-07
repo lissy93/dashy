@@ -55,10 +55,11 @@ const HomeMixin = {
      * for KNOWN the store loads the matching sub-config
      * for UNKNOWN the store triggers the critical error modal */
     async loadUpConfig() {
-      const subPage = this.determineConfigFile() || null;
-      const { currentConfigInfo, requestedConfigId } = this.$store.state;
-      // Already on this config, and no other page is still loading, so no reload
-      if (subPage === (currentConfigInfo?.confId || null) && subPage === requestedConfigId) return;
+      const subPage = this.determineConfigFile();
+      const current = this.$store.state.currentConfigInfo?.confId || null;
+      const requested = this.$store.state.requestedConfigId;
+      // Already on this config, and it's the last one requested, so no reload
+      if ((subPage || null) === current && current === requested) return;
       await this.$store.dispatch(Keys.INITIALIZE_CONFIG, subPage);
     },
     /* Resolve which sub-config the current route targets.
