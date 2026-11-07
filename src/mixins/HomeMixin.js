@@ -57,7 +57,9 @@ const HomeMixin = {
     async loadUpConfig() {
       const subPage = this.determineConfigFile();
       const current = this.$store.state.currentConfigInfo?.confId || null;
-      if ((subPage || null) === current) return; // Already on this config, no reload
+      const requested = this.$store.state.requestedConfigId;
+      // Already on this config, and it's the last one requested, so no reload
+      if ((subPage || null) === current && current === requested) return;
       await this.$store.dispatch(Keys.INITIALIZE_CONFIG, subPage);
     },
     /* Resolve which sub-config the current route targets.
