@@ -2689,6 +2689,7 @@ Shows queue information regarding your self hosted Sabnzbd server.
 **`apiKey`** | `string` |  Required | API key for Sabnzbd access. Located under `Config` -> `General` -> `Security` -> `API Key`.
 **`hideDetails`** | `boolean` |  _Optional_ | Hides extra server queue details.
 **`hideQueue`** | `boolean` |  _Optional_ | Hides the queue list in an expandable dropdown.
+**`pathPrefix`** | `string` |  _Optional_ | URL path prefix used when constructing API requests. Set to an empty string ('') if your SABnzbd API is available directly at /api
 
 #### Example
 
