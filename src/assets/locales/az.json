@@ -123,6 +123,13 @@
     "workspace": "İş sahəsi",
     "minimal": "Minimal"
   },
+  "workspace": {
+    "expand-sidebar": "Yan paneli genişləndir",
+    "collapse-sidebar": "Yan paneli yığ",
+    "open-apps": "Açıq tətbiqlər",
+    "close-app": "{app} tətbiqini bağla",
+    "empty-state": "Burada açmaq üçün yan paneldən tətbiq seçin"
+  },
   "remote-config": {
     "title": "Uzaq konfiqurasiya yüklənsin?",
     "apply-button": "Önizləməni tətbiq et",
@@ -446,6 +453,9 @@
       "mem-details": "Yaddaş təfərrüatları",
       "show-less": "Daha az göstər",
       "open-link": "Oxumağa davam et"
+    },
+    "apod": {
+      "watch-video": "Videoya bax"
     },
     "calendar": {
       "all-day": "Bütün gün",
