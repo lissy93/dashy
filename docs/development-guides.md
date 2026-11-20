@@ -44,7 +44,7 @@ Note that if your theme is just for yourself, and you're not submitting a PR, th
 
 For full docs about Dashy's multi-language support, see [Multi-Language Support](./multi-language-support.md)
 
-Dashy is using [vue-i18n](https://vue-i18n.intlify.dev/guide/) to manage multi-language support.
+Dashy is using [vue-i18n](https://vue-i18n.intlify.dev/guide/introduction.html) to manage multi-language support.
 
 Adding a new language is pretty straightforward, with just three steps:
 
