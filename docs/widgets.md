@@ -3321,8 +3321,7 @@ Shows public and private IP address. Note that the ip plugin is not available on
 
 Displays temperature data from system CPUs.
 
-Note: This widget uses the [`sensors`](https://github.com/nicolargo/glances/blob/develop/glances/plugins/glances_sensors.py) plugin, which is disabled by default, and may cause [performance issues](https://github.com/nicolargo/glances/issues/1664#issuecomment-632063558).
-You'll need to enable the sensors plugin to use this widget, using: `--enable-plugin sensors` when you start Glances.
+Note: This widget uses the Glances [`sensors`](https://glances.readthedocs.io/en/latest/aoa/sensors.html) plugin, which is only available on Linux. If you've disabled it, re-enable it with `--enable-plugin sensors` when you start Glances.
 
 <p align="center"><img width="400" src="https://pixelflare.cc/alicia/dashy/cpu-temp-glances" /></p>
 

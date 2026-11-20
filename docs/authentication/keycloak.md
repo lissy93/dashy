@@ -2,7 +2,7 @@
 
 Dashy supports using a [Keycloak](https://www.keycloak.org/) (V17+) authentication server.
 
-[Keycloak](https://www.keycloak.org/about.html) is a Java-based [open source](https://github.com/keycloak/keycloak), high-performance, secure authentication system, supported by [RedHat](https://www.redhat.com/en). It can be deployed with Docker, and enables you to secure multiple self-hosted applications with single-sign-on using standard protocols (OpenID Connect, OAuth 2.0, SAML 2.0 and social login).
+[Keycloak](https://www.keycloak.org/) is a Java-based [open source](https://github.com/keycloak/keycloak), high-performance, secure authentication system, supported by [RedHat](https://www.redhat.com/en). It can be deployed with Docker, and enables you to secure multiple self-hosted applications with single-sign-on using standard protocols (OpenID Connect, OAuth 2.0, SAML 2.0 and social login).
 
 ### Contents
 

@@ -33,7 +33,7 @@ At the time of writing the following languages are supported: `en`, `en-GB`, `ar
 
 ## Adding a new Language
 
-Dashy is using [vue-i18n](https://vue-i18n.intlify.dev/guide/) to manage multi-language support.
+Dashy is using [vue-i18n](https://vue-i18n.intlify.dev/guide/introduction.html) to manage multi-language support.
 
 Adding a new language is pretty straightforward, with just three steps:
 
@@ -150,7 +150,7 @@ Which will render:
 Hello Alicia!
 ```
 
-There are many other advanced features, including  Pluralization,  Datetime & Number Formatting, Message Support and more, all of which are outlined in the [Vue-i18n Docs](https://vue-i18n.intlify.dev/guide/).
+There are many other advanced features, including  Pluralization,  Datetime & Number Formatting, Message Support and more, all of which are outlined in the [Vue-i18n Docs](https://vue-i18n.intlify.dev/guide/introduction.html).
 
 ### Basic Example
 
