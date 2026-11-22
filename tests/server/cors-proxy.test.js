@@ -176,6 +176,23 @@ describe('CORS proxy error classification', () => {
     expect(received['allow-insecure']).toBeUndefined();
   });
 
+  it('resolves env-var placeholders inside a Basic auth header', async () => {
+    let received = null;
+    handler = (req, res) => { received = req.headers; res.end('{}'); };
+    process.env.DASHY_TEST_BASIC_PASS = 'hunter2';
+    try {
+      const basic = (creds) => `Basic ${Buffer.from(creds, 'latin1').toString('base64')}`;
+      const res = await request(app)
+        .get('/cors-proxy')
+        .set('Target-URL', targetUrl)
+        .set('CustomHeaders', JSON.stringify({ Authorization: basic('josé:DASHY_TEST_BASIC_PASS') }));
+      expect(res.status).toBe(200);
+      expect(received.authorization).toBe(basic('josé:hunter2'));
+    } finally {
+      delete process.env.DASHY_TEST_BASIC_PASS;
+    }
+  });
+
   it('blocks a redirect to a metadata host (does not follow it)', async () => {
     handler = (req, res) => {
       res.statusCode = 302;
