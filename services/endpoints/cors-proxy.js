@@ -31,6 +31,21 @@ const substituteEnv = (val) => {
   return val;
 };
 
+/* Swaps env var name for real value, for widget environmental variable configs */
+const substituteBasicAuth = (value) => {
+  const BASIC_AUTH_RE = /^(Basic\s+)([A-Za-z0-9+/]+=*)$/i;
+  const match = typeof value === 'string' && BASIC_AUTH_RE.exec(value);
+  if (!match) {
+    return value;
+  }
+  const decoded = Buffer.from(match[2], 'base64').toString('latin1');
+  const resolved = substituteEnv(decoded);
+  if (resolved === decoded) {
+    return value;
+  }
+  return match[1] + Buffer.from(resolved, 'latin1').toString('base64');
+};
+
 const handler = (req, res) => {
   // Apply allow-all response headers
   res.header('Access-Control-Allow-Origin', '*');
@@ -64,6 +79,9 @@ const handler = (req, res) => {
   if (rawCustomHeaders) {
     try {
       headers = substituteEnv(JSON.parse(rawCustomHeaders));
+      if (headers?.Authorization) {
+        headers.Authorization = substituteBasicAuth(headers.Authorization);
+      }
     } catch (e) {
       res.status(400).send({ error: 'CustomHeaders header contains malformed JSON' });
       return;
