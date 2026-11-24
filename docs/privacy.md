@@ -203,6 +203,7 @@ Dashy supports [Widgets](/docs/widgets.md) for displaying dynamic content. Below
 | [IP Address](/docs/widgets.md#public-ip) | `https://free.freeipapi.com/api/json` | [FreeIPAPI](https://freeipapi.com/) |
 | | `https://ipinfo.io/json` | [IPInfo Privacy Policy](https://ipinfo.io/privacy-policy) |
 | | `https://api.ipquery.io/` | [IPQuery](https://ipquery.io/) |
+| | `https://api.internetdata.io/myip` | [InternetData Privacy Policy](https://internetdata.io/privacy) |
 | | `http://ip-api.com/json` | [IP-API Privacy Policy](https://ip-api.com/docs/legal) |
 | | `https://api.ipgeolocation.io/ipgeo` | [IPGeoLocation Privacy Policy](https://ipgeolocation.io/privacy.html) |
 | [IP Blacklist](/docs/widgets.md#ip-blacklist) | `https://api.blacklistchecker.com` | [Blacklist Checker Privacy Policy](https://blacklistchecker.com/privacy) |

@@ -389,8 +389,8 @@ Displays your public IP address, ISP and approximate location.
 
 **Field** | **Type** | **Required** | **Description**
 --- | --- | --- | ---
-**`provider`** | `string` |  _Optional_ | One of `ipinfo` _(default)_, `freeipapi`, `ipquery`, `ip-api`, or `ipgeolocation`. See the table below
-**`apiKey`** | `string` |  _Optional_ | Required for `ipgeolocation`. Optional for `ipinfo` (a [free token](https://ipinfo.io/signup) raises the rate limit from ~1k/day to ~50k/month)
+**`provider`** | `string` |  _Optional_ | One of `ipinfo` _(default)_, `freeipapi`, `ipquery`, `internetdata`, `ip-api`, or `ipgeolocation`. See the table below
+**`apiKey`** | `string` |  _Optional_ | Required for `ipgeolocation`. Optional for `ipinfo` (a [free token](https://ipinfo.io/signup) raises the rate limit from ~1k/day to ~50k/month) and `internetdata` (a key adds city and region)
 **`hideLocation`** | `boolean` |  _Optional_ | Set to `true` to hide the flag, ISP name and city/region — only the IP address is shown. Defaults to `false`
 
 #### Example
@@ -429,6 +429,7 @@ Using `ipgeolocation` with a key:
 `ipinfo` _(default)_ | 🟢 Not needed / 🟠 Optional | 🟢 Not needed | Service from [ipinfo.io](https://ipinfo.io/). Keyless gives ~1k/day; a [free token](https://ipinfo.io/signup) raises this to ~50k/month. Sometimes blocked by adblockers.
 `freeipapi` | 🟢 Not needed | 🟢 Not needed | Keyless, 60 req/min via [freeipapi.com](https://freeipapi.com/).
 `ipquery` | 🟢 Not needed | 🟢 Not needed | Modern keyless API from [ipquery.io](https://ipquery.io/). Includes VPN/Tor/datacenter risk flags in the raw response.
+`internetdata` | 🟢 Not needed / 🟠 Optional | 🟢 Not needed | Keyless via [internetdata.io](https://internetdata.io/) ([terms](https://internetdata.io/terms#no-key)), showing the company and country. A key adds city and region.
 `ip-api` | 🟢 Not needed | 🔴 **Required** | [ip-api.com](https://ip-api.com/) is HTTP-only on the free tier, so the proxy is needed to avoid mixed-content errors.
 `ipgeolocation` | 🔴 **Required** | 🟢 Not needed | Get a free key from [ipgeolocation.io](https://ipgeolocation.io/signup.html).
 
@@ -436,10 +437,10 @@ Using `ipgeolocation` with a key:
 #### Info
 
 - **CORS**: 🟢 Enabled (only `provider: ip-api` needs the proxy)
-- **Auth**: 🟠 Optional (only `ipgeolocation` requires a key, and `ipinfo` is optional)
+- **Auth**: 🟠 Optional (only `ipgeolocation` requires a key, and `ipinfo` and `internetdata` are optional)
 - **Price**: 🟢 Free
 - **Host**: Managed Instance Only
-- **Privacy**: See the policy for whichever provider you choose: [freeipapi.com](https://freeipapi.com/), [ipinfo.io](https://ipinfo.io/privacy-policy), [ipquery.io](https://ipquery.io/), [ip-api.com](https://ip-api.com/docs/legal), [IPGeoLocation](https://ipgeolocation.io/privacy.html).
+- **Privacy**: See the policy for whichever provider you choose: [freeipapi.com](https://freeipapi.com/), [ipinfo.io](https://ipinfo.io/privacy-policy), [ipquery.io](https://ipquery.io/), [InternetData](https://internetdata.io/privacy), [ip-api.com](https://ip-api.com/docs/legal), [IPGeoLocation](https://ipgeolocation.io/privacy.html).
 
 ---
 

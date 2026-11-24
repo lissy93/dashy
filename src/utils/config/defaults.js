@@ -246,6 +246,7 @@ const defaults = {
     publicIp4: 'https://free.freeipapi.com/api/json',
     publicIp5: 'https://ipinfo.io/json',
     publicIp6: 'https://api.ipquery.io/?format=json',
+    publicIp7: 'https://api.internetdata.io/myip',
     rescueTime: 'https://www.rescuetime.com/anapi/data',
     rssToJson: 'https://api.rss2json.com/v1/api.json',
     sportsScores: 'https://www.thesportsdb.com/api/v1/json',

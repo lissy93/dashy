@@ -59,6 +59,18 @@ const PROVIDERS = {
       lon: d.location && d.location.longitude,
     }),
   },
+  internetdata: {
+    url: (key) => (key ? `${urls.publicIp7}?apikey=${key}` : urls.publicIp7),
+    parse: (d) => ({
+      ip: d.ip,
+      isp: d.company?.name || d.asn?.name,
+      city: d.location?.city,
+      region: d.location?.region,
+      countryCode: d.location?.country,
+      lat: d.location?.latitude,
+      lon: d.location?.longitude,
+    }),
+  },
   'ip-api': {
     url: urls.publicIp3,
     parse: (d) => ({
