@@ -26,6 +26,8 @@
   "login": {
     "title": "Dashy",
     "guest-label": "訪客存取",
+    "oidc-label": "單一登入",
+    "oidc-login-button": "使用 SSO 登入",
     "username-label": "使用者名稱",
     "password-label": "密碼",
     "login-button": "登入",
@@ -120,6 +122,13 @@
     "default": "預設",
     "workspace": "工作區",
     "minimal": "最小化"
+  },
+  "workspace": {
+    "expand-sidebar": "展開側邊欄",
+    "collapse-sidebar": "收合側邊欄",
+    "open-apps": "開啟應用程式",
+    "close-app": "關閉 {app}",
+    "empty-state": "從側邊欄選取一個應用程式，在這裡開啟"
   },
   "remote-config": {
     "title": "載入遠端設定？",
@@ -362,7 +371,9 @@
       "save-locally-warning": "若繼續，變更將僅儲存在瀏覽器中。您應匯出設定檔以在其他裝置使用。您確定要繼續嗎？"
     },
     "edit-item": {
-      "missing-title-err": "必須填寫項目標題"
+      "missing-title-err": "必須填寫項目標題",
+      "add-item-title": "新增項目",
+      "add-item-description": "點擊新增項目"
     },
     "edit-section": {
       "edit-section-title": "編輯區塊",
@@ -382,6 +393,7 @@
       "update-interval-label": "更新間隔（秒）",
       "timeout-label": "逾時（毫秒）",
       "use-proxy-label": "使用代理",
+      "allow-insecure-label": "允許無效憑證",
       "ignore-errors-label": "忽略錯誤",
       "options-heading": "小工具選項",
       "add-option-btn": "新增選項",
@@ -441,6 +453,16 @@
       "mem-details": "記憶體詳細資訊",
       "show-less": "顯示較少",
       "open-link": "繼續閱讀"
+    },
+    "apod": {
+      "watch-video": "觀看影片"
+    },
+    "calendar": {
+      "all-day": "全天",
+      "no-events": "暫無行程",
+      "today": "今天",
+      "tomorrow": "明天",
+      "untitled": "未命名行程"
     },
     "github-profile": {
       "repos": "儲存庫",
