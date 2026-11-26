@@ -123,6 +123,13 @@
     "workspace": "工作空间",
     "minimal": "极简"
   },
+  "workspace": {
+    "expand-sidebar": "展开侧边栏",
+    "collapse-sidebar": "收起侧边栏",
+    "open-apps": "打开应用",
+    "close-app": "关闭 {app}",
+    "empty-state": "从侧边栏选择一个应用，在此打开"
+  },
   "remote-config": {
     "title": "加载远程配置？",
     "apply-button": "应用预览",
