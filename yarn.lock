@@ -3260,10 +3260,10 @@ fraction.js@^5.3.4:
   resolved "https://registry.yarnpkg.com/fraction.js/-/fraction.js-5.3.4.tgz#8c0fcc6a9908262df4ed197427bdeef563e0699a"
   integrity sha512-1X1NTtiJphryn/uLQz3whtY6jK3fTqoE3ohKs0tT+Ujr1W59oopxmoEh7Lu5p6vBaPbgoM0bzveAW4Qi5RyWDQ==
 
-frappe-charts@^1.6.2:
-  version "1.6.2"
-  resolved "https://registry.yarnpkg.com/frappe-charts/-/frappe-charts-1.6.2.tgz#4671a943a8606e5020180fa65c8ea1835c510baf"
-  integrity sha512-9TC3/+YVUi84yYoEbxFiSqu+1FQ5If/ydUNj6i8FRpwynd08t6a7RkS+IRJozAk6NfdL8/LVTTE1DUOjjKZZxg==
+frappe-charts@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/frappe-charts/-/frappe-charts-2.3.0.tgz#93a6970a6a5dd895aa17e65a6ab03911ecf6f62d"
+  integrity sha512-dj+fcBC5hHHiW3rchKfdw7L0B6LG+nm5OnZMfAykOvSi/iZO3HM69uSNMyAISFLBV7n4CjgAwRB2nEWMv0UexQ==
 
 fresh@^2.0.0:
   version "2.0.0"
